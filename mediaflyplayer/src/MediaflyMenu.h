@@ -29,8 +29,7 @@ private:
 	QString	         m_channelSlug;
 	State	         m_state;
 
-	MediaflyChannelModelThread m_channelModelThread;
-	MediaflyChannelModel *m_channelModel;
+	MediaflyChannelModel m_channelModel;
 
 	MediaflyEpisodeModelThread m_episodeModelThread;
 	MediaflyEpisodeModel *m_episodeModel;
@@ -48,7 +47,7 @@ private slots:
 	void uploadNextPartOfMenu();
 
 private slots:
-	void updateModel(const MediaflyChannelModel& m);
+	void updateChannelModel();
 	void updateModel(const MediaflyEpisodeModel& m);
 	void errorHandler(const QString& errorMsg);
 };

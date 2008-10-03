@@ -5,6 +5,11 @@ MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	qRegisterMetaType<MediaflyChannelModel>("MediaflyChannelModel");
+
+	connect(&m_channelModelThread, SIGNAL(refreshed(const MediaflyChannelModel&)),
+	        this, SLOT(handleRefreshed(const MediaflyChannelModel&)));
+	connect(&m_channelModelThread, SIGNAL(error(const QString&)),
+	        this, SLOT(handleError(const QString&)));
 }
 
 MediaflyChannelModel::MediaflyChannelModel(const MediaflyChannelModel &obj) :
@@ -15,6 +20,24 @@ MediaflyChannelModel::MediaflyChannelModel(const MediaflyChannelModel &obj) :
 }
 
 void MediaflyChannelModel::refresh()
+{
+	m_channelModelThread.refresh();
+}
+
+void MediaflyChannelModel::handleError(const QString& errorMsg)
+{
+	emit error(errorMsg);
+}
+
+void MediaflyChannelModel::handleRefreshed(const MediaflyChannelModel& obj)
+{
+	m_nameList = obj.m_nameList;
+	m_slugList = obj.m_slugList;
+
+	emit refreshed();
+}
+
+void MediaflyChannelModel::readData()
 {
 	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
 	Mediafly::SessionInfo session = mf.Authentication_GetToken("123");

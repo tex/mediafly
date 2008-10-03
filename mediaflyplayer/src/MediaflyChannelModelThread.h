@@ -1,8 +1,9 @@
 #ifndef MediaflyChannelModelThread_H
 #define MediaflyChannelModelThread_H
 
-#include "MediaflyChannelModel.h"
 #include <QThread>
+
+class MediaflyChannelModel;
 
 /*
  * This class retrieves data that use to populate

@@ -1,4 +1,5 @@
 #include "MediaflyChannelModelThread.h"
+#include "MediaflyChannelModel.h"
 #include "Exception.h"
 
 MediaflyChannelModelThread::MediaflyChannelModelThread(QObject *parent) :
@@ -10,7 +11,7 @@ void MediaflyChannelModelThread::run()
 {
 	try {
 		MediaflyChannelModel model;
-		model.refresh();
+		model.readData();
 		emit refreshed(model);
 	}
 	catch (Exception &e) {

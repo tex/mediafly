@@ -7,7 +7,6 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	QWidget(parent),
 	m_listView(this),
 	m_state(ChannelMenu),
-	m_channelModel(NULL),
 	m_episodeModel(NULL)
 {
 	m_layout.addWidget(&m_listView);
@@ -22,30 +21,29 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	connect(&m_listView, SIGNAL(leftPressed()),
 	        this, SLOT(handleLeftKey()));
 
-	connect(&m_channelModelThread, SIGNAL(refreshed(const MediaflyChannelModel&)),
-	        this, SLOT(updateModel(const MediaflyChannelModel&)));
-	connect(&m_channelModelThread, SIGNAL(error(const QString&)),
+	connect(&m_channelModel, SIGNAL(refreshed()),
+	        this, SLOT(updateChannelModel()));
+	connect(&m_channelModel, SIGNAL(error(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
+
 	connect(&m_episodeModelThread, SIGNAL(refreshed(const MediaflyEpisodeModel&)),
 	        this, SLOT(updateModel(const MediaflyEpisodeModel&)));
 	connect(&m_episodeModelThread, SIGNAL(error(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
-	m_channelModelThread.refresh();
+
+	m_channelModel.refresh();
 }
 
-void MediaflyMenu::updateModel(const MediaflyChannelModel& m)
+void MediaflyMenu::updateChannelModel()
 {
-	delete m_channelModel;
-	m_channelModel = new MediaflyChannelModel(m);
-
-	m_listView.setModel(m_channelModel);
+	m_listView.setModel(&m_channelModel);
 
 	// setModel itself doesn't "refresh", we
 	// have to call 'update' to repaint it and
 	// 'setCurrentIndex' to select the first item.
 
-	m_listView.update(m_channelModel->index(0, 0));
-	m_listView.setCurrentIndex(m_channelModel->index(0, 0));
+	m_listView.update(m_channelModel.index(0, 0));
+	m_listView.setCurrentIndex(m_channelModel.index(0, 0));
 
 	// Clear MediaflyEpisodeModel model.
 
@@ -111,7 +109,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 
 void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 {
-	m_channelModelThread.refresh();
+	m_channelModel.refresh();
 
 	m_state = ChannelMenu;
 	m_listView.setEnabled(false);
