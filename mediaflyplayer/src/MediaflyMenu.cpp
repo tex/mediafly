@@ -11,6 +11,8 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	m_layout.addWidget(&m_listView);
 	setLayout(&m_layout);
 
+	m_listView.setEnabled(false);
+
 	connect(&m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
 	connect(&m_listView, SIGNAL(enterPressed()),
