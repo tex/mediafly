@@ -23,6 +23,8 @@ void MediaflyList::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down:
 	case Qt::Key_PageDown:
 	case Qt::Key_End:
+		if (!model())
+			break;
 		if (currentIndex().row() + 15 > model()->rowCount())
 			emit almostAtEndOfList();
 		break;
