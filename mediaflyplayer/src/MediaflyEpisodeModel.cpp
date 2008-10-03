@@ -5,6 +5,11 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	qRegisterMetaType<MediaflyEpisodeModel>("MediaflyEpisodeModel");
+
+	connect(&m_episodeModelThread, SIGNAL(refreshed(const MediaflyEpisodeModel&)),
+	        this, SLOT(handleRefreshed(const MediaflyEpisodeModel&)));
+	connect(&m_episodeModelThread, SIGNAL(error(const QString&)),
+	        this, SLOT(handleError(const QString&)));
 }
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
@@ -14,6 +19,26 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 }
 
 void MediaflyEpisodeModel::refresh(QString channelSlug, int offset, int limit, QString mediaType)
+{
+	m_episodeModelThread.refresh(channelSlug, offset, limit, mediaType);
+}
+
+void MediaflyEpisodeModel::handleError(const QString& errorMsg)
+{
+	emit error(errorMsg);
+}
+
+void MediaflyEpisodeModel::handleRefreshed(const MediaflyEpisodeModel& obj)
+{
+	// TODO: unite may insert already existing keys multiple times,
+	// is it a problem for us?
+
+	m_data.unite(obj.m_data);
+
+	emit refreshed();
+}
+
+void MediaflyEpisodeModel::readData(QString channelSlug, int offset, int limit, QString mediaType)
 {
 	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
 	Mediafly::SessionInfo session = mf.Authentication_GetToken("123");
@@ -36,7 +61,6 @@ void MediaflyEpisodeModel::refresh(QString channelSlug, int offset, int limit, Q
 			data[imageUrlRole]    = el.attribute("imageUrl");
 			data[channelRole]     = el.attribute("channel");
 			m_data[offset] = data;
-qDebug() << "offset:" << offset << data;
 		}
 		it = it.nextSibling();
 		++offset;
@@ -70,14 +94,6 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	case channelRole:     return (m_data[index.row()])[channelRole];
 	default:              return QVariant();
 	}
-}
-
-void MediaflyEpisodeModel::unite(const MediaflyEpisodeModel& obj)
-{
-	// TODO: unite may insert already existing keys multiple times,
-	// is it a problem for us?
-
-	m_data.unite(obj.m_data);
 }
 
 QString MediaflyEpisodeModel::toString() const

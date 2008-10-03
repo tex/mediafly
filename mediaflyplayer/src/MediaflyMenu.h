@@ -30,9 +30,7 @@ private:
 	State	         m_state;
 
 	MediaflyChannelModel m_channelModel;
-
-	MediaflyEpisodeModelThread m_episodeModelThread;
-	MediaflyEpisodeModel *m_episodeModel;
+	MediaflyEpisodeModel m_episodeModel;
 
 	static const int itemsReadAtOnce = 50;
 
@@ -48,7 +46,7 @@ private slots:
 
 private slots:
 	void updateChannelModel();
-	void updateModel(const MediaflyEpisodeModel& m);
+	void updateEpisodeModel();
 	void errorHandler(const QString& errorMsg);
 };
 

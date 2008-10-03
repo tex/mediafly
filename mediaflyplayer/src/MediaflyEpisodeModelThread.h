@@ -1,8 +1,9 @@
 #ifndef MediaflyEpisodeModelThread_H
 #define MediaflyEpisodeModelThread_H
 
-#include "MediaflyEpisodeModel.h"
 #include <QThread>
+
+class MediaflyEpisodeModel;
 
 /*
  * This class retrieves data that use to populate
@@ -31,14 +32,14 @@ public slots:
 	 * model class. Emits refreshed(...) signal when
 	 * done or emits error(...) if error occured.
 	 */
-	void refresh(QString channelSlug, int offset, int limit, QString mediaType = "audio,video" );
+	void refresh(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
 
 private:
 	void run();
 
 	QString m_channelSlug;
-	int m_offset;
-	int m_limit;
+	int     m_offset;
+	int     m_limit;
 	QString m_mediaType;
 };
 

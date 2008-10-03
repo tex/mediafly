@@ -1,6 +1,6 @@
 #include "Mediafly.h"
 #include "MediaflyChannelModel.h"
-#include <iostream>
+
 MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
 {

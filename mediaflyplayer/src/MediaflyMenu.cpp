@@ -6,8 +6,7 @@
 MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	QWidget(parent),
 	m_listView(this),
-	m_state(ChannelMenu),
-	m_episodeModel(NULL)
+	m_state(ChannelMenu)
 {
 	m_layout.addWidget(&m_listView);
 	setLayout(&m_layout);
@@ -26,9 +25,9 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	connect(&m_channelModel, SIGNAL(error(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
 
-	connect(&m_episodeModelThread, SIGNAL(refreshed(const MediaflyEpisodeModel&)),
-	        this, SLOT(updateModel(const MediaflyEpisodeModel&)));
-	connect(&m_episodeModelThread, SIGNAL(error(const QString&)),
+	connect(&m_episodeModel, SIGNAL(refreshed()),
+	        this, SLOT(updateEpisodeModel()));
+	connect(&m_episodeModel, SIGNAL(error(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
 
 	m_channelModel.refresh();
@@ -36,6 +35,9 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 
 void MediaflyMenu::updateChannelModel()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
+	m_listView.setModel(NULL);
 	m_listView.setModel(&m_channelModel);
 
 	// setModel itself doesn't "refresh", we
@@ -45,43 +47,27 @@ void MediaflyMenu::updateChannelModel()
 	m_listView.update(m_channelModel.index(0, 0));
 	m_listView.setCurrentIndex(m_channelModel.index(0, 0));
 
-	// Clear MediaflyEpisodeModel model.
-
-	delete m_episodeModel;
-	m_episodeModel = NULL;
-
 	m_listView.setEnabled(true);
 	m_listView.setFocus();
 }
 
-void MediaflyMenu::updateModel(const MediaflyEpisodeModel& m)
+void MediaflyMenu::updateEpisodeModel()
 {
-	bool newModel = false;
-
 	qDebug() << __PRETTY_FUNCTION__;
 
-	QModelIndex current = m_listView.currentIndex();
+	// Remember current selected index (position)
+	// if episode menu is already shown.
 
-	if (!m_episodeModel) {
-		m_episodeModel = new MediaflyEpisodeModel();
-		newModel = true;
-	}
+	QModelIndex current = m_episodeModel.index(0, 0);
+	if (m_listView.model() == &m_episodeModel)
+		current = m_listView.currentIndex();
 
-	qDebug() << "Merge";
-	qDebug() << m_episodeModel->toString();
-	qDebug() << "with:";
-	qDebug() << m.toString();
-
-	m_episodeModel->unite(m);
 	m_listView.setModel(NULL);
-	m_listView.setModel(m_episodeModel);
+	m_listView.setModel(&m_episodeModel);
 
 	// setModel itself doesn't "refresh", we
 	// have to call 'update' to repaint it and
 	// 'setCurrentIndex' to select the first item.
-
-	if (newModel)
-		current = m_episodeModel->index(0,0);
 
 	m_listView.update(current);
 	m_listView.setCurrentIndex(current);
@@ -101,7 +87,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	QString name = index.data(MediaflyChannelModel::nameRole).toString();
 
 	m_channelSlug = slug;
-	m_episodeModelThread.refresh(slug, 0, itemsReadAtOnce);
+	m_episodeModel.refresh(slug, 0, itemsReadAtOnce);
 
 	m_state = EpisodeMenu;
 	m_listView.setEnabled(false);
@@ -189,9 +175,7 @@ void MediaflyMenu::uploadNextPartOfMenu()
 
 	switch (m_state) {
 	case EpisodeMenu:
-		if (!m_episodeModel)
-			return;
-		m_episodeModelThread.refresh(m_channelSlug, m_episodeModel->rowCount(), itemsReadAtOnce);
+		m_episodeModel.refresh(m_channelSlug, m_episodeModel.rowCount(), itemsReadAtOnce);
 		return;
 	default:
 		return;
