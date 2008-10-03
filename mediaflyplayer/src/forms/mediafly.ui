@@ -1,0 +1,93 @@
+<ui version="4.0" >
+ <class>Form</class>
+ <widget class="QWidget" name="Form" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>536</width>
+    <height>413</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" colspan="4" >
+    <widget class="QLabel" name="applicationName" >
+     <property name="font" >
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Mediafly</string>
+     </property>
+     <property name="alignment" >
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QSplitter" name="splitter" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QLabel" name="applicationLogo" >
+      <property name="text" >
+       <string>LOGO</string>
+      </property>
+      <property name="alignment" >
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="3" >
+    <widget class="MListView" name="listView" />
+   </item>
+   <item row="1" column="2" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Maximum</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Maximum</enum>
+     </property>
+     <property name="sizeHint" >
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="4" margin="4" />
+ <customwidgets>
+  <customwidget>
+   <class>MListView</class>
+   <extends>QListView</extends>
+   <header>MListView.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
