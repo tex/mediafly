@@ -1,5 +1,6 @@
 #include "Mediafly.h"
 #include "MediaflyChannelModel.h"
+#include <QNetworkInterface>
 
 MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
@@ -39,8 +40,11 @@ void MediaflyChannelModel::handleRefreshed(const MediaflyChannelModel& obj)
 
 void MediaflyChannelModel::readData()
 {
+	QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName("eth0");
+	QString hwAddress = networkInterface.hardwareAddress();
+
 	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
-	Mediafly::SessionInfo session = mf.Authentication_GetToken("123");
+	Mediafly::SessionInfo session = mf.Authentication_GetToken(hwAddress);
 	QDomDocument doc = mf.Channels_GetChannels(session, true);
 
 	QDomNode it = doc.firstChildElement("response").firstChildElement("channels").firstChild();

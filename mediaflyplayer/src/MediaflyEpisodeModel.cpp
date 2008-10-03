@@ -40,8 +40,11 @@ void MediaflyEpisodeModel::handleRefreshed(const MediaflyEpisodeModel& obj)
 
 void MediaflyEpisodeModel::readData(QString channelSlug, int offset, int limit, QString mediaType)
 {
+	QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName("eth0");
+	QString hwAddress = networkInterface.hardwareAddress();
+
 	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
-	Mediafly::SessionInfo session = mf.Authentication_GetToken("123");
+	Mediafly::SessionInfo session = mf.Authentication_GetToken(hwAddress);
 	QDomDocument doc = mf.Playlists_GetPlaylistForChannel(session, channelSlug, offset, limit, mediaType);
 
 	QDomNode it = doc.firstChildElement("response").firstChildElement("playlist").firstChild();
