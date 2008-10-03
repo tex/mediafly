@@ -2,4 +2,5 @@
 *.o
 moc_*
 tags
+doc_private/
 
