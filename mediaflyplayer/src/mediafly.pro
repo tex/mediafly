@@ -31,6 +31,9 @@ HEADERS += MediaflyList.h
 SOURCES += MediaflyEpisodeDelegate.cpp
 HEADERS += MediaflyEpisodeDelegate.h
 
+SOURCES += BHttp.cpp
+HEADERS += BHttp.h
+
 SOURCES += main.cpp MediaflyMenu.cpp
 HEADERS += MListView.h MediaflyMenu.h
 
