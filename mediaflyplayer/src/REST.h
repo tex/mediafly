@@ -7,10 +7,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDomDocument>
-#include <QtNetwork>
-#include <QtCore>
-#include <QEventLoop>
-
+#include "BHttp.h"
 #include "Exception.h"
 
 /**
@@ -59,23 +56,7 @@ public:
 private:
 	QString  m_Server;
 	QString  m_Prefix;
-	QHttp    m_Http;
-
-private:
-	// Event loop used to implement blocking operations
-	// on QHttp object.
-	//
-	QEventLoop m_eventLoop;
-	int        m_id;
-	bool       m_error;
-
-	void Query(QString& Path, bool useHttps);
-
-signals:
-	void singleQueryDone();
-
-private slots:
-	void dataDone(int id, bool error);
+	BHttp    m_Http;
 };
 
 #endif // REST_H

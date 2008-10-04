@@ -1,6 +1,9 @@
 #include "Mediafly.h"
 #include "MediaflyEpisodeModel.h"
 #include "BHttp.h"
+#include <QNetworkInterface>
+#include <QByteArray>
+#include <QUrl>
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
@@ -85,15 +88,14 @@ QByteArray MediaflyEpisodeModel::readImage(const QString& imageUrl)
 	if (imageUrl.isEmpty())
 		return QByteArray();
 
-	BHttp http;
-	QEventLoop eventLoop;
 	QUrl url(imageUrl);
 
+	BHttp http;
 	http.setHost(url.host());
-	http.get(url.path());
+	if (http.get(url.path()) == false)
+		throw REST::ConnectionException(http.errorString());
 
-	QByteArray buffer = http.readAll();
-	return buffer;
+	return http.readAll();
 }
 
 int MediaflyEpisodeModel::rowCount(const QModelIndex &/*parent*/) const

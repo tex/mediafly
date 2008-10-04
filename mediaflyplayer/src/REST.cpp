@@ -3,6 +3,8 @@
 
 #include "REST.h"
 #include <stdlib.h>
+#include <QDebug>
+#include <QUrl>
 
 /**
  * Constructs the path and sends the GET reguest to the server.
@@ -24,15 +26,9 @@ QDomDocument REST::Query (QString Method, QStringList& Parameters, bool useHttps
 			Path += "&";
 	}
 
-	Query(Path, useHttps);
-
-	// Block until response read or error signalled.
-	//
-	m_eventLoop.exec(QEventLoop::ExcludeUserInputEvents);
-
-	if (m_error) {
+	m_Http.setHost(m_Server, useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
+ 	if (m_Http.get(Path) == false)
 		throw REST::ConnectionException(m_Http.errorString());
-	}
 
 	// Make an DOM document from the response.
 	// 
@@ -64,27 +60,4 @@ REST::REST (QString Server, QString Prefix ) : m_Server(Server),
 REST::~REST() {
 }
 
-void REST::dataDone(int id, bool error)
-{
-	if (m_id == id) {
-		m_error = error;
- 		emit singleQueryDone();
-	}
-}
-
-void REST::Query(QString& Path, bool useHttps)
-{
-	// Connect signal that is emited from dataDone when
-	// http request is finished.
-	// 
- 	connect(this, SIGNAL(singleQueryDone()), &m_eventLoop, SLOT(quit()));
-
-	// Connect signal that is emited from m_Http when http request
-	// is finished.
-	//
- 	connect(&m_Http, SIGNAL(requestFinished(int,bool)), this, SLOT(dataDone(int, bool)));
-
-	m_Http.setHost(m_Server, useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
- 	m_id = m_Http.get(Path);
-}
 

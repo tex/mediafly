@@ -4,6 +4,7 @@
 #include "Mediafly.h"
 
 #include <QCryptographicHash>
+#include <QDebug>
 
 /**
  * Check request response. Is it correct and is it's status fail or ok?
