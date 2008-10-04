@@ -8,6 +8,10 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	m_listView(this),
 	m_state(ChannelMenu)
 {
+	// Remember the default item delegate that m_listView uses.
+	// 
+	m_itemDelegateDefault = m_listView.itemDelegate();
+
 	m_layout.addWidget(&m_listView);
 	setLayout(&m_layout);
 
@@ -39,6 +43,8 @@ void MediaflyMenu::updateChannelModel()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
+	m_listView.setItemDelegate(m_itemDelegateDefault);
+
 	m_listView.setModel(NULL);
 	m_listView.setModel(&m_channelModel);
 
@@ -56,6 +62,8 @@ void MediaflyMenu::updateChannelModel()
 void MediaflyMenu::updateEpisodeModel()
 {
 	qDebug() << __PRETTY_FUNCTION__;
+
+	m_listView.setItemDelegate(&m_itemDelegateEpisode);
 
 	// Remember current selected index (position)
 	// if episode menu is already shown.

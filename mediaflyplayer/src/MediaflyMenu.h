@@ -1,5 +1,6 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyChannelModelThread.h"
+#include "MediaflyEpisodeDelegate.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeModelThread.h"
 #include "MediaflyList.h"
@@ -37,6 +38,9 @@ private:
 	void renderEpisodeMenu(const QModelIndex& index);
 	void renderChannelMenu(const QModelIndex& index);
 	void render(const QModelIndex& index);
+
+	QAbstractItemDelegate   *m_itemDelegateDefault;
+	MediaflyEpisodeDelegate  m_itemDelegateEpisode;
 
 private slots:
 	void handleEnterKey();

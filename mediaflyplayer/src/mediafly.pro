@@ -28,6 +28,9 @@ SOURCES += libs/neux/views/nhorizontalspinbox.cpp libs/neux/views/nlistview.cpp 
 SOURCES += MediaflyList.cpp
 HEADERS += MediaflyList.h
 
+SOURCES += MediaflyEpisodeDelegate.cpp
+HEADERS += MediaflyEpisodeDelegate.h
+
 SOURCES += main.cpp MediaflyMenu.cpp
 HEADERS += MListView.h MediaflyMenu.h
 
