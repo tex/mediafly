@@ -27,6 +27,8 @@ void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 
 QSize MediaflyEpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-	return QSize(200, 50);
+	QSize size = QItemDelegate::sizeHint(option, index);
+	size.setHeight(size.height() * 2);
+	return size;
 }
 
