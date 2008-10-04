@@ -20,6 +20,12 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 	m_image = obj.m_image;
 }
 
+void MediaflyEpisodeModel::clear()
+{
+	m_data.clear();
+	m_image.clear();
+}
+
 void MediaflyEpisodeModel::refresh(QString channelSlug, int offset, int limit, QString mediaType)
 {
 	m_episodeModelThread.refresh(channelSlug, offset, limit, mediaType);

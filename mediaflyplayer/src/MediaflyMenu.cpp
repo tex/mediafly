@@ -93,6 +93,8 @@ void MediaflyMenu::errorHandler(const QString& errorMsg)
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 {
+	m_episodeModel.clear();
+
 	QString slug = index.data(MediaflyChannelModel::slugRole).toString();
 	QString name = index.data(MediaflyChannelModel::nameRole).toString();
 

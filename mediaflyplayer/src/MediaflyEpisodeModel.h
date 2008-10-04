@@ -33,6 +33,8 @@ public:
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
 
+	void clear();
+
 	QString toString() const ;
 
 public slots:
