@@ -5,6 +5,7 @@
 #include <QAbstractListModel>
 #include <QStringList>
 #include <QMap>
+#include <QPixmap>
 
 class MediaflyEpisodeModel : public QAbstractListModel
 {
@@ -22,6 +23,7 @@ public:
 		showSlugRole,
 		showTitleRole,
 		imageUrlRole,
+		imageRole,
 		channelRole,
 	};
 
@@ -47,9 +49,12 @@ private:
 	//            2. Value: value
 
 	QMap<int, QMap<int, QString> > m_data;
+	QMap<int, QByteArray> m_image;
+
 	MediaflyEpisodeModelThread m_episodeModelThread;
 
 	void readData(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
+	QByteArray readImage(const QString& imageUrl);
 
 private slots:
 	void handleError(const QString& errorMsg);

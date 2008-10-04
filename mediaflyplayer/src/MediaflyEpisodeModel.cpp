@@ -1,5 +1,6 @@
 #include "Mediafly.h"
 #include "MediaflyEpisodeModel.h"
+#include "BHttp.h"
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
@@ -16,6 +17,7 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
 	m_data = obj.m_data;
+	m_image = obj.m_image;
 }
 
 void MediaflyEpisodeModel::refresh(QString channelSlug, int offset, int limit, QString mediaType)
@@ -34,6 +36,7 @@ void MediaflyEpisodeModel::handleRefreshed(const MediaflyEpisodeModel& obj)
 	// is it a problem for us?
 
 	m_data.unite(obj.m_data);
+	m_image.unite(obj.m_image);
 
 	emit refreshed();
 }
@@ -64,10 +67,27 @@ void MediaflyEpisodeModel::readData(QString channelSlug, int offset, int limit, 
 			data[imageUrlRole]    = el.attribute("imageUrl");
 			data[channelRole]     = el.attribute("channel");
 			m_data[offset] = data;
+			m_image[offset] = readImage(data[imageUrlRole]);
 		}
 		it = it.nextSibling();
 		++offset;
 	}
+}
+
+QByteArray MediaflyEpisodeModel::readImage(const QString& imageUrl)
+{
+	if (imageUrl.isEmpty())
+		return QByteArray();
+
+	BHttp http;
+	QEventLoop eventLoop;
+	QUrl url(imageUrl);
+
+	http.setHost(url.host());
+	http.get(url.path());
+
+	QByteArray buffer = http.readAll();
+	return buffer;
 }
 
 int MediaflyEpisodeModel::rowCount(const QModelIndex &/*parent*/) const
@@ -94,6 +114,7 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	case showSlugRole:    return (m_data[index.row()])[showSlugRole];
 	case showTitleRole:   return (m_data[index.row()])[showTitleRole];
 	case imageUrlRole:    return (m_data[index.row()])[imageUrlRole];
+	case imageRole:       return (m_image[index.row()]);
 	case channelRole:     return (m_data[index.row()])[channelRole];
 	default:              return QVariant();
 	}

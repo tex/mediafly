@@ -33,7 +33,7 @@ private:
 	MediaflyChannelModel m_channelModel;
 	MediaflyEpisodeModel m_episodeModel;
 
-	static const int itemsReadAtOnce = 50;
+	static const int itemsReadAtOnce = 10;
 
 	void renderEpisodeMenu(const QModelIndex& index);
 	void renderChannelMenu(const QModelIndex& index);
