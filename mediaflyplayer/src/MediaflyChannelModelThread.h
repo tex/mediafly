@@ -1,6 +1,7 @@
 #ifndef MediaflyChannelModelThread_H
 #define MediaflyChannelModelThread_H
 
+#include "MediaflyChannelModelData.h"
 #include <QThread>
 
 class MediaflyChannelModel;
@@ -17,10 +18,7 @@ public:
 	~MediaflyChannelModelThread() { }
 
 signals:
-	/* Emited when MediaflyChannelModel model
-	 * populated with new data is available.
-	 */
-	void refreshed(const MediaflyChannelModel& model);
+	void entryRead(const MediaflyChannelEntry& entry);
 
 	/* Emited when error occured during retrieving
 	 * data for MediaflyChannelModel model.
@@ -28,13 +26,14 @@ signals:
 	void error(const QString& errorMsg);
 
 public slots:
-	/* Retrieve new data for MediaflyChannelModel
-	 * model class. Emits refreshed(...) signal when
-	 * done or emits error(...) if error occured.
-	 */
 	void refresh();
 
+private slots:
+	void handleEntry(const MediaflyChannelEntry& entry);
+
 private:
+	MediaflyChannelModelData m_modelData;
+
 	void run();
 };
 

@@ -2,8 +2,8 @@
 #define MediaflyEpisodeModel_H
 
 #include "MediaflyEpisodeModelThread.h"
+#include "MediaflyEpisodeEntry.h"
 #include <QAbstractListModel>
-#include <QStringList>
 #include <QMap>
 #include <QPixmap>
 
@@ -35,13 +35,12 @@ public:
 
 	void clear();
 
-	QString toString() const ;
-
 public slots:
 	void refresh(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
 
 signals:
-	void refreshed();
+	void entryRefreshed();
+	void imageRefreshed();
 	void error(const QString& errorMsg);
 
 private:
@@ -50,19 +49,15 @@ private:
 	// 1. Value : 2. Key : role
 	//            2. Value: value
 
-	QMap<int, QMap<int, QString> > m_data;
+	QMap<int, MediaflyEpisodeEntry> m_data;
 	QMap<int, QByteArray> m_image;
 
 	MediaflyEpisodeModelThread m_episodeModelThread;
 
-	void readData(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
-	QByteArray readImage(const QString& imageUrl);
-
 private slots:
 	void handleError(const QString& errorMsg);
-	void handleRefreshed(const MediaflyEpisodeModel& obj);
-
-	friend class MediaflyEpisodeModelThread;
+	void handleEntry(const MediaflyEpisodeEntry& entry);
+	void handleImage(const QByteArray& buffer);
 };
 
 #endif

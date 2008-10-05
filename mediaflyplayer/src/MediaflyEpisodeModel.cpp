@@ -1,17 +1,15 @@
-#include "Mediafly.h"
 #include "MediaflyEpisodeModel.h"
-#include "BHttp.h"
-#include <QNetworkInterface>
-#include <QByteArray>
-#include <QUrl>
+#include <QDebug>
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	qRegisterMetaType<MediaflyEpisodeModel>("MediaflyEpisodeModel");
 
-	connect(&m_episodeModelThread, SIGNAL(refreshed(const MediaflyEpisodeModel&)),
-	        this, SLOT(handleRefreshed(const MediaflyEpisodeModel&)));
+	connect(&m_episodeModelThread, SIGNAL(entryRead(const MediaflyEpisodeEntry&)),
+	        this, SLOT(handleEntry(const MediaflyEpisodeEntry&)));
+	connect(&m_episodeModelThread, SIGNAL(imageRead(const QByteArray&)),
+	        this, SLOT(handleImage(const QByteArray&)));
 	connect(&m_episodeModelThread, SIGNAL(error(const QString&)),
 	        this, SLOT(handleError(const QString&)));
 }
@@ -39,63 +37,17 @@ void MediaflyEpisodeModel::handleError(const QString& errorMsg)
 	emit error(errorMsg);
 }
 
-void MediaflyEpisodeModel::handleRefreshed(const MediaflyEpisodeModel& obj)
+void MediaflyEpisodeModel::handleEntry(const MediaflyEpisodeEntry& entry)
 {
-	// TODO: unite may insert already existing keys multiple times,
-	// is it a problem for us?
-
-	m_data.unite(obj.m_data);
-	m_image.unite(obj.m_image);
-
-	emit refreshed();
+	m_data[m_data.size()] = entry;
+	emit entryRefreshed();
 }
 
-void MediaflyEpisodeModel::readData(QString channelSlug, int offset, int limit, QString mediaType)
+void MediaflyEpisodeModel::handleImage(const QByteArray& buffer)
 {
-	QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName("eth0");
-	QString hwAddress = networkInterface.hardwareAddress();
-
-	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
-	Mediafly::SessionInfo session = mf.Authentication_GetToken(hwAddress);
-	QDomDocument doc = mf.Playlists_GetPlaylistForChannel(session, channelSlug, offset, limit, mediaType);
-
-	QDomNode it = doc.firstChildElement("response").firstChildElement("playlist").firstChild();
-	while (!it.isNull()) {
-		QDomElement el = it.toElement();
-		if (!el.isNull()) {
-			QMap<int, QString> data;
-			data[titleRole]       = el.attribute("title");
-			data[slugRole]        = el.attribute("slug");
-			data[descriptionRole] = el.attribute("description");
-			data[formatRole]      = el.attribute("format");
-			data[urlRole]         = el.attribute("url");
-			data[urlOriginalRole] = el.attribute("urlOriginal");
-			data[publishedRole]   = el.attribute("published");
-			data[showSlugRole]    = el.attribute("showSlug");
-			data[showTitleRole]   = el.attribute("showTitle");
-			data[imageUrlRole]    = el.attribute("imageUrl");
-			data[channelRole]     = el.attribute("channel");
-			m_data[offset] = data;
-			m_image[offset] = readImage(data[imageUrlRole]);
-		}
-		it = it.nextSibling();
-		++offset;
-	}
-}
-
-QByteArray MediaflyEpisodeModel::readImage(const QString& imageUrl)
-{
-	if (imageUrl.isEmpty())
-		return QByteArray();
-
-	QUrl url(imageUrl);
-
-	BHttp http;
-	http.setHost(url.host());
-	if (http.get(url.path()) == false)
-		throw REST::ConnectionException(http.errorString());
-
-	return http.readAll();
+	qDebug() << "image added to the model";
+	m_image[m_image.size()] = buffer;
+	emit imageRefreshed();
 }
 
 int MediaflyEpisodeModel::rowCount(const QModelIndex &/*parent*/) const
@@ -112,34 +64,19 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 
 	switch (role) {
-	case titleRole:       return (m_data[index.row()])[titleRole];
-	case slugRole:        return (m_data[index.row()])[slugRole];
-	case descriptionRole: return (m_data[index.row()])[descriptionRole];
-	case formatRole:      return (m_data[index.row()])[formatRole];
-	case urlRole:         return (m_data[index.row()])[urlRole];
-	case urlOriginalRole: return (m_data[index.row()])[urlOriginalRole];
-	case publishedRole:   return (m_data[index.row()])[publishedRole];
-	case showSlugRole:    return (m_data[index.row()])[showSlugRole];
-	case showTitleRole:   return (m_data[index.row()])[showTitleRole];
-	case imageUrlRole:    return (m_data[index.row()])[imageUrlRole];
+	case titleRole:       return (m_data[index.row()]).title();
+	case slugRole:        return (m_data[index.row()]).slug();
+	case descriptionRole: return (m_data[index.row()]).description();
+	case formatRole:      return (m_data[index.row()]).format();
+	case urlRole:         return (m_data[index.row()]).url();
+	case urlOriginalRole: return (m_data[index.row()]).urlOriginal();
+	case publishedRole:   return (m_data[index.row()]).published();
+	case showSlugRole:    return (m_data[index.row()]).showSlug();
+	case showTitleRole:   return (m_data[index.row()]).showTitle();
+	case imageUrlRole:    return (m_data[index.row()]).imageUrl();
 	case imageRole:       return (m_image[index.row()]);
-	case channelRole:     return (m_data[index.row()])[channelRole];
+	case channelRole:     return (m_data[index.row()]).channel();
 	default:              return QVariant();
 	}
-}
-
-QString MediaflyEpisodeModel::toString() const
-{
-	QString text = "(";
-
-	for (int i = 0; i < m_data.size(); ++i)
-	{
-		text += ((m_data[i])[titleRole]);
-		if (i + 1 < m_data.size())
-			text += ", ";
-	}
-	text += ")";
-
-	return text;
 }
 

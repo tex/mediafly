@@ -1,14 +1,10 @@
-#include "Mediafly.h"
 #include "MediaflyChannelModel.h"
-#include <QNetworkInterface>
 
 MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
-	qRegisterMetaType<MediaflyChannelModel>("MediaflyChannelModel");
-
-	connect(&m_channelModelThread, SIGNAL(refreshed(const MediaflyChannelModel&)),
-	        this, SLOT(handleRefreshed(const MediaflyChannelModel&)));
+	connect(&m_channelModelThread, SIGNAL(entryRead(const MediaflyChannelEntry&)),
+	        this, SLOT(handleEntry(const MediaflyChannelEntry&)));
 	connect(&m_channelModelThread, SIGNAL(error(const QString&)),
 	        this, SLOT(handleError(const QString&)));
 }
@@ -16,12 +12,12 @@ MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 MediaflyChannelModel::MediaflyChannelModel(const MediaflyChannelModel &obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
-	m_nameList = obj.m_nameList;
-	m_slugList = obj.m_slugList;
+	m_data = obj.m_data;
 }
 
 void MediaflyChannelModel::refresh()
 {
+	m_data.clear();
 	m_channelModelThread.refresh();
 }
 
@@ -30,39 +26,15 @@ void MediaflyChannelModel::handleError(const QString& errorMsg)
 	emit error(errorMsg);
 }
 
-void MediaflyChannelModel::handleRefreshed(const MediaflyChannelModel& obj)
+void MediaflyChannelModel::handleEntry(const MediaflyChannelEntry& entry)
 {
-	m_nameList = obj.m_nameList;
-	m_slugList = obj.m_slugList;
-
+	m_data << entry;
 	emit refreshed();
-}
-
-void MediaflyChannelModel::readData()
-{
-	QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName("eth0");
-	QString hwAddress = networkInterface.hardwareAddress();
-
-	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
-	Mediafly::SessionInfo session = mf.Authentication_GetToken(hwAddress);
-	QDomDocument doc = mf.Channels_GetChannels(session, true);
-
-	QDomNode it = doc.firstChildElement("response").firstChildElement("channels").firstChild();
-	while (!it.isNull()) {
-		QDomElement el = it.toElement();
-		if (!el.isNull()) {
-			m_nameList << el.attribute("name");
-			m_slugList << el.attribute("slug");
-		}
-		it = it.nextSibling();
-	}
 }
 
 int MediaflyChannelModel::rowCount(const QModelIndex &/*parent*/) const
 {
-	Q_ASSERT(m_nameList.size() == m_slugList.size());
-
-	return m_nameList.size();
+	return m_data.size();
 }
 
 QVariant MediaflyChannelModel::data(const QModelIndex &index, int role) const
@@ -70,16 +42,13 @@ QVariant MediaflyChannelModel::data(const QModelIndex &index, int role) const
 	if (!index.isValid())
 		return QVariant();
 
-	Q_ASSERT(m_nameList.size() == m_slugList.size());
-
-	if (index.row() >= m_nameList.size())
+	if (index.row() >= m_data.size())
 		return QVariant();
 
-	if (role == nameRole)
-		return m_nameList.at(index.row());
-	else if (role == slugRole)
-		return m_slugList.at(index.row());
-	else
-		return QVariant();
+	switch (role) {
+	case nameRole: return m_data.at(index.row()).name();
+	case slugRole: return m_data.at(index.row()).slug();
+	default:       return QVariant();
+	}
 }
 

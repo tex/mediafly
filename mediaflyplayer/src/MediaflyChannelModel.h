@@ -30,21 +30,13 @@ signals:
 	void error(const QString& errorMsg);
 
 private:
-	void readData();
-
-	MediaflyChannelModelThread m_channelModelThread;
-
-	QStringList m_nameList;
-	QStringList m_slugList;
+	MediaflyChannelModelThread  m_channelModelThread;
+	QList<MediaflyChannelEntry> m_data;
 
 private slots:
 	void handleError(const QString& errorMsg);
-	void handleRefreshed(const MediaflyChannelModel& obj);
-
-	friend class MediaflyChannelModelThread;
+	void handleEntry(const MediaflyChannelEntry& entry);
 };
-
-Q_DECLARE_METATYPE(MediaflyChannelModel);
 
 #endif
 

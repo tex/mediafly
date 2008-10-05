@@ -1,18 +1,22 @@
 #include "MediaflyChannelModelThread.h"
-#include "MediaflyChannelModel.h"
 #include "Exception.h"
 
 MediaflyChannelModelThread::MediaflyChannelModelThread(QObject *parent) :
 	QThread(parent)
 {
+	connect(&m_modelData, SIGNAL(entryRead(const MediaflyChannelEntry&)),
+	        this, SLOT(handleEntry(const MediaflyChannelEntry&)));
+}
+
+void MediaflyChannelModelThread::handleEntry(const MediaflyChannelEntry& entry)
+{
+	emit entryRead(entry);
 }
 
 void MediaflyChannelModelThread::run()
 {
 	try {
-		MediaflyChannelModel model;
-		model.readData();
-		emit refreshed(model);
+		m_modelData.readData();
 	}
 	catch (Exception &e) {
 		emit error(e.getError());

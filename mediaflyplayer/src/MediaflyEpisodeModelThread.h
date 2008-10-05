@@ -1,7 +1,9 @@
 #ifndef MediaflyEpisodeModelThread_H
 #define MediaflyEpisodeModelThread_H
 
+#include "MediaflyEpisodeModelData.h"
 #include <QThread>
+#include <QStringList>
 
 class MediaflyEpisodeModel;
 
@@ -17,10 +19,8 @@ public:
 	~MediaflyEpisodeModelThread() { }
 
 signals:
-	/* Emited when MediaflyEpisodeModel model
-	 * populated with new data is available.
-	 */
-	void refreshed(const MediaflyEpisodeModel& model);
+	void entryRead(const MediaflyEpisodeEntry& entry);
+	void imageRead(const QByteArray& buffer);
 
 	/* Emited when error occured during retrieving
 	 * data for MediaflyEpisodeModel model.
@@ -28,19 +28,23 @@ signals:
 	void error(const QString& errorMsg);
 
 public slots:
-	/* Retrieve new data for MediaflyEpisodeModel
-	 * model class. Emits refreshed(...) signal when
-	 * done or emits error(...) if error occured.
-	 */
 	void refresh(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
 
-private:
-	void run();
+private slots:
+	void handleEntry(const MediaflyEpisodeEntry& entry);
+	void handleImage(const QString& imageUrl);
 
+private:
+	MediaflyEpisodeModelData m_modelData;
+	
 	QString m_channelSlug;
 	int     m_offset;
 	int     m_limit;
 	QString m_mediaType;
+
+	QStringList m_imagesToLoad;
+
+	void run();
 };
 
 #endif
