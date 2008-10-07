@@ -15,8 +15,6 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	m_layout.addWidget(&m_listView);
 	setLayout(&m_layout);
 
-	m_listView.setEnabled(false);
-
 	connect(&m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
 	connect(&m_listView, SIGNAL(enterPressed()),
@@ -82,7 +80,6 @@ void MediaflyMenu::updateEpisodeModel()
 	m_listView.update(current);
 	m_listView.setCurrentIndex(current);
 
-	m_listView.setEnabled(true);
 	m_listView.setFocus();
 }
 
@@ -102,8 +99,6 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	m_channelSlug = slug;
 	m_episodeModel.refresh(MediaflyEpisodeQuery(slug, 0, itemsReadAtOnce));
 
-	m_listView.setEnabled(false);
-
 	m_listView.setModel(&m_episodeModel);
 	m_listView.setItemDelegate(&m_itemDelegateEpisode);
 }
@@ -114,8 +109,6 @@ void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 
 	m_episodeModel.cancel();
 	m_channelModel.refresh();
-
-	m_listView.setEnabled(true);
 
 	m_listView.setModel(&m_channelModel);
 	m_listView.setItemDelegate(m_itemDelegateDefault);
