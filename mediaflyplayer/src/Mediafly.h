@@ -32,10 +32,11 @@ private:
 
 	struct RequestInfo
 	{
-		MediaflyConsumer *m_consumer;
-		QString           m_method;
-		QStringList       m_parameters;
-		bool              m_useHttps;
+		MediaflyConsumer       *m_consumer;
+		QString                 m_method;
+		QMap<QString, QString>  m_firstMap;
+		QMap<QString, QString>  m_map;
+		bool                    m_useHttps;
 	};
 
 	struct RequestInfoBinary
@@ -49,7 +50,7 @@ private:
 	QList<RequestInfo>           m_request;
 
 	QString makePath(QString& method, QStringList& parameters);
-	void Query(MediaflyConsumer *consumer, QString method, QStringList& parameters, bool useHttps = false);
+	void Query(MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps = false);
 	void checkResponse(QDomDocument& doc);
 	QString computeHash(QMap<QString, QString>& map, QString token_id);
 	QStringList makeParams(QMap<QString, QString>& map);
@@ -58,7 +59,7 @@ private:
 	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg);
 	void Query (RequestInfo& requestInfo);
 	void Query (RequestInfoBinary& requestInfoBinary);
-	void Query (MediaflyConsumerBinary *modelData, QString& path);
+	void Query (MediaflyConsumerBinary *modelData, const QString& path);
 
 	void read(const QDomDocument& doc);
 
@@ -101,7 +102,7 @@ public:
 	/**
 	 * This method retrieves a image (raw data) from specified url.
 	 */
-	void Utility_GetImage(MediaflyConsumerBinary *modelData, QString& path);
+	void Utility_GetImage(MediaflyConsumerBinary *modelData, const QString& path);
 
 	/**
 	 * This method returns a list of channels.

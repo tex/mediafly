@@ -37,7 +37,7 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 
 	qDebug() << __PRETTY_FUNCTION__;
 
-	m_channelModel.refresh();
+	render(QModelIndex());
 }
 
 void MediaflyMenu::updateChannelModel()

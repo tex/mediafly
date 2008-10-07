@@ -111,7 +111,7 @@ Mediafly::Mediafly()
 	// Get token as soon as possible. It will be neccessary
 	// anyway...
 
-	Authentication_GetToken();
+//	Authentication_GetToken();
 }
 
 void Mediafly::abort()
@@ -119,6 +119,16 @@ void Mediafly::abort()
 	m_connection.clear();
 	m_connectionBinary.clear();
 	m_http.abort();
+}
+
+QStringList Mediafly::makeParams(QMap<QString, QString>& map)
+{
+	QStringList sl;
+	for (QMap<QString, QString>::const_iterator it = map.constBegin();
+	     it != map.constEnd(); ++it) {
+		sl << (it.key() + QString("=") + it.value());
+	}
+	return sl;
 }
 
 QString Mediafly::makePath(QString& method, QStringList& parameters)
@@ -136,12 +146,17 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 
 void Mediafly::Query (RequestInfoBinary& requestInfoBinary)
 {
-	m_http.setHost(m_server, QHttp::ConnectionModeHttp);
- 	int id = m_http.get(requestInfoBinary.m_path);
+	qDebug() << __PRETTY_FUNCTION__;
+
+	QUrl url(requestInfoBinary.m_path);
+
+	m_http.setHost(url.host(), QHttp::ConnectionModeHttp);
+ 	int id = m_http.get(url.path());
+
 	m_connectionBinary.insert(id, requestInfoBinary);
 }
 
-void Mediafly::Query (MediaflyConsumerBinary *consumer, QString& path)
+void Mediafly::Query (MediaflyConsumerBinary *consumer, const QString& path)
 {
 	RequestInfoBinary requestInfoBinary;
 	requestInfoBinary.m_consumer = consumer;
@@ -153,16 +168,24 @@ void Mediafly::Query (MediaflyConsumerBinary *consumer, QString& path)
 void Mediafly::Query (RequestInfo& requestInfo)
 {
 	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
- 	int id = m_http.get(makePath(requestInfo.m_method, requestInfo.m_parameters));
+
+	QStringList ls = makeParams(requestInfo.m_firstMap) + makeParams(requestInfo.m_map);
+
+	qDebug() << ls;
+
+ 	int id = m_http.get(makePath(requestInfo.m_method, ls));
 	m_connection.insert(id, requestInfo);
 }
 
-void Mediafly::Query (MediaflyConsumer *consumer, QString method, QStringList& parameters, bool useHttps )
+void Mediafly::Query (MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps )
 {
+	qDebug() << method;
+
 	RequestInfo requestInfo;
 	requestInfo.m_consumer = consumer;
 	requestInfo.m_method = method;
-	requestInfo.m_parameters = parameters;
+	requestInfo.m_firstMap = firstMap;
+	requestInfo.m_map = map;
 	requestInfo.m_useHttps = useHttps;
 
 	if (m_connection.size() == 0) {
@@ -172,23 +195,12 @@ void Mediafly::Query (MediaflyConsumer *consumer, QString method, QStringList& p
 	}
 }
 
-QStringList Mediafly::makeParams(QMap<QString, QString>& map)
-{
-	QStringList sl;
-	for (QMap<QString, QString>::const_iterator it = map.constBegin();
-	     it != map.constEnd(); ++it) {
-		sl << (it.key() + QString("=") + it.value());
-	}
-	return sl;
-}
-
 void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map)
 {
-	QStringList sl;
-	sl << (QString("app_id=") + m_appId);
-	sl += makeParams(map);
+	QMap<QString, QString> firstMap;
+	firstMap[QString("app_id")] = m_appId;
 
-	Query(consumer, function, sl);
+	Query(consumer, function, firstMap, map);
 }
 
 QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
@@ -208,13 +220,12 @@ QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
 
 void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session)
 {
-	QStringList sl;
-	sl << (QString("app_id=") + m_appId);
-	sl << (QString("token=") + session.token());
-	sl << (QString("call_sig=") + computeHash(map, session.tokenId()));
-	sl += makeParams(map);
+	QMap<QString, QString> firstMap;
+	firstMap[QString("app_id")] = m_appId;
+	firstMap[QString("token")] = session.token();
+	firstMap[QString("call_sig")] = computeHash(map, session.tokenId());
 
-	Query(consumer, function, sl);
+	Query(consumer, function, firstMap, map);
 }
 
 void Mediafly::read(const QDomDocument& doc)
@@ -226,12 +237,21 @@ void Mediafly::read(const QDomDocument& doc)
 
 	m_sessionInfo.setToken(docToken.text());
 	m_sessionInfo.setTokenId(docToken.attribute("id"));
+
+	// Update token on all queued connections.
+
+	for (int i = 0; i < m_request.size(); ++i) {
+		RequestInfo requestInfo = m_request.at(i);
+		requestInfo.m_firstMap[QString("token")] = m_sessionInfo.token();
+		requestInfo.m_firstMap[QString("call_sig")] = computeHash(requestInfo.m_map, m_sessionInfo.tokenId());
+		m_request.replace(i, requestInfo);
+	}
 }
 
 /**
  * This method retrieves a image (raw data) from specified url.
  */
-void Mediafly::Utility_GetImage(MediaflyConsumerBinary *consumer, QString& path)
+void Mediafly::Utility_GetImage(MediaflyConsumerBinary *consumer, const QString& path)
 {
 	Query(consumer, path);
 }

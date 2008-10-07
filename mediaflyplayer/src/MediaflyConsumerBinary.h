@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QByteArray>
+#include <QDebug>
 
 class MediaflyConsumerBinary : public QObject
 {
@@ -10,6 +11,8 @@ class MediaflyConsumerBinary : public QObject
 public:
 	void read(const QByteArray& array)
 	{
+		qDebug() << __PRETTY_FUNCTION__;
+
 		emit binaryRead(array);
 	}
 

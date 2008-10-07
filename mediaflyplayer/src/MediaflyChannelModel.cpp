@@ -32,7 +32,7 @@ void MediaflyChannelModel::refresh()
 
 void MediaflyChannelModel::handleEntryRead(const MediaflyChannelEntry& entry)
 {
-	qDebug() << __PRETTY_FUNCTION__ << "id:" << m_id;
+	qDebug() << __PRETTY_FUNCTION__ << "id:" << m_id << entry.name();
 
 	if (m_data.size() > m_id)
 		m_data.replace(m_id, entry);

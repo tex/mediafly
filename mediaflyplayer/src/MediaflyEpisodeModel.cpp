@@ -41,12 +41,19 @@ void MediaflyEpisodeModel::handleEntryRead(const MediaflyEpisodeEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << entry.title();
 
+	if (entry.imageUrl() != "") {
+		qDebug() << "LOADING IMAGE";
+		m_mediafly->Utility_GetImage(&m_binaryData, entry.imageUrl());
+	}
+
 	m_data[m_data.size()] = entry;
 	emit refreshed();
 }
 
 void MediaflyEpisodeModel::handleBinaryRead(const QByteArray& buffer)
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_image[m_image.size()] = buffer;
 	emit refreshed();
 }
