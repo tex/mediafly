@@ -1,8 +1,6 @@
 #include "MediaflyChannelModel.h"
-#include "MediaflyChannelModelThread.h"
-#include "MediaflyEpisodeDelegate.h"
 #include "MediaflyEpisodeModel.h"
-#include "MediaflyEpisodeModelThread.h"
+#include "MediaflyEpisodeDelegate.h"
 #include "MediaflyList.h"
 #include <QObject>
 #include <QVBoxLayout>

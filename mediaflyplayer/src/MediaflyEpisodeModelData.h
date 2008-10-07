@@ -1,20 +1,14 @@
+#include "MediaflyConsumer.h"
 #include "MediaflyEpisodeEntry.h"
-#include <QObject>
-#include <QString>
 
-class MediaflyEpisodeModelData : public QObject
+class MediaflyEpisodeModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeModelData(QObject *parent = 0) :
-		QObject(parent)
-	{ }
-
-	QByteArray readImage(const QString& imageUrl);
-	void readData(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
+	void read(const QDomDocument& doc);
 
 signals:
 	void entryRead(const MediaflyEpisodeEntry& entry);
-	void imageRead(const QString& imageUrl);
+	void entryReadFinished();
 };
 

@@ -1,10 +1,25 @@
-/************************************************************************
-**************************************************************************/
-
 #include "Mediafly.h"
 
 #include <QCryptographicHash>
 #include <QDebug>
+#include <QNetworkInterface>
+#include <QUrl>
+
+#include <stdlib.h>
+
+Mediafly*       Mediafly::m_mediafly = NULL;
+const QString   Mediafly::m_appId = "dfcfefff34d0458fa3df0e0c7a6feb6c";
+const QString   Mediafly::m_sharedSecret = "N38r0s0sd";
+const QString   Mediafly::m_server = "api.mediafly.com";
+const QString   Mediafly::m_prefix = "/api/rest/1.1/Mediafly.";
+
+Mediafly* Mediafly::getMediafly()
+{
+	if (!m_mediafly) {
+		m_mediafly = new Mediafly();
+	}
+	return m_mediafly;
+}
 
 /**
  * Check request response. Is it correct and is it's status fail or ok?
@@ -14,43 +29,147 @@
  *   <err code="14" message="Request must be made over a secure connection." />
  * </response>
  */
-void Mediafly::checkResponse(QDomDocument& doc)
+bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg)
 {
+	if (!doc.setContent(data, &errorMsg))
+		return false;
+
 	QDomElement docResponse = doc.firstChildElement("response");
 	if (docResponse.isNull()) {
-		throw InvalidDocumentException(doc.toString());
+		errorMsg = doc.toString();
+		return false;
 	}
 	QString statusAttribute = docResponse.attribute("status");
 	if (statusAttribute == "fail") {
 		QDomElement docErr = docResponse.firstChildElement("err");
 		QString errCode = docErr.attribute("code");
 		QString errMessage = docErr.attribute("message");
-		throw FailedResponseException(errCode, errMessage);
+		errorMsg = "[" + errCode + "] " + errMessage;
+		return false;
 	} else if (statusAttribute != "ok") {
-		throw InvalidDocumentException(doc.toString());
+		errorMsg = doc.toString();
+		return false;
+	}
+	return true;
+}
+
+void Mediafly::handleRequestFinished(int id, bool error)
+{
+	if (m_connection.contains(id))
+	{
+		RequestInfo requestInfo = m_connection.value(id);
+
+		if (error) {
+			emit readError(m_http.errorString());
+		}
+		else {
+			QString data = QString::fromUtf8(m_http.readAll());
+			QString errorMsg;
+			QDomDocument doc;
+
+			qDebug() << data;
+
+			if (!checkResponse(doc, data, errorMsg))
+			{
+				// We count only with token expired error for now.
+				//
+
+				// Acquire new session info and restart the operation.
+				//
+				Authentication_GetToken();
+				m_request << requestInfo;
+			}
+			else
+				requestInfo.m_consumer->read(doc);
+		}
+
+		m_connection.remove(id);
+
+		if (m_request.size() > 0) {
+			RequestInfo requestInfo = m_request.takeFirst();
+			Query(requestInfo);
+		}
+	}
+	if (m_connectionBinary.contains(id))
+	{
+		RequestInfoBinary requestInfoBinary = m_connectionBinary.take(id);
+		QByteArray array = m_http.readAll();
+		requestInfoBinary.m_consumer->read(array);
 	}
 }
 
-QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
+Mediafly::Mediafly()
 {
-	QCryptographicHash hash(QCryptographicHash::Md5);
+	m_thirdPartyUserId = QNetworkInterface::interfaceFromName("eth0").hardwareAddress();
 
-	// First, hash the shared secret.
-	//
-	hash.addData(m_sharedSecret.toUtf8());
+	connect(&m_http, SIGNAL(requestFinished(int, bool)),
+	        this, SLOT(handleRequestFinished(int, bool)));
 
-	// Second, hash token_id if set.
-	//
-	if (!tokenId.isEmpty()) {
-		hash.addData(tokenId.toUtf8());
+	QUrl proxy(getenv("http_proxy"));
+	m_http.setProxy(proxy.host(), proxy.port());
+
+	// Get token as soon as possible. It will be neccessary
+	// anyway...
+
+	Authentication_GetToken();
+}
+
+void Mediafly::abort()
+{
+	m_connection.clear();
+	m_connectionBinary.clear();
+	m_http.abort();
+}
+
+QString Mediafly::makePath(QString& method, QStringList& parameters)
+{
+	QString path = m_prefix + method;
+	if (parameters.size() > 0)
+		path += "?";
+	for (int i = 0; i < parameters.size(); ++i) {
+		path += parameters.at(i);
+		if (i + 1 != parameters.size())
+			path += "&";
 	}
+	return path;
+}
 
-	for (QMap<QString, QString>::const_iterator it = map.constBegin();
-	     it != map.constEnd(); ++it) {
-		hash.addData(it.value().toUtf8());
+void Mediafly::Query (RequestInfoBinary& requestInfoBinary)
+{
+	m_http.setHost(m_server, QHttp::ConnectionModeHttp);
+ 	int id = m_http.get(requestInfoBinary.m_path);
+	m_connectionBinary.insert(id, requestInfoBinary);
+}
+
+void Mediafly::Query (MediaflyConsumerBinary *consumer, QString& path)
+{
+	RequestInfoBinary requestInfoBinary;
+	requestInfoBinary.m_consumer = consumer;
+	requestInfoBinary.m_path = path;
+
+	Query(requestInfoBinary);
+}
+
+void Mediafly::Query (RequestInfo& requestInfo)
+{
+	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
+ 	int id = m_http.get(makePath(requestInfo.m_method, requestInfo.m_parameters));
+	m_connection.insert(id, requestInfo);
+}
+
+void Mediafly::Query (MediaflyConsumer *consumer, QString method, QStringList& parameters, bool useHttps )
+{
+	RequestInfo requestInfo;
+	requestInfo.m_consumer = consumer;
+	requestInfo.m_method = method;
+	requestInfo.m_parameters = parameters;
+	requestInfo.m_useHttps = useHttps;
+
+	if (m_connection.size() == 0) {
+		Query(requestInfo);
+	} else {
+		m_request << requestInfo;
 	}
-
-	return QString(hash.result().toHex());
 }
 
 QStringList Mediafly::makeParams(QMap<QString, QString>& map)
@@ -60,20 +179,34 @@ QStringList Mediafly::makeParams(QMap<QString, QString>& map)
 	     it != map.constEnd(); ++it) {
 		sl << (it.key() + QString("=") + it.value());
 	}
-	qDebug() << sl;
 	return sl;
 }
 
-QDomDocument Mediafly::Query(QString function, QMap<QString, QString>& map)
+void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map)
 {
 	QStringList sl;
 	sl << (QString("app_id=") + m_appId);
 	sl += makeParams(map);
 
-	return REST::Query(function, sl);
+	Query(consumer, function, sl);
 }
 
-QDomDocument Mediafly::Query(QString function, QMap<QString, QString>& map, const Mediafly::SessionInfo& session)
+QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
+{
+	QCryptographicHash hash(QCryptographicHash::Md5);
+
+	hash.addData(m_sharedSecret.toUtf8());
+	hash.addData(tokenId.toUtf8());
+
+	for (QMap<QString, QString>::const_iterator it = map.constBegin();
+	     it != map.constEnd(); ++it) {
+		hash.addData(it.value().toUtf8());
+	}
+
+	return QString(hash.result().toHex());
+}
+
+void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session)
 {
 	QStringList sl;
 	sl << (QString("app_id=") + m_appId);
@@ -81,14 +214,26 @@ QDomDocument Mediafly::Query(QString function, QMap<QString, QString>& map, cons
 	sl << (QString("call_sig=") + computeHash(map, session.tokenId()));
 	sl += makeParams(map);
 
-	return REST::Query(function, sl);
+	Query(consumer, function, sl);
 }
 
-Mediafly::Mediafly(QString appId, QString sharedSecret) :
-	REST (QString("api.mediafly.com"), QString("/api/rest/1.1/Mediafly.")),
-	m_appId (appId),
-	m_sharedSecret (sharedSecret)
+void Mediafly::read(const QDomDocument& doc)
 {
+	QDomElement docToken = doc.firstChildElement("response").firstChildElement("token");
+	if (docToken.isNull()) {
+		emit readError(doc.toString());
+	}
+
+	m_sessionInfo.setToken(docToken.text());
+	m_sessionInfo.setTokenId(docToken.attribute("id"));
+}
+
+/**
+ * This method retrieves a image (raw data) from specified url.
+ */
+void Mediafly::Utility_GetImage(MediaflyConsumerBinary *consumer, QString& path)
+{
+	Query(consumer, path);
 }
 
 /**
@@ -102,18 +247,80 @@ Mediafly::Mediafly(QString appId, QString sharedSecret) :
  * @param  thirdPartyUserID a unique id that will be used to uniquely identify the
  * device, or the user using the device or application
  */
-Mediafly::SessionInfo Mediafly::Authentication_GetToken (QString thirdPartyUserID ) {
+void Mediafly::Authentication_GetToken ()
+{
 	QMap<QString, QString> map;
-	map["thirdPartyUserID"] = thirdPartyUserID;
-	QDomDocument doc = Query("Authentication.GetToken", map);
-	checkResponse(doc);
-
-	QDomElement docToken = doc.firstChildElement("response").firstChildElement("token");
-	if (docToken.isNull()) {
-		throw InvalidDocumentException(doc.toString());
-	}
-	return SessionInfo(docToken.text(), docToken.attribute("id"));
+	map["thirdPartyUserID"] = m_thirdPartyUserId;
+	Query(this, "Authentication.GetToken", map);
 }
+
+/**
+ * This method returns a list of channels.
+ * Response:
+ * <response status="ok">
+ *   <channels>
+ *     <channel name="All (Mix)" slug="__all__" />
+ *     <channel name="business" slug="business" />
+ *     <channel name="education" slug="education" />
+ *   </channels>
+ * </response>
+ * Response (No Channels):
+ * <response status="ok">
+ * 
+ *   <channels />
+ * </response>
+ * @param  capitalizeChannelNames (optional):  whether channel names will be
+ * capitalized (defaults to “true”, excepts values “true” or “false”)
+ */
+void Mediafly::Channels_GetChannels (MediaflyChannelModelData *modelData,
+                                     bool capitalizeChannelNames)
+{
+	QMap<QString, QString> map;
+	map["capitalizeChannelNames"] = capitalizeChannelNames ? "true" : "false";
+	Query(modelData, QString("Channels.GetChannels"), map, m_sessionInfo);
+}
+
+/**
+ * This method returns a list of episodes for the specified channel.
+ * Response:
+ * <response status="ok">
+ *   <playlist channelSlug="business" totalEpisodes="3">
+ *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+ * published=””
+ * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+ *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+ * published=””
+ * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+ *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+ * published=””
+ * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+ *   </playlist>
+ * </response>
+ * Response (No Episodes):
+ * <response status="ok">
+ *   <playlist channelSlug="business" />
+ * </response>
+ * @param  channelSlug  (required):  the slug for the requested channel
+ * @param  offset (optional):  an integer value representing the offset for the
+ * start of the playlist results (default: 0)
+ * @param  limit (optional): an integer value representing the number of episodes
+ * to return (default:500, max:500)
+ * @param  mediaType (optional):  include or exclude content based on its type
+ * (“audio”, “video”, default: “audio,video”)
+ */
+void Mediafly::Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData* modelData,
+                                                QString channelSlug, int offset, int limit, QString mediaType)
+{
+	QMap<QString, QString> map;
+	map["channelSlug"] = channelSlug;
+	map["offset"] = QString::number(offset);
+	map["limit"] = QString::number(limit);
+	map["mediaType"] = mediaType;
+	Query(modelData, QString("Playlists.GetPlaylistForChannel"), map, m_sessionInfo);
+}
+
+
+#if 0
 
 /**
  * This method returns information about the current token.
@@ -248,72 +455,6 @@ QDomDocument Mediafly::Authentication_SetMFUserAsDefault (const Mediafly::Sessio
 QDomDocument Mediafly::Channels_UnbindMFUser (const Mediafly::SessionInfo& session) {
 	QMap<QString, QString> map;
 	QDomDocument doc = Query("Channels.UnbindMFUser", map, session);
-	checkResponse(doc);
-	return doc;
-}
-
-/**
- * This method returns a list of channels.
- * Response:
- * <response status="ok">
- *   <channels>
- *     <channel name="All (Mix)" slug="__all__" />
- *     <channel name="business" slug="business" />
- *     <channel name="education" slug="education" />
- *   </channels>
- * </response>
- * Response (No Channels):
- * <response status="ok">
- * 
- *   <channels />
- * </response>
- * @param  capitalizeChannelNames (optional):  whether channel names will be
- * capitalized (defaults to “true”, excepts values “true” or “false”)
- */
-QDomDocument Mediafly::Channels_GetChannels (const Mediafly::SessionInfo& session, bool capitalizeChannelNames ) {
-	QMap<QString, QString> map;
-	map["capitalizeChannelNames"] = capitalizeChannelNames ? "true" : "false";
-	QDomDocument doc = Query("Channels.GetChannels", map, session);
-	checkResponse(doc);
-	return doc;
-}
-
-
-/**
- * This method returns a list of episodes for the specified channel.
- * Response:
- * <response status="ok">
- *   <playlist channelSlug="business" totalEpisodes="3">
- *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
- * published=””
- * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
- *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
- * published=””
- * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
- *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
- * published=””
- * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
- *   </playlist>
- * </response>
- * Response (No Episodes):
- * <response status="ok">
- *   <playlist channelSlug="business" />
- * </response>
- * @param  channelSlug  (required):  the slug for the requested channel
- * @param  offset (optional):  an integer value representing the offset for the
- * start of the playlist results (default: 0)
- * @param  limit (optional): an integer value representing the number of episodes
- * to return (default:500, max:500)
- * @param  mediaType (optional):  include or exclude content based on its type
- * (“audio”, “video”, default: “audio,video”)
- */
-QDomDocument Mediafly::Playlists_GetPlaylistForChannel (const Mediafly::SessionInfo& session, QString channelSlug, int offset, int limit, QString mediaType) {
-	QMap<QString, QString> map;
-	map["channelSlug"] = channelSlug;
-	map["offset"] = QString::number(offset);
-	map["limit"] = QString::number(limit);
-	map["mediaType"] = mediaType;
-	QDomDocument doc = Query("Playlists.GetPlaylistForChannel", map, session);
 	checkResponse(doc);
 	return doc;
 }
@@ -780,4 +921,6 @@ QDomDocument Mediafly::Episodes_GetEpisodeInfo (const Mediafly::SessionInfo& ses
 	checkResponse(doc);
 	return doc;
 }
+
+#endif
 

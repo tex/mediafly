@@ -1,20 +1,9 @@
-#include "BHttp.h"
-#include "REST.h"
-#include "Mediafly.h"
 #include "MediaflyEpisodeModelData.h"
-#include <QNetworkInterface>
-#include <QDomDocument>
-#include <QByteArray>
-#include <QUrl>
+#include <QDebug>
 
-void MediaflyEpisodeModelData::readData(QString channelSlug, int offset, int limit, QString mediaType)
+void MediaflyEpisodeModelData::read(const QDomDocument& doc)
 {
-	QNetworkInterface networkInterface = QNetworkInterface::interfaceFromName("eth0");
-	QString hwAddress = networkInterface.hardwareAddress();
-
-	Mediafly mf("dfcfefff34d0458fa3df0e0c7a6feb6c", "N38r0s0sd");
-	Mediafly::SessionInfo session = mf.Authentication_GetToken(hwAddress);
-	QDomDocument doc = mf.Playlists_GetPlaylistForChannel(session, channelSlug, offset, limit, mediaType);
+	qDebug() << __PRETTY_FUNCTION__;
 
 	QDomNode it = doc.firstChildElement("response").firstChildElement("playlist").firstChild();
 	while (!it.isNull()) {
@@ -25,12 +14,12 @@ void MediaflyEpisodeModelData::readData(QString channelSlug, int offset, int lim
 			                           el.attribute("published"), el.attribute("showSlug"), el.attribute("showTitle"),
 			                           el.attribute("imageUrl"), el.attribute("channel"));
 			emit entryRead(entry);
-			emit imageRead(entry.imageUrl());
 		}
 		it = it.nextSibling();
 	}
+	emit entryReadFinished();
 }
-
+/*
 QByteArray MediaflyEpisodeModelData::readImage(const QString& imageUrl)
 {
 	if (imageUrl.isEmpty())
@@ -44,4 +33,5 @@ QByteArray MediaflyEpisodeModelData::readImage(const QString& imageUrl)
 		return QByteArray();
 	return http.readAll();
 }
+*/
 

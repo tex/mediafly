@@ -4,19 +4,19 @@
 MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
-	qRegisterMetaType<MediaflyEpisodeModel>("MediaflyEpisodeModel");
+	m_mediafly = Mediafly::getMediafly();
 
-	connect(&m_episodeModelThread, SIGNAL(entryRead(const MediaflyEpisodeEntry&)),
-	        this, SLOT(handleEntry(const MediaflyEpisodeEntry&)));
-	connect(&m_episodeModelThread, SIGNAL(imageRead(const QByteArray&)),
-	        this, SLOT(handleImage(const QByteArray&)));
-	connect(&m_episodeModelThread, SIGNAL(error(const QString&)),
-	        this, SLOT(handleError(const QString&)));
+	connect(&m_modelData, SIGNAL(entryRead(const MediaflyEpisodeEntry&)),
+	        this, SLOT(handleEntryRead(const MediaflyEpisodeEntry&)));
+
+	connect(&m_binaryData, SIGNAL(binaryRead(const QByteArray&)),
+	        this, SLOT(handleBinaryRead(const QByteArray&)));
 }
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
+	m_mediafly = Mediafly::getMediafly();
 	m_data = obj.m_data;
 	m_image = obj.m_image;
 }
@@ -27,27 +27,28 @@ void MediaflyEpisodeModel::clear()
 	m_image.clear();
 }
 
-void MediaflyEpisodeModel::refresh(QString channelSlug, int offset, int limit, QString mediaType)
+void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 {
-	m_episodeModelThread.refresh(channelSlug, offset, limit, mediaType);
+	m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData, query.channelSlug(), query.offset(), query.limit(), query.mediaType());
 }
 
-void MediaflyEpisodeModel::handleError(const QString& errorMsg)
+void MediaflyEpisodeModel::cancel()
 {
-	emit error(errorMsg);
+	m_mediafly->abort();
 }
 
-void MediaflyEpisodeModel::handleEntry(const MediaflyEpisodeEntry& entry)
+void MediaflyEpisodeModel::handleEntryRead(const MediaflyEpisodeEntry& entry)
 {
+	qDebug() << __PRETTY_FUNCTION__ << entry.title();
+
 	m_data[m_data.size()] = entry;
-	emit entryRefreshed();
+	emit refreshed();
 }
 
-void MediaflyEpisodeModel::handleImage(const QByteArray& buffer)
+void MediaflyEpisodeModel::handleBinaryRead(const QByteArray& buffer)
 {
-	qDebug() << "image added to the model";
 	m_image[m_image.size()] = buffer;
-	emit imageRefreshed();
+	emit refreshed();
 }
 
 int MediaflyEpisodeModel::rowCount(const QModelIndex &/*parent*/) const

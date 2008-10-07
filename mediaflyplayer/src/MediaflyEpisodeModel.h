@@ -1,11 +1,12 @@
 #ifndef MediaflyEpisodeModel_H
 #define MediaflyEpisodeModel_H
 
-#include "MediaflyEpisodeModelThread.h"
+#include "Mediafly.h"
 #include "MediaflyEpisodeEntry.h"
+#include "MediaflyEpisodeQuery.h"
+#include "MediaflyConsumerBinary.h"
 #include <QAbstractListModel>
 #include <QMap>
-#include <QPixmap>
 
 class MediaflyEpisodeModel : public QAbstractListModel
 {
@@ -35,29 +36,22 @@ public:
 
 	void clear();
 
-public slots:
-	void refresh(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
+	void refresh(const MediaflyEpisodeQuery& query);
+	void cancel();
 
 signals:
-	void entryRefreshed();
-	void imageRefreshed();
-	void error(const QString& errorMsg);
+	void refreshed();
 
 private:
-
-	// 1. Key : offset
-	// 1. Value : 2. Key : role
-	//            2. Value: value
-
+	Mediafly                       *m_mediafly;
+	MediaflyEpisodeModelData        m_modelData;
+	MediaflyConsumerBinary          m_binaryData;
 	QMap<int, MediaflyEpisodeEntry> m_data;
-	QMap<int, QByteArray> m_image;
-
-	MediaflyEpisodeModelThread m_episodeModelThread;
+	QMap<int, QByteArray>           m_image;
 
 private slots:
-	void handleError(const QString& errorMsg);
-	void handleEntry(const MediaflyEpisodeEntry& entry);
-	void handleImage(const QByteArray& buffer);
+	void handleEntryRead(const MediaflyEpisodeEntry& entry);
+	void handleBinaryRead(const QByteArray& buffer);
 };
 
 #endif
