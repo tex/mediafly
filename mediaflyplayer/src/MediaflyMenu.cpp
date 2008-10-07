@@ -73,6 +73,8 @@ void MediaflyMenu::updateEpisodeModel()
 		return;
 
 	QModelIndex current = m_listView.currentIndex();
+	if (m_episodeModel.rowCount() == 1)
+		current = m_episodeModel.index(0, 0);
 
 	m_listView.setModel(NULL);
 	m_listView.setModel(model);
@@ -90,6 +92,8 @@ void MediaflyMenu::errorHandler(const QString& errorMsg)
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 {
+	m_lastChannelIndex = m_listView.currentIndex();
+
 	m_episodeModel.cancel();
 	m_episodeModel.clear();
 
@@ -112,6 +116,8 @@ void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 
 	m_listView.setModel(&m_channelModel);
 	m_listView.setItemDelegate(m_itemDelegateDefault);
+
+	m_listView.setCurrentIndex(m_lastChannelIndex);
 }
 
 void MediaflyMenu::render(const QModelIndex& index)

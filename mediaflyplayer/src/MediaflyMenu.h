@@ -40,6 +40,8 @@ private:
 	QAbstractItemDelegate   *m_itemDelegateDefault;
 	MediaflyEpisodeDelegate  m_itemDelegateEpisode;
 
+	QModelIndex              m_lastChannelIndex;
+
 private slots:
 	void handleEnterKey();
 	void handleRightKey();
