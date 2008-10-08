@@ -45,3 +45,6 @@ HEADERS += MediaflyEpisodeEntry.h
 HEADERS += MediaflyEpisodeModelData.h
 SOURCES += MediaflyEpisodeModelData.cpp
 
+HEADERS += MediaflyMenuModel.h
+SOURCES += MediaflyMenuModel.cpp
+

@@ -6,7 +6,7 @@
 MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	QWidget(parent),
 	m_listView(this),
-	m_state(ChannelMenu)
+	m_state(Menu)
 {
 	// Remember the default item delegate that m_listView uses.
 	// 
@@ -38,7 +38,7 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	connect(&m_episodeModel, SIGNAL(error(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
 
-	m_channelModel.refresh();
+	render(QModelIndex());
 }
 
 void MediaflyMenu::updateChannelModel()
@@ -98,6 +98,27 @@ void MediaflyMenu::updateEpisodeModel()
 void MediaflyMenu::errorHandler(const QString& errorMsg)
 {
 	QMessageBox::critical(this, "Error", errorMsg);
+
+	// In case of an error switch to main menu. This
+	// menu doesn't require internet connection and it
+	// may be used to leave the application.
+
+	m_state = Menu;
+	render(QModelIndex());
+}
+
+void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
+{
+	m_listView.setItemDelegate(m_itemDelegateDefault);
+
+	m_listView.setModel(NULL);
+	m_listView.setModel(&m_menuModel);
+
+	m_listView.update(m_lastMenuIndex);
+	m_listView.setCurrentIndex(m_lastMenuIndex);
+
+	m_listView.setEnabled(true);
+	m_listView.setFocus();
 }
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
@@ -125,6 +146,9 @@ void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 void MediaflyMenu::render(const QModelIndex& index)
 {
 	switch (m_state) {
+	case Menu:
+		renderMenu(index);
+		break;
 	case ChannelMenu:
 		renderChannelMenu(index);
 		break;
@@ -136,6 +160,21 @@ void MediaflyMenu::render(const QModelIndex& index)
 	}
 }
 
+void MediaflyMenu::selectMenu(QModelIndex& index)
+{
+	switch (index.data(MediaflyMenuModel::slugRole).toInt()) {
+	case MediaflyMenuModel::MENU_SEARCH:
+	case MediaflyMenuModel::MENU_POPULAR_CHANNELS:
+	case MediaflyMenuModel::MENU_PERSONALIZE:
+	default:
+		QMessageBox::information(this, "Missing feature", "Not yet implemented");
+		break;
+	case MediaflyMenuModel::MENU_MEDIA_CHANNELS:
+		m_state = ChannelMenu;
+		break;
+	}
+}
+
 void MediaflyMenu::handleEnterKey()
 {
 	qDebug() << __PRETTY_FUNCTION__;
@@ -143,6 +182,9 @@ void MediaflyMenu::handleEnterKey()
 	QModelIndex index = m_listView.currentIndex();
 
 	switch (m_state) {
+	case Menu:
+		selectMenu(index);
+		break;
 	case ChannelMenu:
 		m_state = EpisodeMenu;
 		break;
@@ -162,6 +204,9 @@ void MediaflyMenu::handleRightKey()
 	QModelIndex index = m_listView.currentIndex();
 
 	switch (m_state) {
+	case Menu:
+		selectMenu(index);
+		break;
 	case ChannelMenu:
 		m_state = EpisodeMenu;
 		break;
@@ -181,6 +226,9 @@ void MediaflyMenu::handleLeftKey()
 	QModelIndex index = m_listView.currentIndex();
 
 	switch (m_state) {
+	case ChannelMenu:
+		m_state = Menu;
+		break;
 	case EpisodeMenu:
 		m_state = ChannelMenu;
 		break;

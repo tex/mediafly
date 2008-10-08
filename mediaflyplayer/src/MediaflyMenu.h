@@ -1,3 +1,4 @@
+#include "MediaflyMenuModel.h"
 #include "MediaflyChannelModel.h"
 #include "MediaflyChannelModelThread.h"
 #include "MediaflyEpisodeDelegate.h"
@@ -21,6 +22,7 @@ signals:
 private:
 	enum State
 	{
+		Menu,
 		ChannelMenu,
 		EpisodeMenu,
 	};
@@ -30,17 +32,22 @@ private:
 	QString	         m_channelSlug;
 	State	         m_state;
 
+	MediaflyMenuModel    m_menuModel;
 	MediaflyChannelModel m_channelModel;
 	MediaflyEpisodeModel m_episodeModel;
 
 	static const int itemsReadAtOnce = 10;
 
+	void selectMenu(QModelIndex& index);
+	void renderMenu(const QModelIndex& index);
 	void renderEpisodeMenu(const QModelIndex& index);
 	void renderChannelMenu(const QModelIndex& index);
 	void render(const QModelIndex& index);
 
 	QAbstractItemDelegate   *m_itemDelegateDefault;
 	MediaflyEpisodeDelegate  m_itemDelegateEpisode;
+
+	QModelIndex m_lastMenuIndex;
 
 private slots:
 	void handleEnterKey();
