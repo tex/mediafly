@@ -34,7 +34,7 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	        this, SLOT(errorHandler(const QString&)));
 
 	m_lastMenuIndex = m_menuModel.index(0, 0);
-	m_lastChannelMenuIndex = m_channelModel.index(0, 0);
+	m_lastChannelMenuIndex = QModelIndex();
 
 	render(QModelIndex());
 }
@@ -50,7 +50,9 @@ void MediaflyMenu::updateChannelModel()
 	// Remember current selected index (position)
 	// if episode menu is already shown.
 
-	QModelIndex current = m_listView.currentIndex();
+	if (!m_lastChannelMenuIndex.isValid()) {
+		m_lastChannelMenuIndex = m_channelModel.index(0, 0);
+	}
 
 	m_listView.setModel(NULL);
 	m_listView.setModel(model);
@@ -59,8 +61,8 @@ void MediaflyMenu::updateChannelModel()
 	// have to call 'update' to repaint it and
 	// 'setCurrentIndex' to select the first item.
 
-	m_listView.update(current);
-	m_listView.setCurrentIndex(current);
+	m_listView.update(m_lastChannelMenuIndex);
+	m_listView.setCurrentIndex(m_lastChannelMenuIndex);
 
 	m_listView.setFocus();
 }
