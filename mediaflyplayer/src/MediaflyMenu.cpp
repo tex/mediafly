@@ -33,6 +33,9 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	connect(Mediafly::getMediafly(), SIGNAL(readError(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
 
+	m_lastMenuIndex = m_menuModel.index(0, 0);
+	m_lastChannelMenuIndex = m_channelModel.index(0, 0);
+
 	render(QModelIndex());
 }
 
