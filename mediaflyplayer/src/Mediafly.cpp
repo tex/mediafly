@@ -329,13 +329,13 @@ void Mediafly::Channels_GetChannels (MediaflyChannelModelData *modelData,
  * (“audio”, “video”, default: “audio,video”)
  */
 void Mediafly::Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData* modelData,
-                                                QString channelSlug, int offset, int limit, QString mediaType)
+                                                const MediaflyEpisodeQuery& query)
 {
 	QMap<QString, QString> map;
-	map["channelSlug"] = channelSlug;
-	map["offset"] = QString::number(offset);
-	map["limit"] = QString::number(limit);
-	map["mediaType"] = mediaType;
+	map["channelSlug"] = query.channelSlug();
+	map["offset"] = QString::number(query.offset());
+	map["limit"] = QString::number(query.limit());
+	map["mediaType"] = query.mediaType();
 	Query(modelData, QString("Playlists.GetPlaylistForChannel"), map, m_sessionInfo);
 }
 

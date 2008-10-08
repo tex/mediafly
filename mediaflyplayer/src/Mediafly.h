@@ -3,6 +3,7 @@
 
 #include "MediaflyChannelModelData.h"
 #include "MediaflyEpisodeModelData.h"
+#include "MediaflyEpisodeQuery.h"
 #include "MediaflySessionInfo.h"
 #include "MediaflyConsumer.h"
 #include "MediaflyConsumerBinary.h"
@@ -154,7 +155,7 @@ public:
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
 	void Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData *modelData,
-	                                      QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
+	                                      const MediaflyEpisodeQuery& query);
 
 #if 0
 	/**

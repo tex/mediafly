@@ -30,11 +30,7 @@ void MediaflyEpisodeModel::clear()
 void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 {
 	if (m_data.size() < m_modelData.totalEpisodes()) {
-		m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData,
-		                                            query.channelSlug(),
-		                                            query.offset(),
-		                                            query.limit(),
-		                                            query.mediaType());
+		m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData, query);
 	}
 }
 
