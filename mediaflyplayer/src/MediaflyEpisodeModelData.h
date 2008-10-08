@@ -1,10 +1,12 @@
 #include "MediaflyConsumer.h"
 #include "MediaflyEpisodeEntry.h"
+#include <QDebug>
 
 class MediaflyEpisodeModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
+	MediaflyEpisodeModelData() : m_totalEpisodes(-1) { }
 	void read(const QDomDocument& doc);
 
 	/**
@@ -13,6 +15,8 @@ public:
 	 * signal.
 	 */
 	int totalEpisodes() const { return m_totalEpisodes; }
+
+	void clear() { m_totalEpisodes = -1; }
 
 signals:
 	void entryRead(const MediaflyEpisodeEntry& entry);

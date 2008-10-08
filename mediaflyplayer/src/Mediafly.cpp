@@ -105,9 +105,6 @@ Mediafly::Mediafly()
 	connect(&m_http, SIGNAL(requestFinished(int, bool)),
 	        this, SLOT(handleRequestFinished(int, bool)));
 
-	QUrl proxy(getenv("http_proxy"));
-	m_http.setProxy(proxy.host(), proxy.port());
-
 	// Get token as soon as possible. It will be neccessary
 	// anyway...
 
@@ -148,6 +145,11 @@ void Mediafly::Query (RequestInfoBinary& requestInfoBinary)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
+	// Dunno why this doesn't work when in the constructor...
+
+	QUrl proxy(getenv("http_proxy"));
+	m_http.setProxy(proxy.host(), proxy.port());
+
 	QUrl url(requestInfoBinary.m_path);
 
 	m_http.setHost(url.host(), QHttp::ConnectionModeHttp);
@@ -167,6 +169,11 @@ void Mediafly::Query (MediaflyConsumerBinary *consumer, const QString& path)
 
 void Mediafly::Query (RequestInfo& requestInfo)
 {
+	// Dunno why this doesn't work when in the constructor...
+
+	QUrl proxy(getenv("http_proxy"));
+	m_http.setProxy(proxy.host(), proxy.port());
+
 	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
 
 	QStringList ls = makeParams(requestInfo.m_firstMap) + makeParams(requestInfo.m_map);

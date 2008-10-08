@@ -5,9 +5,13 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	m_mediafly = Mediafly::getMediafly();
+	m_refreshFinished = true;
 
 	connect(&m_modelData, SIGNAL(entryRead(const MediaflyEpisodeEntry&)),
 	        this, SLOT(handleEntryRead(const MediaflyEpisodeEntry&)));
+	connect(&m_modelData, SIGNAL(entryReadFinished()),
+	        this, SLOT(handleEntryReadFinished()));
+
 
 	connect(&m_binaryData, SIGNAL(binaryRead(const QByteArray&)),
 	        this, SLOT(handleBinaryRead(const QByteArray&)));
@@ -19,17 +23,26 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 	m_mediafly = Mediafly::getMediafly();
 	m_data = obj.m_data;
 	m_image = obj.m_image;
+	m_refreshFinished = obj.m_refreshFinished;
 }
 
 void MediaflyEpisodeModel::clear()
 {
 	m_data.clear();
 	m_image.clear();
+	m_modelData.clear();
+	m_refreshFinished = true;
 }
 
 void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 {
-	if (m_data.size() < m_modelData.totalEpisodes()) {
+	if (!m_refreshFinished)
+		return;
+	m_refreshFinished = false;
+
+	if ((m_data.size() < m_modelData.totalEpisodes()) ||	// Not all episodes loaded yet.
+	    (m_modelData.totalEpisodes() == -1))		// Unknown number of episodes.
+	{
 		m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData, query);
 	}
 }
@@ -50,6 +63,11 @@ void MediaflyEpisodeModel::handleEntryRead(const MediaflyEpisodeEntry& entry)
 
 	m_data[m_data.size()] = entry;
 	emit refreshed();
+}
+
+void MediaflyEpisodeModel::handleEntryReadFinished()
+{
+	m_refreshFinished = true;
 }
 
 void MediaflyEpisodeModel::handleBinaryRead(const QByteArray& buffer)

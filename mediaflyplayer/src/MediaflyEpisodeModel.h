@@ -48,9 +48,11 @@ private:
 	MediaflyConsumerBinary          m_binaryData;
 	QMap<int, MediaflyEpisodeEntry> m_data;
 	QMap<int, QByteArray>           m_image;
+	bool                            m_refreshFinished;
 
 private slots:
 	void handleEntryRead(const MediaflyEpisodeEntry& entry);
+	void handleEntryReadFinished();
 	void handleBinaryRead(const QByteArray& buffer);
 };
 
