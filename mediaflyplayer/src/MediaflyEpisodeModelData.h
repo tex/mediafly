@@ -7,8 +7,18 @@ class MediaflyEpisodeModelData : public MediaflyConsumer
 public:
 	void read(const QDomDocument& doc);
 
+	/**
+	 * Returns total number of all episodes available.
+	 * Return value valid after emmited entryRead() or entryReadFinished()
+	 * signal.
+	 */
+	int totalEpisodes() const { return m_totalEpisodes; }
+
 signals:
 	void entryRead(const MediaflyEpisodeEntry& entry);
 	void entryReadFinished();
+
+private:
+	int m_totalEpisodes;
 };
 

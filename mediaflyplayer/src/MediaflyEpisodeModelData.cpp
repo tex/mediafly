@@ -5,7 +5,11 @@ void MediaflyEpisodeModelData::read(const QDomDocument& doc)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
-	QDomNode it = doc.firstChildElement("response").firstChildElement("playlist").firstChild();
+	QDomNode playlist = doc.firstChildElement("response").firstChildElement("playlist");
+
+	m_totalEpisodes = playlist.toElement().attribute("totalEpisodes").toInt();
+
+	QDomNode it = playlist.firstChild();
 	while (!it.isNull()) {
 		QDomElement el = it.toElement();
 		if (!el.isNull()) {
@@ -19,19 +23,4 @@ void MediaflyEpisodeModelData::read(const QDomDocument& doc)
 	}
 	emit entryReadFinished();
 }
-/*
-QByteArray MediaflyEpisodeModelData::readImage(const QString& imageUrl)
-{
-	if (imageUrl.isEmpty())
-		return QByteArray();
-
-	QUrl url(imageUrl);
-
-	BHttp http;
-	http.setHost(url.host());
-	if (http.get(url.path()) == false)
-		return QByteArray();
-	return http.readAll();
-}
-*/
 
