@@ -13,8 +13,8 @@ CONFIG += qt silent #debug
 FORMS += forms/mediafly.ui
 
 # Input
-HEADERS += REST.h Mediafly.h MediaflyChannelModel.h MediaflyEpisodeModel.h MediaflyChannelModelThread.h MediaflyEpisodeModelThread.h
-SOURCES += REST.cpp Mediafly.cpp MediaflyChannelModel.cpp MediaflyEpisodeModel.cpp MediaflyChannelModelThread.cpp MediaflyEpisodeModelThread.cpp
+HEADERS += Mediafly.h MediaflyChannelModel.h MediaflyEpisodeModel.h
+SOURCES += Mediafly.cpp MediaflyChannelModel.cpp MediaflyEpisodeModel.cpp
 
 HEADERS += libs/neux/models/nmenuitemmodel.h libs/neux/models/nmenuitem.h
 SOURCES += libs/neux/models/nmenuitemmodel.cpp libs/neux/models/nmenuitem.cpp
@@ -31,20 +31,22 @@ HEADERS += MediaflyList.h
 SOURCES += MediaflyEpisodeDelegate.cpp
 HEADERS += MediaflyEpisodeDelegate.h
 
-SOURCES += BHttp.cpp
-HEADERS += BHttp.h
-
-SOURCES += main.cpp MediaflyMenu.cpp
-HEADERS += MListView.h MediaflyMenu.h
+SOURCES += MediaflyMenu.cpp
+HEADERS += MediaflyMenu.h
 
 SOURCES += MediaflyChannelModelData.cpp
 HEADERS += MediaflyChannelModelData.h
 HEADERS += MediaflyChannelEntry.h
 
 HEADERS += MediaflyEpisodeEntry.h
+HEADERS += MediaflyEpisodeQuery.h
 HEADERS += MediaflyEpisodeModelData.h
 SOURCES += MediaflyEpisodeModelData.cpp
 
 HEADERS += MediaflyMenuModel.h
 SOURCES += MediaflyMenuModel.cpp
+
+HEADERS += MediaflyConsumerBinary.h
+
+SOURCES += main.cpp
 

@@ -1,20 +1,28 @@
+#include "MediaflyConsumer.h"
 #include "MediaflyEpisodeEntry.h"
-#include <QObject>
-#include <QString>
+#include <QDebug>
 
-class MediaflyEpisodeModelData : public QObject
+class MediaflyEpisodeModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeModelData(QObject *parent = 0) :
-		QObject(parent)
-	{ }
+	MediaflyEpisodeModelData() : m_totalEpisodes(-1) { }
+	void read(const QDomDocument& doc);
 
-	QByteArray readImage(const QString& imageUrl);
-	void readData(QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
+	/**
+	 * Returns total number of all episodes available.
+	 * Return value valid after emmited entryRead() or entryReadFinished()
+	 * signal.
+	 */
+	int totalEpisodes() const { return m_totalEpisodes; }
+
+	void clear() { m_totalEpisodes = -1; }
 
 signals:
 	void entryRead(const MediaflyEpisodeEntry& entry);
-	void imageRead(const QString& imageUrl);
+	void entryReadFinished();
+
+private:
+	int m_totalEpisodes;
 };
 

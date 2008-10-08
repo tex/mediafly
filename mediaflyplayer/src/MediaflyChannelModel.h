@@ -1,9 +1,10 @@
 #ifndef MediaflyChannelModel_H
 #define MediaflyChannelModel_H
 
-#include "MediaflyChannelModelThread.h"
+#include "Mediafly.h"
+#include "MediaflyChannelModelData.h"
 #include <QAbstractListModel>
-#include <QStringList>
+#include <QList>
 
 struct MediaflyChannelModel : public QAbstractListModel
 {
@@ -17,25 +18,25 @@ public:
 
 	MediaflyChannelModel(QObject *parent = 0);
 	MediaflyChannelModel(const MediaflyChannelModel &obj);
-	~MediaflyChannelModel() { }
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
 
-public slots:
 	void refresh();
+	void cancel();
 
 signals:
 	void refreshed();
-	void error(const QString& errorMsg);
 
 private:
-	MediaflyChannelModelThread  m_channelModelThread;
+	Mediafly                   *m_mediafly;
+	MediaflyChannelModelData    m_modelData;
 	QList<MediaflyChannelEntry> m_data;
+	int                         m_id;
 
 private slots:
-	void handleError(const QString& errorMsg);
-	void handleEntry(const MediaflyChannelEntry& entry);
+	void handleEntryRead(const MediaflyChannelEntry& entry);
+	void handleEntryFinished();
 };
 
 #endif

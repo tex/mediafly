@@ -1,21 +1,19 @@
-#include "MediaflyChannelEntry.h"
-#include <QObject>
+#ifndef MediaflyChannelModelData_H
+#define MediaflyChannelModelData_H
 
-class MediaflyChannelModelData : public QObject
+#include "MediaflyConsumer.h"
+#include "MediaflyChannelEntry.h"
+
+class MediaflyChannelModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
-	MediaflyChannelModelData(QObject *parent = 0) :
-		QObject(parent)
-	{ }
-
-public slots:
-	// Reads all available channel entries. When new
-	// entry loaded, emits dataCompleted() signal.
-	//
-	void readData();
+	void read(const QDomDocument& doc);
 
 signals:
 	void entryRead(const MediaflyChannelEntry& entry);
+	void entryReadFinished();
 };
+
+#endif
 

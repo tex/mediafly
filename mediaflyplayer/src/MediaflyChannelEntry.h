@@ -15,7 +15,6 @@ public:
 		m_name (obj.m_name),
 		m_slug (obj.m_slug)
 	{
-		qRegisterMetaType<MediaflyChannelEntry>("MediaflyChannelEntry");
 	}
 
 	MediaflyChannelEntry(QString name, QString slug) :

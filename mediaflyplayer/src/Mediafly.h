@@ -1,46 +1,72 @@
-/************************************************************************
-**************************************************************************/
-
 #ifndef MEDIAFLY_H
 #define MEDIAFLY_H
 
+#include "MediaflyChannelModelData.h"
+#include "MediaflyEpisodeModelData.h"
+#include "MediaflyEpisodeQuery.h"
+#include "MediaflySessionInfo.h"
+#include "MediaflyConsumer.h"
+#include "MediaflyConsumerBinary.h"
+
+#include <QObject>
 #include <QMap>
 #include <QString>
+#include <QHttp>
 
-#include "Exception.h"
-#include "REST.h"
-
-/**
-  * class Mediafly
-  */
-
-class Mediafly : public REST
+class Mediafly : public MediaflyConsumer
 {
-public:
-	class SessionInfo
+	Q_OBJECT
+private:
+	Mediafly();
+	Mediafly(const Mediafly&);
+	Mediafly& operator=(const Mediafly&);
+
+	static Mediafly        *m_mediafly;
+
+	static const QString    m_appId;
+	static const QString    m_sharedSecret;
+	static const QString    m_server;
+	static const QString    m_prefix;
+
+	QString                 m_thirdPartyUserId;
+	QHttp                   m_http;
+
+	struct RequestInfo
 	{
-		QString m_token;
-		QString m_tokenId;
-	public:
-		SessionInfo(const QString& token, const QString& tokenId) :
-			m_token (token), m_tokenId (tokenId) { }
-		const QString& token() const { return m_token; }
-		const QString& tokenId() const { return m_tokenId; }
+		MediaflyConsumer       *m_consumer;
+		QString                 m_method;
+		QMap<QString, QString>  m_firstMap;
+		QMap<QString, QString>  m_map;
+		bool                    m_useHttps;
 	};
 
-public:
-	class InvalidDocumentException : public Exception
+	struct RequestInfoBinary
 	{
-	public:
-		InvalidDocumentException(QString /*document*/) : Exception("Invalid document") { }
-	};
-	class FailedResponseException : public Exception
-	{
-	public:
-		FailedResponseException(QString /*errCode*/, QString errMessage) : Exception("Failed response: " + errMessage) { }
+		MediaflyConsumerBinary *m_consumer;
+		QString                 m_path;
 	};
 
-	Mediafly(QString appId, QString sharedSecret);
+	QMap<int, RequestInfo>       m_connection;
+	QMap<int, RequestInfoBinary> m_connectionBinary;
+	QList<RequestInfo>           m_request;
+
+	QString makePath(QString& method, QStringList& parameters);
+	void Query(MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps = false);
+	void checkResponse(QDomDocument& doc);
+	QString computeHash(QMap<QString, QString>& map, QString token_id);
+	QStringList makeParams(QMap<QString, QString>& map);
+	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map);
+	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session);
+	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg);
+	void Query (RequestInfo& requestInfo);
+	void Query (RequestInfoBinary& requestInfoBinary);
+	void Query (MediaflyConsumerBinary *modelData, const QString& path);
+
+	void read(const QDomDocument& doc);
+
+	// SESSION HANDLING //
+
+	MediaflySessionInfo m_sessionInfo;
 
 	/**
 	 * This method retrieves a session token from the server.  This method returns a
@@ -54,8 +80,84 @@ public:
 	 * device, or the user using the device or application
 	 * @return session token
 	 */
-	SessionInfo Authentication_GetToken (QString thirdPartyUserID );
+	void Authentication_GetToken();
 
+	//////////////////////
+
+private slots:
+	void handleRequestFinished(int id, bool error);
+
+public:
+
+signals:
+	void readError(const QString& errorMsg);
+
+public:
+	static Mediafly* getMediafly();
+
+	/**
+	 * Aborts any pending connections.
+	 */
+	void abort();
+
+	/**
+	 * This method retrieves a image (raw data) from specified url.
+	 */
+	void Utility_GetImage(MediaflyConsumerBinary *modelData, const QString& path);
+
+	/**
+	 * This method returns a list of channels.
+	 * Response:
+	 * <response status="ok">
+	 *   <channels>
+	 *     <channel name="All (Mix)" slug="__all__" />
+	 *     <channel name="business" slug="business" />
+	 *     <channel name="education" slug="education" />
+	 *   </channels>
+	 * </response>
+	 * Response (No Channels):
+	 * <response status="ok">
+	 * 
+	 *   <channels />
+	 * </response>
+	 * @param  capitalizeChannelNames (optional):  whether channel names will be
+	 * capitalized (defaults to “true”, excepts values “true” or “false”)
+	 */
+	void Channels_GetChannels (MediaflyChannelModelData *modelData,
+	                           bool capitalizeChannelNames);
+
+	/**
+	 * This method returns a list of episodes for the specified channel.
+	 * Response:
+	 * <response status="ok">
+	 *   <playlist channelSlug="business" totalEpisodes="3">
+	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+	 * published=””
+	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+	 * published=””
+	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
+	 * published=””
+	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
+	 *   </playlist>
+	 * </response>
+	 * Response (No Episodes):
+	 * <response status="ok">
+	 *   <playlist channelSlug="business" />
+	 * </response>
+	 * @param  channelSlug  (required):  the slug for the requested channel
+	 * @param  offset (optional):  an integer value representing the offset for the
+	 * start of the playlist results (default: 0)
+	 * @param  limit (optional): an integer value representing the number of episodes
+	 * to return (default:500, max:500)
+	 * @param  mediaType (optional):  include or exclude content based on its type
+	 * (“audio”, “video”, default: “audio,video”)
+	 */
+	void Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData *modelData,
+	                                      const MediaflyEpisodeQuery& query);
+
+#if 0
 	/**
 	 * This method returns information about the current token.
 	 * Response:
@@ -157,56 +259,6 @@ public:
 	 * <response status="ok" />
 	 */
 	QDomDocument Channels_UnbindMFUser (const Mediafly::SessionInfo& session);
-
-	/**
-	 * This method returns a list of channels.
-	 * Response:
-	 * <response status="ok">
-	 *   <channels>
-	 *     <channel name="All (Mix)" slug="__all__" />
-	 *     <channel name="business" slug="business" />
-	 *     <channel name="education" slug="education" />
-	 *   </channels>
-	 * </response>
-	 * Response (No Channels):
-	 * <response status="ok">
-	 * 
-	 *   <channels />
-	 * </response>
-	 * @param  capitalizeChannelNames (optional):  whether channel names will be
-	 * capitalized (defaults to “true”, excepts values “true” or “false”)
-	 */
-	QDomDocument Channels_GetChannels (const Mediafly::SessionInfo& session, bool capitalizeChannelNames);
-
-	/**
-	 * This method returns a list of episodes for the specified channel.
-	 * Response:
-	 * <response status="ok">
-	 *   <playlist channelSlug="business" totalEpisodes="3">
-	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
-	 * published=””
-	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
-	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
-	 * published=””
-	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
-	 *     <episode slug=““ title="" description=”” format="" url="" urlOriginal=""
-	 * published=””
-	 * showSlug=”” showTitle=”” imageUrl=”” channel=”” />
-	 *   </playlist>
-	 * </response>
-	 * Response (No Episodes):
-	 * <response status="ok">
-	 *   <playlist channelSlug="business" />
-	 * </response>
-	 * @param  channelSlug  (required):  the slug for the requested channel
-	 * @param  offset (optional):  an integer value representing the offset for the
-	 * start of the playlist results (default: 0)
-	 * @param  limit (optional): an integer value representing the number of episodes
-	 * to return (default:500, max:500)
-	 * @param  mediaType (optional):  include or exclude content based on its type
-	 * (“audio”, “video”, default: “audio,video”)
-	 */
-	QDomDocument Playlists_GetPlaylistForChannel (const Mediafly::SessionInfo& session, QString channelSlug, int offset, int limit, QString mediaType = "audio,video");
 
 	/**
 	 * This method returns the next channel from the user’s playlist, relative to the
@@ -565,16 +617,7 @@ public:
 	 * @param  episodeSlug
 	 */
 	QDomDocument Episodes_GetEpisodeInfo (const Mediafly::SessionInfo& session, QString episodeSlug );
-
-private:
-	QString m_appId;
-	QString m_sharedSecret;
-
-	void checkResponse(QDomDocument& doc);
-	QString computeHash(QMap<QString, QString>& map, QString token_id);
-	QStringList makeParams(QMap<QString, QString>& map);
-	QDomDocument Query(QString function, QMap<QString, QString>& map);
-	QDomDocument Query(QString function, QMap<QString, QString>& map, const Mediafly::SessionInfo& session);
+#endif
 };
 
 #endif // MEDIAFLY_H
