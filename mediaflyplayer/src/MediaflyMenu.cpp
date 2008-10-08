@@ -102,7 +102,6 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 	m_listView.setModel(NULL);
 	m_listView.setModel(&m_menuModel);
 
-	m_listView.update(m_lastMenuIndex);
 	m_listView.setCurrentIndex(m_lastMenuIndex);
 
 	m_listView.setEnabled(true);
@@ -111,8 +110,6 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 {
-	m_lastChannelIndex = m_listView.currentIndex();
-
 	m_episodeModel.cancel();
 	m_episodeModel.clear();
 
@@ -136,7 +133,7 @@ void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 	m_listView.setModel(&m_channelModel);
 	m_listView.setItemDelegate(m_itemDelegateDefault);
 
-	m_listView.setCurrentIndex(m_lastChannelIndex);
+	m_listView.setCurrentIndex(m_lastChannelMenuIndex);
 }
 
 void MediaflyMenu::render(const QModelIndex& index)
@@ -179,9 +176,11 @@ void MediaflyMenu::handleEnterKey()
 
 	switch (m_state) {
 	case Menu:
+		m_lastMenuIndex = index;
 		selectMenu(index);
 		break;
 	case ChannelMenu:
+		m_lastChannelMenuIndex = index;
 		m_state = EpisodeMenu;
 		break;
 	case EpisodeMenu:
@@ -201,9 +200,11 @@ void MediaflyMenu::handleRightKey()
 
 	switch (m_state) {
 	case Menu:
+		m_lastMenuIndex = index;
 		selectMenu(index);
 		break;
 	case ChannelMenu:
+		m_lastChannelMenuIndex = index;
 		m_state = EpisodeMenu;
 		break;
 	case EpisodeMenu:

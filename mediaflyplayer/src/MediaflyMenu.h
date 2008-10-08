@@ -46,7 +46,7 @@ private:
 	MediaflyEpisodeDelegate  m_itemDelegateEpisode;
 
 	QModelIndex              m_lastMenuIndex;
-	QModelIndex              m_lastChannelIndex;
+	QModelIndex              m_lastChannelMenuIndex;
 
 private slots:
 	void handleEnterKey();
