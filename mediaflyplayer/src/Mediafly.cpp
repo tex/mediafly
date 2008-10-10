@@ -29,21 +29,26 @@ Mediafly* Mediafly::getMediafly()
  *   <err code="14" message="Request must be made over a secure connection." />
  * </response>
  */
-bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg)
+bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg, bool& expiredToken)
 {
+	expiredToken = false;
+
 	if (!doc.setContent(data, &errorMsg))
 		return false;
 
 	QDomElement docResponse = doc.firstChildElement("response");
 	if (docResponse.isNull()) {
-		errorMsg = doc.toString();
+		errorMsg = data;
 		return false;
 	}
+
 	QString statusAttribute = docResponse.attribute("status");
 	if (statusAttribute == "fail") {
 		QDomElement docErr = docResponse.firstChildElement("err");
 		QString errCode = docErr.attribute("code");
 		QString errMessage = docErr.attribute("message");
+		if ((errCode.toInt() == -1) && (errMessage == "Token invalid."))
+			expiredToken = true;
 		errorMsg = "[" + errCode + "] " + errMessage;
 		return false;
 	} else if (statusAttribute != "ok") {
@@ -69,15 +74,19 @@ void Mediafly::handleRequestFinished(int id, bool error)
 
 			qDebug() << data;
 
-			if (!checkResponse(doc, data, errorMsg))
+			bool expiredToken;
+			if (!checkResponse(doc, data, errorMsg, expiredToken))
 			{
-				// We count only with token expired error for now.
-				//
+				if (expiredToken)
+				{
+					// Acquire new session info and restart
+					// the operation.
 
-				// Acquire new session info and restart the operation.
-				//
-				Authentication_GetToken();
-				m_request << requestInfo;
+					Authentication_GetToken();
+					m_request << requestInfo;
+				}
+				else
+					emit readError(errorMsg);
 			}
 			else
 				requestInfo.m_consumer->read(doc);
@@ -108,7 +117,7 @@ Mediafly::Mediafly()
 	// Get token as soon as possible. It will be neccessary
 	// anyway...
 
-//	Authentication_GetToken();
+	Authentication_GetToken();
 }
 
 void Mediafly::abort()

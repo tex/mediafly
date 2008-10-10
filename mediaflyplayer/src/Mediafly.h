@@ -52,12 +52,11 @@ private:
 
 	QString makePath(QString& method, QStringList& parameters);
 	void Query(MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps = false);
-	void checkResponse(QDomDocument& doc);
 	QString computeHash(QMap<QString, QString>& map, QString token_id);
 	QStringList makeParams(QMap<QString, QString>& map);
 	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map);
 	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session);
-	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg);
+	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg, bool& expiredToken);
 	void Query (RequestInfo& requestInfo);
 	void Query (RequestInfoBinary& requestInfoBinary);
 	void Query (MediaflyConsumerBinary *modelData, const QString& path);
