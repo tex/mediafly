@@ -8,12 +8,14 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 	m_listView(this),
 	m_state(Menu)
 {
-	// Remember the default item delegate that m_listView uses.
-	// 
-	m_itemDelegateDefault = m_listView.itemDelegate();
+	m_vLayout.addWidget(&m_header);
+	m_vLayout.addWidget(&m_listView);
+	m_hLayout.addWidget(&m_icon);
+	m_hLayout.addLayout(&m_vLayout);
+	setLayout(&m_hLayout);
 
-	m_layout.addWidget(&m_listView);
-	setLayout(&m_layout);
+	m_header.setAlignment(Qt::AlignRight);
+	m_icon.setText("ICON");
 
 	connect(&m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
@@ -32,6 +34,10 @@ MediaflyMenu::MediaflyMenu(QWidget *parent) :
 
 	connect(Mediafly::getMediafly(), SIGNAL(readError(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
+
+	// Remember the default item delegate that m_listView uses.
+	// 
+	m_itemDelegateDefault = m_listView.itemDelegate();
 
 	m_lastMenuIndex = m_menuModel.index(0, 0);
 	m_lastChannelMenuIndex = QModelIndex();
@@ -102,6 +108,9 @@ void MediaflyMenu::errorHandler(const QString& errorMsg)
 
 void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 {
+	m_header.setText("Mediafly");
+	m_icon.setVisible(true);
+
 	m_listView.setItemDelegate(m_itemDelegateDefault);
 
 	m_listView.setModel(NULL);
@@ -115,6 +124,9 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 {
+	m_header.setText("Media Episodes");
+	m_icon.setVisible(false);
+
 	m_episodeModel.cancel();
 	m_episodeModel.clear();
 
@@ -130,7 +142,8 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 
 void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	m_header.setText("Media Channels");
+	m_icon.setVisible(true);
 
 	m_episodeModel.cancel();
 	m_channelModel.refresh();

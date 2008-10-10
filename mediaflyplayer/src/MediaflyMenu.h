@@ -5,6 +5,8 @@
 #include "MediaflyList.h"
 #include <QObject>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
 
 class MediaflyMenu : public QWidget
 {
@@ -25,8 +27,12 @@ private:
 		EpisodeMenu,
 	};
 
-	QVBoxLayout      m_layout;
+	QHBoxLayout      m_hLayout;
+	QVBoxLayout      m_vLayout;
 	MediaflyList     m_listView;
+	QLabel           m_header;
+	QLabel           m_icon;
+
 	QString	         m_channelSlug;
 	State	         m_state;
 
