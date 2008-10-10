@@ -191,6 +191,8 @@ void MediaflyMenu::handleEnterKey()
 	qDebug() << __PRETTY_FUNCTION__;
 
 	QModelIndex index = m_listView.currentIndex();
+	if (!index.isValid())
+		return;
 
 	switch (m_state) {
 	case Menu:
@@ -215,6 +217,8 @@ void MediaflyMenu::handleRightKey()
 	qDebug() << __PRETTY_FUNCTION__;
 
 	QModelIndex index = m_listView.currentIndex();
+	if (!index.isValid())
+		return;
 
 	switch (m_state) {
 	case Menu:
