@@ -44,7 +44,15 @@ void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 	    (m_modelData.totalEpisodes() == -1))		// Unknown number of episodes.
 	{
 		m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData, query);
+		m_query = query;
 	}
+}
+
+void MediaflyEpisodeModel::refresh()
+{
+	MediaflyEpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
+	refresh(query);
+
 }
 
 void MediaflyEpisodeModel::cancel()

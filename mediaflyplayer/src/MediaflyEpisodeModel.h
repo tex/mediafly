@@ -37,6 +37,7 @@ public:
 	void clear();
 
 	void refresh(const MediaflyEpisodeQuery& query);
+	void refresh();
 	void cancel();
 
 signals:
@@ -49,6 +50,7 @@ private:
 	QMap<int, MediaflyEpisodeEntry> m_data;
 	QMap<int, QByteArray>           m_image;
 	bool                            m_refreshFinished;
+	MediaflyEpisodeQuery            m_query;
 
 private slots:
 	void handleEntryRead(const MediaflyEpisodeEntry& entry);

@@ -1,4 +1,5 @@
 #include "MediaflyMenu.h"
+#include "MediaflyEpisodeDetailsView.h"
 #include <QMessageBox>
 #include <QtDebug>
 #include <QKeyEvent>
@@ -230,8 +231,12 @@ void MediaflyMenu::handleRightKey()
 		m_state = EpisodeMenu;
 		break;
 	case EpisodeMenu:
+	{
 		emit showShowMenu(index);
+		MediaflyEpisodeDetailsView *p = new MediaflyEpisodeDetailsView(index);
+		p->show();
 		return;
+	}
 	default:
 		return;
 	}

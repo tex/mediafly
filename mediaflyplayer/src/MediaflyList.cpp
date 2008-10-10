@@ -1,7 +1,7 @@
 #include "MediaflyList.h"
 
 MediaflyList::MediaflyList(QWidget *parent) :
-	QListView(parent)
+	MediaflyListParent(parent)
 {
 }
 
@@ -33,6 +33,7 @@ void MediaflyList::keyPressEvent(QKeyEvent *event)
 		emit enterPressed();
 		break;
 	default:
+		event->ignore();
 		break;
 	}
 }

@@ -2,8 +2,12 @@
 #include <QWidget>
 #include <QListView>
 #include <QKeyEvent>
+#include "nribbonlistview.h"
 
-class MediaflyList : public QListView
+//typedef NRibbonListView MediaflyListParent;
+typedef QListView MediaflyListParent;
+
+class MediaflyList : public MediaflyListParent
 {
 	Q_OBJECT
 public:
