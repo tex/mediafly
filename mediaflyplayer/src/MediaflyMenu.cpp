@@ -57,7 +57,9 @@ void MediaflyMenu::updateChannelModel()
 	// Remember current selected index (position)
 	// if episode menu is already shown.
 
-	if (!m_lastChannelMenuIndex.isValid()) {
+	if (m_listView.currentIndex().isValid()) {
+		m_lastChannelMenuIndex = m_listView.currentIndex();
+	} else if (!m_lastChannelMenuIndex.isValid()) {
 		m_lastChannelMenuIndex = m_channelModel.index(0, 0);
 	}
 
@@ -83,7 +85,7 @@ void MediaflyMenu::updateEpisodeModel()
 		return;
 
 	QModelIndex current = m_listView.currentIndex();
-	if (m_episodeModel.rowCount() == 1)
+	if (!current.isValid())
 		current = m_episodeModel.index(0, 0);
 
 	m_listView.setModel(NULL);
