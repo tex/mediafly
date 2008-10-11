@@ -10,6 +10,7 @@ MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
 	setFocus();
 
 	m_header.setAlignment(Qt::AlignRight);
+	m_length.setAlignment(Qt::AlignRight);
 
 	m_details.setReadOnly(true);
 	m_info.setReadOnly(true);
@@ -40,11 +41,11 @@ void MediaflyEpisodeDetailsView::update()
 	m_icon.setPixmap(icon);
 	m_label.setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
 	m_length.setText("???");
-	m_details.setText("Item details\nLink:\n" +
+	m_details.setHtml("<b>Item details</b><br><b>Link:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlRole).toString() +
-	                  "\nPublication date:\n" +
+	                  "<br><b>Publication date:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::publishedRole).toString() +
-	                  "\nEnclosure:\n" +
+	                  "<br><b>Enclosure:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlOriginalRole).toString());
 	m_info.setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
 }
