@@ -27,7 +27,9 @@ private:
 	QModelIndex m_index;
 	void keyPressEvent(QKeyEvent *event);
 
-private slots:
 	void update();
+
+private slots:
+	void updateImage();
 };
 

@@ -29,18 +29,26 @@ MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
 	setLayout(&m_vLayout);
 
 	connect(m_index.model(), SIGNAL(refreshed()),
-	        this, SLOT(update()));
+	        this, SLOT(updateImage()));
 
 	update();
+}
+
+void MediaflyEpisodeDetailsView::updateImage()
+{
+	if (m_icon.pixmap()->isNull()) {
+		QPixmap icon; icon.loadFromData(m_index.data(MediaflyEpisodeModel::imageRole).toByteArray());
+		m_icon.setPixmap(icon);
+	}
 }
 
 void MediaflyEpisodeDetailsView::update()
 {
 	m_header.setText("Episode Details");
-	QPixmap icon; icon.loadFromData(m_index.data(MediaflyEpisodeModel::imageRole).toByteArray());
-	m_icon.setPixmap(icon);
 	m_label.setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
 	m_length.setText("???");
+	QPixmap icon; icon.loadFromData(m_index.data(MediaflyEpisodeModel::imageRole).toByteArray());
+	m_icon.setPixmap(icon);
 	m_details.setHtml("<b>Item details</b><br><b>Link:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlRole).toString() +
 	                  "<br><b>Publication date:</b><br>" +
