@@ -103,7 +103,7 @@ void Mediafly::handleRequestFinished(int id, bool error)
 	{
 		RequestInfoBinary requestInfoBinary = m_connectionBinary.take(id);
 		QByteArray array = m_http.readAll();
-		requestInfoBinary.m_consumer->read(array);
+		requestInfoBinary.m_consumer->read(requestInfoBinary.m_path, array);
 	}
 }
 
@@ -153,6 +153,11 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 void Mediafly::Query (RequestInfoBinary& requestInfoBinary)
 {
 	qDebug() << __PRETTY_FUNCTION__;
+
+	for (int i = 0; i < m_connectionBinary.size(); ++i) {
+		if (m_connectionBinary.value(i).m_path == requestInfoBinary.m_path)
+			return;
+	}
 
 	// Dunno why this doesn't work when in the constructor...
 

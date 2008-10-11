@@ -4,20 +4,21 @@
 #include <QObject>
 #include <QByteArray>
 #include <QDebug>
+#include <QPixmap>
 
 class MediaflyConsumerBinary : public QObject
 {
 	Q_OBJECT
 public:
-	void read(const QByteArray& array)
+	void read(const QString& path, const QByteArray& array)
 	{
-		qDebug() << __PRETTY_FUNCTION__;
+		qDebug() << __PRETTY_FUNCTION__ << path;
 
-		emit binaryRead(array);
+		emit binaryRead(path, array);
 	}
 
 signals:
-	void binaryRead(const QByteArray& array);
+	void binaryRead(const QString& path, const QByteArray& array);
 };
 
 #endif

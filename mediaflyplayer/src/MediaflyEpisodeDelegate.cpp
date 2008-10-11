@@ -10,8 +10,7 @@ void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 	} else
 		painter->setPen(option.palette.text().color());
 
-	QPixmap icon;
-	icon.loadFromData(index.data(MediaflyEpisodeModel::imageRole).toByteArray());
+	QPixmap icon(index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	QString episodeTitle(index.data(MediaflyEpisodeModel::titleRole).toString());
 	QString showTitle(index.data(MediaflyEpisodeModel::showTitleRole).toString());
 

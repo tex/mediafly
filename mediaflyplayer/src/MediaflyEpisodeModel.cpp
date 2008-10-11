@@ -1,5 +1,6 @@
 #include "MediaflyEpisodeModel.h"
 #include <QDebug>
+#include <QPixmapCache>
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
@@ -12,9 +13,8 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	connect(&m_modelData, SIGNAL(entryReadFinished()),
 	        this, SLOT(handleEntryReadFinished()));
 
-
-	connect(&m_binaryData, SIGNAL(binaryRead(const QByteArray&)),
-	        this, SLOT(handleBinaryRead(const QByteArray&)));
+	connect(&m_binaryData, SIGNAL(binaryRead(const QString&, const QByteArray&)),
+	        this, SLOT(handleBinaryRead(const QString&, const QByteArray&)));
 }
 
 MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
@@ -22,14 +22,12 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 {
 	m_mediafly = Mediafly::getMediafly();
 	m_data = obj.m_data;
-	m_image = obj.m_image;
 	m_refreshFinished = obj.m_refreshFinished;
 }
 
 void MediaflyEpisodeModel::clear()
 {
 	m_data.clear();
-	m_image.clear();
 	m_modelData.clear();
 	m_refreshFinished = true;
 }
@@ -52,7 +50,6 @@ void MediaflyEpisodeModel::refresh()
 {
 	MediaflyEpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
 	refresh(query);
-
 }
 
 void MediaflyEpisodeModel::cancel()
@@ -64,11 +61,6 @@ void MediaflyEpisodeModel::handleEntryRead(const MediaflyEpisodeEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << entry.title();
 
-	if (entry.imageUrl() != "") {
-		qDebug() << "LOADING IMAGE";
-		m_mediafly->Utility_GetImage(&m_binaryData, entry.imageUrl());
-	}
-
 	m_data[m_data.size()] = entry;
 	emit refreshed();
 }
@@ -78,11 +70,13 @@ void MediaflyEpisodeModel::handleEntryReadFinished()
 	m_refreshFinished = true;
 }
 
-void MediaflyEpisodeModel::handleBinaryRead(const QByteArray& buffer)
+void MediaflyEpisodeModel::handleBinaryRead(const QString& path, const QByteArray& array)
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	QPixmap image; image.loadFromData(array);
+	QPixmapCache::insert(path, image.scaled(80, 80));
 
-	m_image[m_image.size()] = buffer;
+	qDebug() << __PRETTY_FUNCTION__ << path << image;
+
 	emit refreshed();
 }
 
@@ -110,7 +104,19 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	case showSlugRole:    return (m_data[index.row()]).showSlug();
 	case showTitleRole:   return (m_data[index.row()]).showTitle();
 	case imageUrlRole:    return (m_data[index.row()]).imageUrl();
-	case imageRole:       return (m_image[index.row()]);
+	case imageRole:
+	{
+		QString path = m_data[index.row()].imageUrl();
+		qDebug() << __PRETTY_FUNCTION__ << path;
+		QPixmap image;
+		if (!QPixmapCache::find(path, image)) {
+			m_mediafly->Utility_GetImage(const_cast<MediaflyConsumerBinary *>(&m_binaryData), path);
+			return QVariant();
+		} else {
+			return image;
+		}
+		
+	} 
 	case channelRole:     return (m_data[index.row()]).channel();
 	default:              return QVariant();
 	}

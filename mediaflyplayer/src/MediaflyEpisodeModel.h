@@ -7,6 +7,9 @@
 #include "MediaflyConsumerBinary.h"
 #include <QAbstractListModel>
 #include <QMap>
+#include <QString>
+#include <QByteArray>
+#include <QPixmap>
 
 class MediaflyEpisodeModel : public QAbstractListModel
 {
@@ -48,14 +51,13 @@ private:
 	MediaflyEpisodeModelData        m_modelData;
 	MediaflyConsumerBinary          m_binaryData;
 	QMap<int, MediaflyEpisodeEntry> m_data;
-	QMap<int, QByteArray>           m_image;
 	bool                            m_refreshFinished;
 	MediaflyEpisodeQuery            m_query;
 
 private slots:
 	void handleEntryRead(const MediaflyEpisodeEntry& entry);
 	void handleEntryReadFinished();
-	void handleBinaryRead(const QByteArray& buffer);
+	void handleBinaryRead(const QString& path, const QByteArray& array);
 };
 
 #endif

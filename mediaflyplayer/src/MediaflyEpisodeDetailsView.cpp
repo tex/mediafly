@@ -9,6 +9,8 @@ MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
 	setFocusPolicy(Qt::StrongFocus);
 	setFocus();
 
+	m_icon.setFixedSize(80, 80);
+
 	m_header.setAlignment(Qt::AlignRight);
 	m_length.setAlignment(Qt::AlignRight);
 
@@ -37,8 +39,7 @@ MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
 void MediaflyEpisodeDetailsView::updateImage()
 {
 	if (m_icon.pixmap()->isNull()) {
-		QPixmap icon; icon.loadFromData(m_index.data(MediaflyEpisodeModel::imageRole).toByteArray());
-		m_icon.setPixmap(icon);
+		m_icon.setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	}
 }
 
@@ -47,8 +48,7 @@ void MediaflyEpisodeDetailsView::update()
 	m_header.setText("Episode Details");
 	m_label.setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
 	m_length.setText("???");
-	QPixmap icon; icon.loadFromData(m_index.data(MediaflyEpisodeModel::imageRole).toByteArray());
-	m_icon.setPixmap(icon);
+	m_icon.setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	m_details.setHtml("<b>Item details</b><br><b>Link:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlRole).toString() +
 	                  "<br><b>Publication date:</b><br>" +
