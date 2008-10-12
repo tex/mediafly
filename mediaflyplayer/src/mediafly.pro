@@ -10,7 +10,6 @@ INCLUDEPATH += . libs/neux/edits libs/neux/delegates libs/neux/views libs/neux/m
 QT += xml network
 QT += gui
 CONFIG += qt silent #debug
-FORMS += forms/mediafly.ui
 
 # Input
 HEADERS += Mediafly.h MediaflyChannelModel.h MediaflyEpisodeModel.h
