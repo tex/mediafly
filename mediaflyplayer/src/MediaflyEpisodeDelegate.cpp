@@ -18,8 +18,10 @@ void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 	QRect i(r.left(), r.top(), 40, 40);
 
 	painter->drawPixmap(i, icon.scaled(i.width(), i.height()));
-	painter->drawText(r.left() + i.width() + 5, r.top(), r.width() - i.width() - 5, r.height() / 2, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, episodeTitle);
-	painter->drawText(r.left() + i.width() + 5, r.top() + r.height() / 2, r.width() - i.width() - 5, r.height() / 2, Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
+	painter->drawText(r.left() + i.width() + 5, r.top(), r.width() - i.width() - 5, r.height() / 2,
+	                  Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, episodeTitle);
+	painter->drawText(r.left() + i.width() + 5, r.top() + r.height() / 2, r.width() - i.width() - 5, r.height() / 2,
+	                  Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
 }
 
 QSize MediaflyEpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
