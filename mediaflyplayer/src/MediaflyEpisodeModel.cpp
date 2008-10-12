@@ -75,8 +75,6 @@ void MediaflyEpisodeModel::handleBinaryRead(const QString& path, const QByteArra
 	QPixmap image; image.loadFromData(array);
 	QPixmapCache::insert(path, image.scaled(80, 80));
 
-	qDebug() << __PRETTY_FUNCTION__ << path << image;
-
 	emit refreshed();
 }
 
@@ -107,7 +105,6 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	case imageRole:
 	{
 		QString path = m_data[index.row()].imageUrl();
-		qDebug() << __PRETTY_FUNCTION__ << path;
 		QPixmap image;
 		if (!QPixmapCache::find(path, image)) {
 			m_mediafly->Utility_GetImage(const_cast<MediaflyConsumerBinary *>(&m_binaryData), path);

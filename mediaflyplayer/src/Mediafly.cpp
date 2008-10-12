@@ -150,12 +150,12 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 	return path;
 }
 
-void Mediafly::Query (RequestInfoBinary& requestInfoBinary)
+void Mediafly::Query(RequestInfoBinary& requestInfoBinary)
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	// Ignore duplicate queries....
 
-	for (int i = 0; i < m_connectionBinary.size(); ++i) {
-		if (m_connectionBinary.value(i).m_path == requestInfoBinary.m_path)
+	foreach (RequestInfoBinary tmp, m_connectionBinary) {
+		if (tmp.m_path == requestInfoBinary.m_path)
 			return;
 	}
 
