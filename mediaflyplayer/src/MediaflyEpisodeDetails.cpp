@@ -2,9 +2,8 @@
 #include "MediaflyEpisodeModel.h"
 #include <QDebug>
 
-MediaflyEpisodeDetails::MediaflyEpisodeDetails(QModelIndex& index) :
-	QWidget(),
-	m_index (index)
+MediaflyEpisodeDetails::MediaflyEpisodeDetails(QWidget *parent) :
+	QWidget(parent)
 {
 	setFocusPolicy(Qt::StrongFocus);
 	setFocus();
@@ -29,11 +28,15 @@ MediaflyEpisodeDetails::MediaflyEpisodeDetails(QModelIndex& index) :
 	m_vLayout.addWidget(&m_info);
 
 	setLayout(&m_vLayout);
+}
+
+void MediaflyEpisodeDetails::show(const QModelIndex& index)
+{
+	m_index = index;
+	update();
 
 	connect(m_index.model(), SIGNAL(refreshed()),
 	        this, SLOT(updateImage()));
-
-	update();
 }
 
 void MediaflyEpisodeDetails::updateImage()
@@ -73,6 +76,11 @@ void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 			dynamic_cast<MediaflyEpisodeModel*>(const_cast<QAbstractItemModel*>(m_index.model()))->refresh();
 		if (m_index.row() + 1 < m_index.model()->rowCount())
 			m_index = m_index.model()->index(m_index.row() + 1, 0);
+		break;
+	}
+	case Qt::Key_Escape:
+	{
+		emit back();
 		break;
 	}
 	default:

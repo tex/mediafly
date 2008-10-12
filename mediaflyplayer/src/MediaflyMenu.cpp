@@ -4,10 +4,13 @@
 #include <QtDebug>
 #include <QKeyEvent>
 
-MediaflyMenu::MediaflyMenu(QWidget *parent) :
+MediaflyMenu::MediaflyMenu(QWidget *parent, MediaflyMenuModel& menuModel, MediaflyChannelModel& channelModel, MediaflyEpisodeModel& episodeModel) :
 	QWidget(parent),
 	m_listView(this),
-	m_state(Menu)
+	m_state(Menu),
+	m_menuModel(menuModel),
+	m_channelModel(channelModel),
+	m_episodeModel(episodeModel)
 {
 	m_vLayout.addWidget(&m_header);
 	m_vLayout.addWidget(&m_listView);
@@ -72,8 +75,6 @@ void MediaflyMenu::updateChannelModel()
 
 	m_listView.update(m_lastChannelMenuIndex);
 	m_listView.setCurrentIndex(m_lastChannelMenuIndex);
-
-	m_listView.setFocus();
 }
 
 void MediaflyMenu::updateEpisodeModel()
@@ -93,8 +94,6 @@ void MediaflyMenu::updateEpisodeModel()
 
 	m_listView.update(current);
 	m_listView.setCurrentIndex(current);
-
-	m_listView.setFocus();
 }
 
 void MediaflyMenu::errorHandler(const QString& errorMsg)
@@ -122,7 +121,6 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 	m_listView.setCurrentIndex(m_lastMenuIndex);
 
 	m_listView.setEnabled(true);
-	m_listView.setFocus();
 }
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
@@ -235,8 +233,6 @@ void MediaflyMenu::handleRightKey()
 	case EpisodeMenu:
 	{
 		emit showShowMenu(index);
-		MediaflyEpisodeDetails *p = new MediaflyEpisodeDetails(index);
-		p->show();
 		return;
 	}
 	default:

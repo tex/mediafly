@@ -12,7 +12,7 @@ class MediaflyMenu : public QWidget
 {
 	Q_OBJECT
 public:
-	MediaflyMenu(QWidget *parent = 0); 
+	MediaflyMenu(QWidget *parent, MediaflyMenuModel& menuModel, MediaflyChannelModel& channelModel, MediaflyEpisodeModel& episodeModel); 
 	virtual ~MediaflyMenu() { };
 
 signals:
@@ -36,9 +36,9 @@ private:
 	QString	         m_channelSlug;
 	State	         m_state;
 
-	MediaflyMenuModel    m_menuModel;
-	MediaflyChannelModel m_channelModel;
-	MediaflyEpisodeModel m_episodeModel;
+	MediaflyMenuModel&    m_menuModel;
+	MediaflyChannelModel& m_channelModel;
+	MediaflyEpisodeModel& m_episodeModel;
 
 	static const int itemsReadAtOnce = 10;
 

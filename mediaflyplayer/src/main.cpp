@@ -1,10 +1,10 @@
-#include "MediaflyMenu.h"
+#include "MediaflyPlayer.h"
 #include <QApplication>
 
 int main(int argc, char** argv)
 {
 	QApplication app(argc, argv);
-	MediaflyMenu v;
+	MediaflyPlayer v;
 	v.show();
 	return app.exec();
 }

@@ -53,3 +53,6 @@ SOURCES += main.cpp
 HEADERS += MediaflyEpisodeDetails.h
 SOURCES += MediaflyEpisodeDetails.cpp
 
+HEADERS += MediaflyPlayer.h
+SOURCES += MediaflyPlayer.cpp
+

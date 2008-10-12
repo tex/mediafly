@@ -10,7 +10,11 @@ class MediaflyEpisodeDetails : public QWidget
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeDetails(QModelIndex& index);
+	MediaflyEpisodeDetails(QWidget *parent = 0);
+	void show(const QModelIndex& index);
+
+signals:
+	void back();
 
 private:
 	QHBoxLayout      m_hLayoutDetails;
