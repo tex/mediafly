@@ -6,11 +6,11 @@
 #include <QModelIndex>
 #include <QKeyEvent>
 
-class MediaflyEpisodeDetailsView : public QWidget
+class MediaflyEpisodeDetails : public QWidget
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeDetailsView(QModelIndex& index);
+	MediaflyEpisodeDetails(QModelIndex& index);
 
 private:
 	QHBoxLayout      m_hLayoutDetails;

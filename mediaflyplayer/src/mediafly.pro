@@ -50,6 +50,6 @@ HEADERS += MediaflyConsumerBinary.h
 
 SOURCES += main.cpp
 
-HEADERS += MediaflyEpisodeDetailsView.h
-SOURCES += MediaflyEpisodeDetailsView.cpp
+HEADERS += MediaflyEpisodeDetails.h
+SOURCES += MediaflyEpisodeDetails.cpp
 

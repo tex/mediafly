@@ -1,8 +1,8 @@
-#include "MediaflyEpisodeDetailsView.h"
+#include "MediaflyEpisodeDetails.h"
 #include "MediaflyEpisodeModel.h"
 #include <QDebug>
 
-MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
+MediaflyEpisodeDetails::MediaflyEpisodeDetails(QModelIndex& index) :
 	QWidget(),
 	m_index (index)
 {
@@ -36,14 +36,14 @@ MediaflyEpisodeDetailsView::MediaflyEpisodeDetailsView(QModelIndex& index) :
 	update();
 }
 
-void MediaflyEpisodeDetailsView::updateImage()
+void MediaflyEpisodeDetails::updateImage()
 {
 	if (m_icon.pixmap()->isNull()) {
 		m_icon.setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	}
 }
 
-void MediaflyEpisodeDetailsView::update()
+void MediaflyEpisodeDetails::update()
 {
 	m_header.setText("Episode Details");
 	m_label.setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
@@ -58,7 +58,7 @@ void MediaflyEpisodeDetailsView::update()
 	m_info.setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
 }
 
-void MediaflyEpisodeDetailsView::keyPressEvent(QKeyEvent *event)
+void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Left:
