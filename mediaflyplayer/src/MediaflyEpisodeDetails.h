@@ -17,16 +17,16 @@ signals:
 	void back();
 
 private:
-	QHBoxLayout      m_hLayoutDetails;
-	QHBoxLayout      m_hLayoutName;
-	QVBoxLayout      m_vLayout;
+	QHBoxLayout     *m_hLayoutDetails;
+	QHBoxLayout     *m_hLayoutName;
+	QVBoxLayout     *m_vLayout;
 
-	QLabel m_header;
-	QLabel m_icon;
-	QLabel m_label;
-	QLabel m_length;
-	QTextEdit m_details;
-	QTextEdit m_info;
+	QLabel    *m_header;
+	QLabel    *m_icon;
+	QLabel    *m_label;
+	QLabel    *m_length;
+	QTextEdit *m_details;
+	QTextEdit *m_info;
 
 	QModelIndex m_index;
 	void keyPressEvent(QKeyEvent *event);

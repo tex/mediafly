@@ -12,8 +12,10 @@ class MediaflyMenu : public QWidget
 {
 	Q_OBJECT
 public:
-	MediaflyMenu(QWidget *parent, MediaflyMenuModel& menuModel, MediaflyChannelModel& channelModel, MediaflyEpisodeModel& episodeModel); 
-	virtual ~MediaflyMenu() { };
+	MediaflyMenu(MediaflyMenuModel&     menuModel,
+	             MediaflyChannelModel&  channelModel,
+	             MediaflyEpisodeModel&  episodeModel,
+	             QWidget               *parent = 0); 
 
 signals:
 	void showPlayMenu(const QModelIndex& index);
@@ -27,11 +29,11 @@ private:
 		EpisodeMenu,
 	};
 
-	QHBoxLayout      m_hLayout;
-	QVBoxLayout      m_vLayout;
-	MediaflyList     m_listView;
-	QLabel           m_header;
-	QLabel           m_icon;
+	QHBoxLayout     *m_hLayout;
+	QVBoxLayout     *m_vLayout;
+	MediaflyList    *m_listView;
+	QLabel          *m_header;
+	QLabel          *m_icon;
 
 	QString	         m_channelSlug;
 	State	         m_state;
