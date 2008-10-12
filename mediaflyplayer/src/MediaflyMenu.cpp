@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QtDebug>
 #include <QKeyEvent>
+#include <QIcon>
 
 MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& channelModel, MediaflyEpisodeModel& episodeModel, QWidget *parent) :
 	QWidget(parent),
@@ -24,7 +25,8 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	setLayout(m_hLayout);
 
 	m_header->setAlignment(Qt::AlignRight);
-	m_icon->setText("ICON");
+
+	m_icon->setPixmap(QPixmap(":/logo.png"));
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
