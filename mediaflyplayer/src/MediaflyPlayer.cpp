@@ -18,6 +18,8 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 
 	connect(m_menu, SIGNAL(showShowMenu(const QModelIndex&)),
 	        this, SLOT(handleShowMenu(const QModelIndex&)));
+	connect(m_menu, SIGNAL(showPlayMenu(const QModelIndex&)),
+	        this, SLOT(handlePlayMenu(const QModelIndex&)));
 
 	connect(m_episodeDetails, SIGNAL(back()),
 	        this, SLOT(handleEpisodeDetailsBack()));
@@ -29,6 +31,12 @@ void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
 
 	m_view->setCurrentWidget(m_episodeDetails);
 	m_episodeDetails->show(index);
+}
+
+void MediaflyPlayer::handlePlayMenu(const QModelIndex& index)
+{
+	QString url = index.data(MediaflyEpisodeModel::urlRole).toString();
+	// TODO
 }
 
 void MediaflyPlayer::handleEpisodeDetailsBack()

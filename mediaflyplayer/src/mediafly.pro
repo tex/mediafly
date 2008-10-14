@@ -11,6 +11,7 @@ QT += xml network
 QT += gui
 CONFIG += qt silent #debug
 RESOURCES += resources/mediafly.qrc
+FORMS += ../forms/MediaflyPlay.ui
 
 # Input
 HEADERS += Mediafly.h MediaflyChannelModel.h MediaflyEpisodeModel.h
@@ -55,4 +56,15 @@ SOURCES += MediaflyEpisodeDetails.cpp
 
 HEADERS += MediaflyPlayer.h
 SOURCES += MediaflyPlayer.cpp
+
+HEADERS += MediaflyPlay.h
+SOURCES += MediaflyPlay.cpp
+
+FORMS += ../forms/MediaflyPlayVideo.ui
+HEADERS += MediaflyPlayVideo.h
+SOURCES += MediaflyPlayVideo.cpp
+
+FORMS += ../forms/MediaflyPlayAudio.ui
+HEADERS += MediaflyPlayAudio.h
+SOURCES += MediaflyPlayAudio.cpp
 

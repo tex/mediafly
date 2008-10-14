@@ -23,6 +23,7 @@ private:
 	MediaflyMenu           *m_menu;
 
 private slots:
+	void handlePlayMenu(const QModelIndex& index);
 	void handleShowMenu(const QModelIndex& index);
 	void handleEpisodeDetailsBack();
 };
