@@ -4,13 +4,14 @@
 
 TEMPLATE = app
 TARGET = 
-CONFIG += debug
+#CONFIG += debug
 DEPENDPATH += .
 INCLUDEPATH += . libs/neux/edits libs/neux/delegates libs/neux/views libs/neux/models
 QT += xml network
 QT += gui
 CONFIG += qt silent #debug
-RESOURCES += resources/mediafly.qrc
+
+RESOURCES += ../resources/mediafly.qrc
 FORMS += ../forms/MediaflyPlay.ui
 
 # Input
