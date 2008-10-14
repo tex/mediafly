@@ -33,7 +33,7 @@ bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg
 {
 	expiredToken = false;
 
-	if (!doc.setContent(data, NULL)) {
+	if (!doc.setContent(data)) {
 		errorMsg = data;
 		return false;
 	}
