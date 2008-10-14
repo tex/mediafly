@@ -9,10 +9,10 @@ class MediaflyPlay : public QWidget, protected Ui::MediaflyPlay
 	Q_OBJECT
 
 protected:
-	MediaflyPlay(/*MediaflyEpisodeModel& episodeModel,*/ QWidget *parent = 0);
+	MediaflyPlay(MediaflyEpisodeModel& episodeModel, QWidget *parent = 0);
 	virtual ~MediaflyPlay() { }
 
-//	MediaflyEpisodeModel& m_episodeModel;
+	MediaflyEpisodeModel& m_episodeModel;
 };
 
 #endif

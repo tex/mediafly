@@ -1,7 +1,7 @@
 #include "MediaflyPlayVideo.h"
 
-MediaflyPlayVideo::MediaflyPlayVideo(QWidget *parent) :
-	MediaflyPlay(parent)
+MediaflyPlayVideo::MediaflyPlayVideo(MediaflyEpisodeModel& episodeModel, QWidget *parent) :
+	MediaflyPlay(episodeModel, parent)
 {
 	Ui::MediaflyPlayVideo::setupUi(widget);
 }

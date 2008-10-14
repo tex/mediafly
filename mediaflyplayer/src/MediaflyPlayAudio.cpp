@@ -1,7 +1,7 @@
 #include "MediaflyPlayAudio.h"
 
-MediaflyPlayAudio::MediaflyPlayAudio(QWidget *parent) :
-	MediaflyPlay(parent)
+MediaflyPlayAudio::MediaflyPlayAudio(MediaflyEpisodeModel& episodeModel, QWidget *parent) :
+	MediaflyPlay(episodeModel, parent)
 {
 	Ui::MediaflyPlayAudio::setupUi(widget);
 }

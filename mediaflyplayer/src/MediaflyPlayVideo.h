@@ -3,11 +3,12 @@
 
 #include "ui_MediaflyPlayVideo.h"
 #include "MediaflyPlay.h"
+#include "MediaflyEpisodeModel.h"
 
 class MediaflyPlayVideo : public MediaflyPlay, private Ui::MediaflyPlayVideo
 {
 public:
-	MediaflyPlayVideo(QWidget *parent = 0);
+	MediaflyPlayVideo(MediaflyEpisodeModel& episodeModel, QWidget *parent = 0);
 };
 
 #endif
