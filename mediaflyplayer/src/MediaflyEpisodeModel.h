@@ -43,6 +43,7 @@ public:
 	void refresh();
 	void cancel();
 
+	int totalRowCount() const;
 signals:
 	void refreshed();
 

@@ -15,6 +15,7 @@ public:
 
 signals:
 	void back();
+	void showPlayMenu(const QModelIndex& index);
 
 private:
 	QHBoxLayout     *m_hLayoutDetails;

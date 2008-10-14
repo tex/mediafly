@@ -119,3 +119,8 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	}
 }
 
+int MediaflyEpisodeModel::totalRowCount() const
+{
+	return m_modelData.totalEpisodes();
+}
+

@@ -6,12 +6,14 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 {
 	m_episodeDetails = new MediaflyEpisodeDetails(this);
 	m_menu = new MediaflyMenu(m_menuModel, m_channelModel, m_episodeModel, this);
+	m_play = new MediaflyPlay(this);
 
 	m_view = new QStackedWidget(this);
 	m_layout = new QVBoxLayout(this);
 
 	m_view->addWidget(m_menu);
 	m_view->addWidget(m_episodeDetails);
+	m_view->addWidget(m_play);
 
 	m_layout->addWidget(m_view);
 	setLayout(m_layout);
@@ -21,8 +23,13 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 	connect(m_menu, SIGNAL(showPlayMenu(const QModelIndex&)),
 	        this, SLOT(handlePlayMenu(const QModelIndex&)));
 
+	connect(m_episodeDetails, SIGNAL(showPlayMenu(const QModelIndex&)),
+	        this, SLOT(handlePlayMenu(const QModelIndex&)));
 	connect(m_episodeDetails, SIGNAL(back()),
-	        this, SLOT(handleEpisodeDetailsBack()));
+	        this, SLOT(showMenu()));
+
+	connect(m_play, SIGNAL(back()),
+	        this, SLOT(showMenu()));
 }
 
 void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
@@ -35,11 +42,11 @@ void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
 
 void MediaflyPlayer::handlePlayMenu(const QModelIndex& index)
 {
-	QString url = index.data(MediaflyEpisodeModel::urlRole).toString();
-	// TODO
+	m_view->setCurrentWidget(m_play);
+	m_play->show(index);
 }
 
-void MediaflyPlayer::handleEpisodeDetailsBack()
+void MediaflyPlayer::showMenu()
 {
 	m_view->setCurrentWidget(m_menu);
 }

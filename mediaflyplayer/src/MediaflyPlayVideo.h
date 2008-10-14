@@ -2,13 +2,18 @@
 #define MediaflyPlayVideo_H
 
 #include "ui_MediaflyPlayVideo.h"
-#include "MediaflyPlay.h"
-#include "MediaflyEpisodeModel.h"
+#include <QModelIndex>
 
-class MediaflyPlayVideo : public MediaflyPlay, private Ui::MediaflyPlayVideo
+class MediaflyPlayVideo : public QWidget, private Ui::MediaflyPlayVideo
 {
+	Q_OBJECT
 public:
-	MediaflyPlayVideo(MediaflyEpisodeModel& episodeModel, QWidget *parent = 0);
+	MediaflyPlayVideo(QWidget *parent = 0);
+	void show(const QModelIndex& index);
+	void hide();
+
+private:
+	QModelIndex m_index;
 };
 
 #endif

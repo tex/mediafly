@@ -1,5 +1,6 @@
 #include "MediaflyEpisodeDetails.h"
 #include "MediaflyMenu.h"
+#include "MediaflyPlay.h"
 #include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
@@ -21,10 +22,11 @@ private:
 
 	MediaflyEpisodeDetails *m_episodeDetails;
 	MediaflyMenu           *m_menu;
+	MediaflyPlay           *m_play;
 
 private slots:
 	void handlePlayMenu(const QModelIndex& index);
 	void handleShowMenu(const QModelIndex& index);
-	void handleEpisodeDetailsBack();
+	void showMenu();
 };
 

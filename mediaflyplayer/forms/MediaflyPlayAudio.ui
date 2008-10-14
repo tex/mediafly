@@ -39,7 +39,7 @@
     </widget>
    </item>
    <item row="0" column="2" >
-    <widget class="QLabel" name="showTileLabel" >
+    <widget class="QLabel" name="showTitleLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
        <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
     </widget>
    </item>
    <item row="3" column="0" colspan="3" >
-    <widget class="QLabel" name="NumberOfEpisodesLabel" >
+    <widget class="QLabel" name="numberOfEpisodesLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
        <horstretch>0</horstretch>

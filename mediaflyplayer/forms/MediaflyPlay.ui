@@ -87,10 +87,27 @@
     </spacer>
    </item>
    <item row="0" column="0" colspan="5" >
-    <widget class="QWidget" native="1" name="widget" />
+    <widget class="QStackedWidget" name="stackedWidget" >
+     <widget class="MediaflyPlayAudio" name="audio" />
+     <widget class="MediaflyPlayVideo" name="video" />
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MediaflyPlayAudio</class>
+   <extends>QWidget</extends>
+   <header>MediaflyPlayAudio.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MediaflyPlayVideo</class>
+   <extends>QWidget</extends>
+   <header>MediaflyPlayVideo.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

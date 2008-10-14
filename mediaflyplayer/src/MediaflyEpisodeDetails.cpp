@@ -74,6 +74,12 @@ void MediaflyEpisodeDetails::update()
 void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
+	case Qt::Key_Enter:
+	case Qt::Key_Return:
+	{
+		emit showPlayMenu(m_index);
+		break;
+	}
 	case Qt::Key_Left:
 	{
 		if (m_index.row() > 0)

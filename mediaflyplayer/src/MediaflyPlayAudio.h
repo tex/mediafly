@@ -2,13 +2,18 @@
 #define MediaflyPlayAudio_H
 
 #include "ui_MediaflyPlayAudio.h"
-#include "MediaflyPlay.h"
-#include "MediaflyEpisodeModel.h"
+#include <QModelIndex>
 
-class MediaflyPlayAudio : public MediaflyPlay, private Ui::MediaflyPlayAudio
+class MediaflyPlayAudio : public QWidget, private Ui::MediaflyPlayAudio
 {
+	Q_OBJECT
 public:
-	MediaflyPlayAudio(MediaflyEpisodeModel& episodeModel, QWidget *parent = 0);
+	MediaflyPlayAudio(QWidget *parent = 0);
+	void show(const QModelIndex& index);
+	void hide();
+
+private:
+	QModelIndex m_index;
 };
 
 #endif
