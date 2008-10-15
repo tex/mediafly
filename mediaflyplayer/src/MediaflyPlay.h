@@ -20,10 +20,19 @@ signals:
 	void backToChannelsMenu();
 
 private:
+	enum State
+	{
+		STOP,
+		PAUSE,
+		PLAY,
+	}
+	m_state;
+
 	QModelIndex m_index;
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();
+	void updateStateIndicator(enum State state);
 
 private slots:
 	void handleChannelsButtonClicked();

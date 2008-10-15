@@ -21,7 +21,7 @@
     </widget>
    </item>
    <item row="2" column="0" >
-    <widget class="QPushButton" name="changeChannelButton" >
+    <widget class="QPushButton" name="changeChannelsButton" >
      <property name="text" >
       <string>Change Channel</string>
      </property>

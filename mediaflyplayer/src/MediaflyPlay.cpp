@@ -6,8 +6,8 @@ MediaflyPlay::MediaflyPlay(QWidget *parent) :
 {
 	setupUi(this);
 
-	connect(changeChannelButton, SIGNAL(clicked()),
-	        this, SLOT(handleChannelButtonClicked()));
+	connect(changeChannelsButton, SIGNAL(clicked()),
+	        this, SLOT(handleChannelsButtonClicked()));
 	connect(nextEpisodeButton, SIGNAL(clicked()),
 	        this, SLOT(handleNextEpisodeButtonClicked()));
 }
@@ -25,6 +25,23 @@ void MediaflyPlay::handleNextEpisodeButtonClicked()
 	audio->hide();
 	MediaflyEpisodeModel::advanceToNextEpisode(m_index);
 	update();
+}
+
+void MediaflyPlay::updateStateIndicator(enum State state)
+{
+	switch (state) {
+	case STOP:
+		playStateButton->setText("|");
+		break;
+	case PAUSE:
+		playStateButton->setText("||");
+		break;
+	case PLAY:
+		playStateButton->setText(">");
+		break;
+	default:
+		Q_ASSERT(false);
+	}
 }
 
 void MediaflyPlay::update()
