@@ -23,9 +23,11 @@ private:
 	QModelIndex m_index;
 
 	void keyPressEvent(QKeyEvent *event);
+	void update();
 
 private slots:
 	void handleChannelsButtonClicked();
+	void handleNextEpisodeButtonClicked();
 };
 
 #endif

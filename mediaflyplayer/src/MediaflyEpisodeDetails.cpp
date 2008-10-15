@@ -88,10 +88,7 @@ void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 	}
 	case Qt::Key_Right:
 	{
-		if (m_index.row() + 15 > m_index.model()->rowCount())
-			dynamic_cast<MediaflyEpisodeModel*>(const_cast<QAbstractItemModel*>(m_index.model()))->refresh();
-		if (m_index.row() + 1 < m_index.model()->rowCount())
-			m_index = m_index.model()->index(m_index.row() + 1, 0);
+		MediaflyEpisodeModel::advanceToNextEpisode(m_index);
 		break;
 	}
 	case Qt::Key_Escape:

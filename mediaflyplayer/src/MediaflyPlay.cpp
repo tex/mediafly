@@ -8,17 +8,27 @@ MediaflyPlay::MediaflyPlay(QWidget *parent) :
 
 	connect(changeChannelButton, SIGNAL(clicked()),
 	        this, SLOT(handleChannelButtonClicked()));
+	connect(nextEpisodeButton, SIGNAL(clicked()),
+	        this, SLOT(handleNextEpisodeButtonClicked()));
 }
 
 void MediaflyPlay::handleChannelsButtonClicked()
 {
+	video->hide();
+	audio->hide();
 	emit backToChannelsMenu();
 }
 
-void MediaflyPlay::show(const QModelIndex& index)
+void MediaflyPlay::handleNextEpisodeButtonClicked()
 {
-	m_index = index;
+	video->hide();
+	audio->hide();
+	MediaflyEpisodeModel::advanceToNextEpisode(m_index);
+	update();
+}
 
+void MediaflyPlay::update()
+{
 	if (m_index.data(MediaflyEpisodeModel::formatRole).toString().compare("Video", Qt::CaseInsensitive) == 0)
 	{
 		video->show(m_index);
@@ -29,6 +39,13 @@ void MediaflyPlay::show(const QModelIndex& index)
 		audio->show(m_index);
 		stackedWidget->setCurrentWidget(audio);
 	}
+}
+
+void MediaflyPlay::show(const QModelIndex& index)
+{
+	m_index = index;
+
+	update();
 
 	setFocusPolicy(Qt::StrongFocus);
 	setFocus();
