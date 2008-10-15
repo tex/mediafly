@@ -20,7 +20,7 @@ void MediaflyPlayAudio::show(const QModelIndex& index)
 	showDetailsLabel->setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
 	episodeNameLabel->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
 
-	QString episodesText = "Episode " + QString::number(m_index.row()) + " of " +
+	QString episodesText = "Episode " + QString::number(m_index.row() + 1) + " of " +
 		QString::number(dynamic_cast<const MediaflyEpisodeModel*>(m_index.model())->totalRowCount());
 
 	numberOfEpisodesLabel->setText(episodesText);
