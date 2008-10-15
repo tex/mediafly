@@ -45,14 +45,17 @@ public:
 
 	int totalRowCount() const;
 
-	static void advanceToNextEpisode(QModelIndex& index)
+	static bool advanceToNextEpisode(QModelIndex& index)
 	{
 		if (index.row() + 15 > index.model()->rowCount())
 			dynamic_cast<MediaflyEpisodeModel *>(
 				const_cast<QAbstractItemModel *>(index.model())
 			)->refresh();
-		if (index.row() + 1 < index.model()->rowCount())
+		if (index.row() + 1 < index.model()->rowCount()) {
 			index = index.model()->index(index.row() + 1, 0);
+			return true;
+		}
+		return false;
 	}
 
 signals:

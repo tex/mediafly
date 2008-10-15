@@ -82,13 +82,17 @@ void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 	}
 	case Qt::Key_Left:
 	{
-		if (m_index.row() > 0)
+		if (m_index.row() > 0) {
 			m_index = m_index.model()->index(m_index.row() - 1, 0);
+			update();
+		}
 		break;
 	}
 	case Qt::Key_Right:
 	{
-		MediaflyEpisodeModel::advanceToNextEpisode(m_index);
+		if (MediaflyEpisodeModel::advanceToNextEpisode(m_index)) {
+			update();
+		}
 		break;
 	}
 	case Qt::Key_Escape:
@@ -98,8 +102,7 @@ void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
 	}
 	default:
 		event->ignore();
-		return;
+		break;
 	}
-	update();
 }
 

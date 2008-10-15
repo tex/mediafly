@@ -23,8 +23,9 @@ void MediaflyPlay::handleNextEpisodeButtonClicked()
 {
 	video->hide();
 	audio->hide();
-	MediaflyEpisodeModel::advanceToNextEpisode(m_index);
-	update();
+	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index)) {
+		update();
+	}
 }
 
 void MediaflyPlay::updateStateIndicator(enum State state)
@@ -46,7 +47,8 @@ void MediaflyPlay::updateStateIndicator(enum State state)
 
 void MediaflyPlay::update()
 {
-	if (m_index.data(MediaflyEpisodeModel::formatRole).toString().compare("Video", Qt::CaseInsensitive) == 0)
+	QString format = m_index.data(MediaflyEpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
 	{
 		video->show(m_index);
 		stackedWidget->setCurrentWidget(video);
