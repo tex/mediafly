@@ -280,3 +280,9 @@ void MediaflyMenu::uploadNextPartOfMenu()
 	}
 }
 
+void MediaflyMenu::showChannelsMenu()
+{
+	m_state = ChannelMenu;
+	render(QModelIndex());
+}
+

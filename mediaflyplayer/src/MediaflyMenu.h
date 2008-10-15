@@ -17,6 +17,8 @@ public:
 	             MediaflyEpisodeModel&  episodeModel,
 	             QWidget               *parent = 0); 
 
+	void showChannelsMenu();
+
 signals:
 	void showPlayMenu(const QModelIndex& index);
 	void showShowMenu(const QModelIndex& index);

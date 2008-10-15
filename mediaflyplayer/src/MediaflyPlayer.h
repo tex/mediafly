@@ -28,5 +28,6 @@ private slots:
 	void handlePlayMenu(const QModelIndex& index);
 	void handleShowMenu(const QModelIndex& index);
 	void showMenu();
+	void showChannelsMenu();
 };
 

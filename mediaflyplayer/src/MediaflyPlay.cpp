@@ -5,6 +5,14 @@ MediaflyPlay::MediaflyPlay(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
+
+	connect(changeChannelButton, SIGNAL(clicked()),
+	        this, SLOT(handleChannelButtonClicked()));
+}
+
+void MediaflyPlay::handleChannelsButtonClicked()
+{
+	emit backToChannelsMenu();
 }
 
 void MediaflyPlay::show(const QModelIndex& index)
@@ -22,20 +30,9 @@ void MediaflyPlay::show(const QModelIndex& index)
 		stackedWidget->setCurrentWidget(audio);
 	}
 
-//	connect(m_index.model(), SIGNAL(refreshed()),
-//	        this, SLOT(updateImage()));
-
-	// TODO: Decide what to show based on audio/video content
+	setFocusPolicy(Qt::StrongFocus);
+	setFocus();
 }
-
-//void MediaflyPlay::updateImage()
-//{
-/*
-	if (m_icon->pixmap()->isNull()) {
-		m_icon->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
-	}
-*/
-//}
 
 void MediaflyPlay::keyPressEvent(QKeyEvent *event)
 {

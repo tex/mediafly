@@ -14,6 +14,9 @@ public:
 
 private:
 	QModelIndex m_index;
+
+private slots:
+	void updateImage();
 };
 
 #endif

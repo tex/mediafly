@@ -17,14 +17,15 @@ public:
 
 signals:
 	void back();
+	void backToChannelsMenu();
 
 private:
 	QModelIndex m_index;
 
 	void keyPressEvent(QKeyEvent *event);
 
-//private slots:
-//	void updateImage();
+private slots:
+	void handleChannelsButtonClicked();
 };
 
 #endif

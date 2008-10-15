@@ -30,6 +30,8 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 
 	connect(m_play, SIGNAL(back()),
 	        this, SLOT(showMenu()));
+	connect(m_play, SIGNAL(backToChannelsMenu()),
+	        this, SLOT(showChannelsMenu()));
 }
 
 void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
@@ -48,6 +50,12 @@ void MediaflyPlayer::handlePlayMenu(const QModelIndex& index)
 
 void MediaflyPlayer::showMenu()
 {
+	m_view->setCurrentWidget(m_menu);
+}
+
+void MediaflyPlayer::showChannelsMenu()
+{
+	m_menu->showChannelsMenu();
 	m_view->setCurrentWidget(m_menu);
 }
 
