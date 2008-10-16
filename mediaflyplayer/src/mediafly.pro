@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET = 
-#CONFIG += debug
+CONFIG += debug
 DEPENDPATH += .
 INCLUDEPATH += . libs/neux/edits libs/neux/delegates libs/neux/views libs/neux/models
 QT += xml network
