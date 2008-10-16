@@ -1,3 +1,4 @@
+#include "ui_MediaflyEpisodeDetails.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -6,7 +7,7 @@
 #include <QModelIndex>
 #include <QKeyEvent>
 
-class MediaflyEpisodeDetails : public QWidget
+class MediaflyEpisodeDetails : public QWidget, private Ui::MediaflyEpisodeDetails
 {
 	Q_OBJECT
 public:
@@ -18,20 +19,9 @@ signals:
 	void showPlayMenu(const QModelIndex& index);
 
 private:
-	QHBoxLayout     *m_hLayoutDetails;
-	QHBoxLayout     *m_hLayoutName;
-	QVBoxLayout     *m_vLayout;
-
-	QLabel    *m_header;
-	QLabel    *m_icon;
-	QLabel    *m_label;
-	QLabel    *m_length;
-	QTextEdit *m_details;
-	QTextEdit *m_info;
-
 	QModelIndex m_index;
-	void keyPressEvent(QKeyEvent *event);
 
+	void keyPressEvent(QKeyEvent *event);
 	void update();
 
 private slots:

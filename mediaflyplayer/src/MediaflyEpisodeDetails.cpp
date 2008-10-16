@@ -5,39 +5,7 @@
 MediaflyEpisodeDetails::MediaflyEpisodeDetails(QWidget *parent) :
 	QWidget(parent)
 {
-	m_hLayoutDetails = new QHBoxLayout();
-	m_hLayoutName = new QHBoxLayout();
-	m_vLayout = new QVBoxLayout();
-	m_header = new QLabel(this);
-	m_icon = new QLabel(this);
-	m_label = new QLabel(this);
-	m_length = new QLabel(this);
-	m_details = new QTextEdit(this);
-	m_info = new QTextEdit(this);
-
-	setFocusPolicy(Qt::StrongFocus);
-	setFocus();
-
-	m_icon->setFixedSize(80, 80);
-
-	m_header->setAlignment(Qt::AlignRight);
-	m_length->setAlignment(Qt::AlignRight);
-
-	m_details->setReadOnly(true);
-	m_info->setReadOnly(true);
-
-	m_hLayoutName->addWidget(m_label);
-	m_hLayoutName->addWidget(m_length);
-
-	m_hLayoutDetails->addWidget(m_icon);
-	m_hLayoutDetails->addWidget(m_details);
-
-	m_vLayout->addWidget(m_header);
-	m_vLayout->addLayout(m_hLayoutName);
-	m_vLayout->addLayout(m_hLayoutDetails);
-	m_vLayout->addWidget(m_info);
-
-	setLayout(m_vLayout);
+	setupUi(this);
 }
 
 void MediaflyEpisodeDetails::show(const QModelIndex& index)

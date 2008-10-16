@@ -58,6 +58,7 @@ HEADERS += MediaflyConsumerBinary.h
 
 SOURCES += main.cpp
 
+FORMS += ../forms/MediaflyEpisodeDetails.ui
 HEADERS += MediaflyEpisodeDetails.h
 SOURCES += MediaflyEpisodeDetails.cpp
 
