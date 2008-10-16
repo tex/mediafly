@@ -14,7 +14,7 @@
   </property>
   <layout class="QGridLayout" >
    <item rowspan="2" row="0" column="0" >
-    <widget class="QLabel" name="iconLabel" >
+    <widget class="QLabel" name="m_iconLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
        <horstretch>0</horstretch>
@@ -39,7 +39,7 @@
     </widget>
    </item>
    <item row="0" column="2" >
-    <widget class="QLabel" name="showTitleLabel" >
+    <widget class="QLabel" name="m_showTitleLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
        <horstretch>0</horstretch>
@@ -52,7 +52,7 @@
     </widget>
    </item>
    <item row="2" column="0" colspan="3" >
-    <widget class="QLabel" name="episodeNameLabel" >
+    <widget class="QLabel" name="m_episodeNameLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
        <horstretch>0</horstretch>
@@ -65,7 +65,7 @@
     </widget>
    </item>
    <item row="3" column="0" colspan="3" >
-    <widget class="QLabel" name="numberOfEpisodesLabel" >
+    <widget class="QLabel" name="m_numberOfEpisodesLabel" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
        <horstretch>0</horstretch>
@@ -78,7 +78,7 @@
     </widget>
    </item>
    <item row="1" column="2" >
-    <widget class="QTextEdit" name="showDetailsLabel" >
+    <widget class="QTextEdit" name="m_showDetailsLabel" >
      <property name="readOnly" >
       <bool>true</bool>
      </property>
