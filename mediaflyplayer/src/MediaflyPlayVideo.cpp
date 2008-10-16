@@ -11,8 +11,8 @@ void MediaflyPlayVideo::show(const QModelIndex& index)
 {
 	m_index = index;
 
-	episodeNameLabel->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
-	showTitleLabel->setText(m_index.data(MediaflyEpisodeModel::showTitleRole).toString());
+	m_episodeNameLabel->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
+	m_showTitleLabel->setText(m_index.data(MediaflyEpisodeModel::showTitleRole).toString());
 	
 	// TODO PLAY
 }
