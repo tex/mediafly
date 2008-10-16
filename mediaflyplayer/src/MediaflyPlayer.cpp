@@ -36,8 +36,6 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 
 void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	m_view->setCurrentWidget(m_episodeDetails);
 	m_episodeDetails->show(index);
 }
