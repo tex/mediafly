@@ -23,8 +23,8 @@ public:
 	{ }
 
 	const QString& channelSlug() const { return m_channelSlug; }
-	const int offset() const { return m_offset; }
-	const int limit() const { return m_limit; }
+	int offset() const { return m_offset; }
+	int limit() const { return m_limit; }
 	const QString& mediaType() const { return m_mediaType; }
 
 private:
