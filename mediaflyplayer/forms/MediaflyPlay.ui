@@ -14,21 +14,21 @@
   </property>
   <layout class="QGridLayout" >
    <item row="1" column="0" colspan="5" >
-    <widget class="QProgressBar" name="progressBar" >
+    <widget class="QProgressBar" name="m_progressBar" >
      <property name="value" >
       <number>24</number>
      </property>
     </widget>
    </item>
    <item row="2" column="0" >
-    <widget class="QPushButton" name="changeChannelsButton" >
+    <widget class="QPushButton" name="m_changeChannelsButton" >
      <property name="text" >
       <string>Change Channel</string>
      </property>
     </widget>
    </item>
    <item row="2" column="2" >
-    <widget class="QPushButton" name="playStateButton" >
+    <widget class="QPushButton" name="m_playStateButton" >
      <property name="maximumSize" >
       <size>
        <width>75</width>
@@ -41,14 +41,14 @@
     </widget>
    </item>
    <item row="2" column="4" >
-    <widget class="QPushButton" name="nextEpisodeButton" >
+    <widget class="QPushButton" name="m_nextEpisodeButton" >
      <property name="text" >
       <string>Next Episode</string>
      </property>
     </widget>
    </item>
    <item row="3" column="4" >
-    <widget class="QPushButton" name="playqueueButton" >
+    <widget class="QPushButton" name="m_playqueueButton" >
      <property name="text" >
       <string>Playqueue</string>
      </property>
@@ -87,9 +87,9 @@
     </spacer>
    </item>
    <item row="0" column="0" colspan="5" >
-    <widget class="QStackedWidget" name="stackedWidget" >
-     <widget class="MediaflyPlayAudio" name="audio" />
-     <widget class="MediaflyPlayVideo" name="video" />
+    <widget class="QStackedWidget" name="m_stackedWidget" >
+     <widget class="MediaflyPlayAudio" name="m_audio" />
+     <widget class="MediaflyPlayVideo" name="m_video" />
     </widget>
    </item>
   </layout>
