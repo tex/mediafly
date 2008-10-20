@@ -24,6 +24,8 @@
 
 using namespace mf;
 
+#define RIGHT_ARROW ":/neux/grey-arrow-right.gif"
+
 MenuModel::MenuModel(QObject *parent) :
 	UsersModel(parent)
 {
@@ -60,6 +62,7 @@ QVariant MenuModel::data(const QModelIndex& parent, int role) const
 			return m_name.at(rowCount);
 		case slugRole: return m_slug.at(rowCount);
 		case isUserRole: return false;
+		case rightIconRole: return RIGHT_ARROW;
 		default:       return QVariant();
 		}
 	}
@@ -73,6 +76,7 @@ QVariant MenuModel::data(const QModelIndex& parent, int role) const
 			case isUserRole: return true;
 			case isDefaultRole: return UsersModel::data(createIndex(rowCount, 0), UsersModel::isDefaultRole).toBool();
 			case slugRole: return MENU_USER;
+			case rightIconRole: return RIGHT_ARROW;
 			default:       return QVariant();
 			}
 		}
@@ -84,6 +88,7 @@ QVariant MenuModel::data(const QModelIndex& parent, int role) const
 				return m_name_users.at(rowCount - usersRowCount);
 			case slugRole: return m_slug_users.at(rowCount - usersRowCount);
 			case isUserRole: return false;
+			case rightIconRole: return RIGHT_ARROW;
 			default:       return QVariant();
 			}
 		}

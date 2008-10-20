@@ -24,6 +24,7 @@
 #define mfMenuModel_H
 
 #include "UsersModel.h"
+#include "nlistview.h"
 #include <QStringList>
 #include <QList>
 
@@ -35,6 +36,7 @@ public:
 	enum Roles
 	{
 		displayRole = Qt::DisplayRole,
+		rightIconRole = NListView::RightIconRole,
 		nameRole = Qt::UserRole + 2000,
 		slugRole, 
 		isUserRole,
