@@ -191,6 +191,7 @@ void mf::Menu::renderMenu(const QModelIndex& /*index*/)
 
 	m_listView->setCurrentIndex(m_lastMenuIndex);
 	m_listView->setEnabled(true);
+	m_listView->setShowLeftArrowIcon(false);
 }
 
 void mf::Menu::renderEpisodeMenu(const QModelIndex& index)
@@ -212,6 +213,7 @@ void mf::Menu::renderEpisodeMenu(const QModelIndex& index)
 
 	m_listView->setModel(&m_episodeModel);
 	m_listView->setItemDelegate(m_itemDelegateEpisode);
+	m_listView->setShowLeftArrowIcon(true);
 }
 
 void mf::Menu::renderChannelMenu(const QModelIndex& /*index*/)
@@ -226,6 +228,7 @@ void mf::Menu::renderChannelMenu(const QModelIndex& /*index*/)
 	m_listView->setItemDelegate(m_itemDelegateDefault);
 
 	m_listView->setCurrentIndex(m_lastChannelMenuIndex);
+	m_listView->setShowLeftArrowIcon(true);
 }
 
 void mf::Menu::render(const QModelIndex& index)
