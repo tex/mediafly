@@ -25,6 +25,7 @@
 
 #include "Mediafly.h"
 #include "ChannelModelData.h"
+#include "nlistview.h"
 #include <QAbstractListModel>
 #include <QList>
 
@@ -37,6 +38,7 @@ public:
 	enum Roles
 	{
 		nameRole = Qt::DisplayRole,
+		rightIconRole = NListView::RightIconRole,
 		slugRole = Qt::UserRole + 1000,
 	};
 

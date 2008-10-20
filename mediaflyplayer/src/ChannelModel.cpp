@@ -25,6 +25,8 @@
 
 using namespace mf;
 
+#define RIGHT_ARROW ":/neux/grey-arrow-right.gif"
+
 ChannelModel::ChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
@@ -93,6 +95,7 @@ QVariant ChannelModel::data(const QModelIndex &index, int role) const
 
 	switch (role) {
 	case nameRole: return m_data.at(index.row()).name();
+	case rightIconRole: return RIGHT_ARROW;
 	case slugRole: return m_data.at(index.row()).slug();
 	default:       return QVariant();
 	}
