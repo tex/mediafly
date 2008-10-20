@@ -9,6 +9,9 @@
     <height>388</height>
    </rect>
   </property>
+  <property name="focusPolicy" >
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle" >
    <string>Mediafly now playing</string>
   </property>
@@ -61,7 +64,7 @@
      <property name="sizeType" >
       <enum>QSizePolicy::Fixed</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>40</width>
        <height>20</height>
@@ -77,7 +80,7 @@
      <property name="sizeType" >
       <enum>QSizePolicy::Fixed</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" >
       <size>
        <width>40</width>
        <height>20</height>

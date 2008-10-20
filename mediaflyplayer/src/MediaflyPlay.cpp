@@ -65,9 +65,6 @@ void MediaflyPlay::show(const QModelIndex& index)
 	m_index = index;
 
 	update();
-
-	setFocusPolicy(Qt::StrongFocus);
-	setFocus();
 }
 
 void MediaflyPlay::keyPressEvent(QKeyEvent *event)
