@@ -38,6 +38,17 @@ List::~List()
 {
 }
 
+void List::resizeEvent(QResizeEvent *event)
+{
+	ListParent::resizeEvent(event);
+
+	// Set the size of the right icon to the size of the
+	// left array icon because we use right icon as a right
+	// array icon.
+	//
+	setRightIconSize(leftArrowIconSize());
+}
+
 void List::keyPressEvent(QKeyEvent *event)
 {
 	ListParent::keyPressEvent(event);

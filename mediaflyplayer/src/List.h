@@ -49,6 +49,7 @@ signals:
 	void rightPressed();
 
 private:
+	void resizeEvent(QResizeEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
 
