@@ -27,10 +27,11 @@
 #include <QWidget>
 #include <QListView>
 #include <QKeyEvent>
+#include "nribbonlistview.h"
 
 namespace mf {
 
-typedef QListView ListParent;
+typedef NRibbonListView ListParent;
 
 class List : public ListParent
 {
