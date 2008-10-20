@@ -29,6 +29,7 @@
 #include "ConsumerBinary.h"
 #include "SearchQueryData.h"
 #include "SearchQuery.h"
+#include "nlistview.h"
 #include <QAbstractListModel>
 #include <QMap>
 #include <QString>
@@ -44,6 +45,7 @@ public:
 	enum Roles
 	{
 		titleRole = Qt::DisplayRole,
+		imageUrlRole = NListView::IconRole,
 		slugRole = Qt::UserRole + 1000,
 		descriptionRole,
 		formatRole,
@@ -52,7 +54,6 @@ public:
 		publishedRole,
 		showSlugRole,
 		showTitleRole,
-		imageUrlRole,
 		imageRole,
 		channelRole,
 	};
