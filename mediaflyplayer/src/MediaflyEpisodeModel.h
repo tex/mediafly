@@ -18,7 +18,7 @@ public:
 	enum Roles
 	{
 		titleRole = Qt::DisplayRole,
-		slugRole = Qt::UserRole,
+		slugRole = Qt::UserRole + 1000,
 		descriptionRole,
 		formatRole,
 		urlRole,

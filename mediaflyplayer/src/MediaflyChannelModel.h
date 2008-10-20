@@ -13,7 +13,7 @@ public:
 	enum Roles
 	{
 		nameRole = Qt::DisplayRole,
-		slugRole = Qt::UserRole,
+		slugRole = Qt::UserRole + 1000,
 	};
 
 	MediaflyChannelModel(QObject *parent = 0);
