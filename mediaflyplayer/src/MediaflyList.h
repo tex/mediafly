@@ -20,5 +20,6 @@ signals:
 
 private:
 	void keyPressEvent(QKeyEvent *event);
+	void paintEvent(QPaintEvent * e);
 };
 

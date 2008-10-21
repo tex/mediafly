@@ -1,4 +1,5 @@
 #include "MediaflyList.h"
+#include <QPainter>
 
 MediaflyList::MediaflyList(QWidget *parent) :
 	MediaflyListParent(parent)
@@ -36,5 +37,22 @@ void MediaflyList::keyPressEvent(QKeyEvent *event)
 		event->ignore();
 		break;
 	}
+}
+
+void MediaflyList::paintEvent(QPaintEvent * e)
+{
+	if (model() && model()->rowCount(rootIndex()) < 1)
+	{
+		QPainter painter(viewport());
+		QRect rect = painter.viewport();
+		QString message = tr("Loading menu, please wait...");
+		int wMessage = painter.fontMetrics().width(message);
+		int hMessage = painter.fontMetrics().height();
+		int leftOffset = (rect.width() - wMessage) / 2;
+		int topOffset = (rect.height() - hMessage) / 2;
+		painter.drawText(leftOffset, topOffset, message);
+	}
+	else
+		MediaflyListParent::paintEvent(e);
 }
 
