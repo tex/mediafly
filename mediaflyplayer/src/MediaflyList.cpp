@@ -12,7 +12,7 @@ MediaflyList::~MediaflyList()
 
 void MediaflyList::keyPressEvent(QKeyEvent *event)
 {
-	QListView::keyPressEvent(event);
+	MediaflyListParent::keyPressEvent(event);
 
 	switch (event->key()) {
 	case Qt::Key_Right:
