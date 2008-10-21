@@ -1,6 +1,10 @@
 #include "MediaflyEpisodeDelegate.h"
 #include "MediaflyEpisodeModel.h"
-#include <QDebug>
+
+int   MediaflyEpisodeDelegate::vMargin = 5;
+int   MediaflyEpisodeDelegate::hMargin = 5;
+int   MediaflyEpisodeDelegate::showLines = 3;
+QSize MediaflyEpisodeDelegate::iconSize = QSize(50, 50);
 
 void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
@@ -15,19 +19,27 @@ void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 	QString showTitle(index.data(MediaflyEpisodeModel::showTitleRole).toString());
 
 	QRect r = option.rect.adjusted(2, 2, -2, -2);
-	QRect i(r.left(), r.top(), 40, 40);
+	int hText = option.fontMetrics.height();
 
-	painter->drawPixmap(i, icon.scaled(i.width(), i.height()));
-	painter->drawText(r.left() + i.width() + 5, r.top(), r.width() - i.width() - 5, r.height() / 2,
-	                  Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, episodeTitle);
-	painter->drawText(r.left() + i.width() + 5, r.top() + r.height() / 2, r.width() - i.width() - 5, r.height() / 2,
-	                  Qt::AlignVCenter|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
+	QRect i(QPoint(r.left()                   , r.top() + (r.height() - iconSize.height()) / 2),
+	        QPoint(r.left() + iconSize.width(), r.height()));
+
+	QRect t1(QPoint(r.left() + i.width() + hMargin , r.top()),
+	         QPoint(r.width() - i.width() - hMargin, r.top() + hText * 2));
+
+	QRect t2(QPoint(r.left() + i.width() + hMargin , r.top() + hText * 2),
+	         QPoint(r.width() - i.width() - hMargin, r.height() - vMargin));
+
+	painter->drawPixmap(i, icon.scaled(iconSize.width(), iconSize.height()));
+	painter->drawText(t1, Qt::AlignTop|Qt::AlignLeft|Qt::TextWordWrap, episodeTitle);
+	painter->drawText(t2, Qt::AlignBottom|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
 }
 
-QSize MediaflyEpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize MediaflyEpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
 {
-	QSize size = QItemDelegate::sizeHint(option, index);
-	size.setHeight(50);
-	return size;
+	// Return size big enought to hold a 'showLines' lines of text plus
+	// some spacing on top and bottom.
+	//
+	return QSize(1, option.fontMetrics.height() * showLines + vMargin * 2);
 }
 
