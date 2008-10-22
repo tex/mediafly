@@ -98,15 +98,15 @@ signals:
     void setCaptionSize ( const QSize &size ){CaptionSize = size;}
     void setClickFlashActive (bool isActive) { isClickFlashActive = isActive; }
 
-    void drawFocus (QPainter *painter, const QStyleOptionViewItem &option) const;
-    void drawLeftArrowIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void drawRightIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void drawDisplay (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool active) const;
-    void drawSelection (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void drawIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void drawCaptionHLine (QPainter *painter, const QStyleOptionViewItem &option,  const QModelIndex &index, int length) const;
+    virtual void drawFocus (QPainter *painter, const QStyleOptionViewItem &option) const;
+    virtual void drawLeftArrowIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual void drawRightIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual void drawDisplay (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool active) const;
+    virtual void drawSelection (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual void drawIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual void drawCaptionHLine (QPainter *painter, const QStyleOptionViewItem &option,  const QModelIndex &index, int length) const;
 
-private:
+protected:
     QSize LeftArrowIconSize;
     mutable QSize ItemHintSize;
     QSize LeftIconSize;
