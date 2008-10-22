@@ -32,6 +32,7 @@ List::List(QWidget *parent) :
 	m_empty(false)
 {
 	setItemDelegate(new mf::MenuDelegate());
+	setCaptionAnimationPolicy(AlwaysOff);
 }
 
 List::~List()
