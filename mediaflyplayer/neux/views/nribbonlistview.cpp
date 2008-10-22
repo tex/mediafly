@@ -179,22 +179,7 @@ void NRibbonListView :: paintEvent ( QPaintEvent *e )
 			continue;
 		}
 
-		if(option.state & QStyle::State_HasFocus )
-		{
-			pNItemDelegate->drawFocus(&painter, option);
-			pNItemDelegate->drawLeftArrowIcon (&painter, option, index);
-			pNItemDelegate->drawRightIcon (&painter, option, index);
-		}
-		QString caption = index.data(NListView::CaptionRole ).toString();
-		QFontMetrics metrics(painter.font());
-		painter.drawText( QRect(option.rect.x() + pNItemDelegate->captionOffset().x( ), 
-								option.rect.y( ) + pNItemDelegate->captionOffset().y( ) +  option.rect.height( ) /2 - pNItemDelegate->captionSize().height( )/2  , 
-								pNItemDelegate->captionSize().width( ) , pNItemDelegate->captionSize().height( )),Qt::AlignLeft | Qt::AlignVCenter,
-								metrics.elidedText(caption, Qt::ElideRight,pNItemDelegate->captionSize().width(),
-											 Qt::TextShowMnemonic));
-		pNItemDelegate->drawCaptionHLine (&painter, option, index, metrics.width(caption));
-		pNItemDelegate->drawSelection (&painter, option, index);
-		pNItemDelegate->drawIcon (&painter, option, index);
+		pNItemDelegate->paint(&painter,option,index);
 	}
 }
 
