@@ -139,7 +139,8 @@ QSize NItemDelegate::sizeHint ( const QStyleOptionViewItem & option,
         if ( parent( ) )
         {
             QWidget *p = static_cast<QWidget*>(parent( ) );
-            ItemHintSize = QSize(p->width( ) ,p->height( ) / (p->height( )/(p->font().pointSize( )*5/3)));
+            QFontMetrics fm = QFontMetrics(p->font());
+            ItemHintSize = QSize(p->width( ) ,(fm.height()*5/3));
         }
         else
             ItemHintSize = QItemDelegate :: sizeHint ( option , index );
@@ -159,7 +160,8 @@ QSize NItemDelegate::sizeHint ( const QStyleOptionViewItem & option,
         if ( parent( ) )
         {
             QWidget *p = static_cast<QWidget*>(parent( ) );
-            ItemHintSize = QSize(ItemHintSize.width() ,p->height( ) / (p->height( )/(p->font().pointSize( )*5/3)));
+            QFontMetrics fm = QFontMetrics(p->font());
+            ItemHintSize = QSize(p->width( ) ,(fm.height()*5/3));
         }
         else
             ItemHintSize = QSize(ItemHintSize.width(), QItemDelegate :: sizeHint ( option , index ).height());
