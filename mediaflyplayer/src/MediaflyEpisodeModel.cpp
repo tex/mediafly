@@ -101,18 +101,17 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	case publishedRole:   return (m_data[index.row()]).published();
 	case showSlugRole:    return (m_data[index.row()]).showSlug();
 	case showTitleRole:   return (m_data[index.row()]).showTitle();
-	case imageUrlRole:    return (m_data[index.row()]).imageUrl();
+	case imageUrlRole: 
 	case imageRole:
 	{
 		QString path = m_data[index.row()].imageUrl();
 		QPixmap image;
 		if (!QPixmapCache::find(path, image)) {
 			m_mediafly->Utility_GetImage(const_cast<MediaflyConsumerBinary *>(&m_binaryData), path);
-			return QVariant();
-		} else {
-			return image;
 		}
-		
+		if (role == imageUrlRole)
+			return path;
+		return image;
 	} 
 	case channelRole:     return (m_data[index.row()]).channel();
 	default:              return QVariant();
