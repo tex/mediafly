@@ -269,7 +269,7 @@ int NListView::rows(const QModelIndex &index) const
 void NListView::keyPressEvent(QKeyEvent *event)
 {
 	event->ignore();
-	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Right) 
+	if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return || event->key() == Qt::Key_Right) 
 	{
 		NItemDelegate* delegate = qobject_cast<NItemDelegate*>( itemDelegate(currentIndex()) );
 		if (delegate != NULL)
