@@ -41,6 +41,7 @@ public:
 	~List();
 
 	void setEmpty() { m_empty = true; }
+	void setItemDelegate(QAbstractItemDelegate *newDelegate);
 
 signals:
 	void almostAtEndOfList();
@@ -49,7 +50,6 @@ signals:
 	void rightPressed();
 
 private:
-	void resizeEvent(QResizeEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
 

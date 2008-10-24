@@ -39,15 +39,20 @@ List::~List()
 {
 }
 
-void List::resizeEvent(QResizeEvent *event)
+void List::setItemDelegate(QAbstractItemDelegate *newDelegate)
 {
-	ListParent::resizeEvent(event);
+	ListParent::setItemDelegate(newDelegate);
 
-	// Set the size of the right icon to the size of the
-	// left array icon because we use right icon as a right
-	// array icon.
-	//
+	// Set this size of the right icon to size of the
+	// left arrow icon because the right icon is used
+	// as arrow...
+
 	setRightIconSize(leftArrowIconSize());
+
+	// Recompute layout with the given size of the
+	// right icon.
+
+	delegate->computeLayout(dynamic_cast<QWidget *>(this));
 }
 
 void List::keyPressEvent(QKeyEvent *event)
