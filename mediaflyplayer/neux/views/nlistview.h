@@ -86,11 +86,8 @@ class NListView : public QListView
     {
         setCurrentIndex(model()->index(r, 0,rootIndex()));
     }
-    void setItemDelegate(QAbstractItemDelegate* newDelegate)
-    {
-        delegate = static_cast<NItemDelegate*>(newDelegate);
-        QListView::setItemDelegate(newDelegate);
-    }
+
+    void setItemDelegate(QAbstractItemDelegate *newDelegate);
 
     void setShowLeftArrowIcon ( bool b ) { delegate->setShowLeftArrowIcon( b );}
     void setShowRightIcon(bool b){ delegate->setShowRightIcon( b ) ;}
@@ -175,6 +172,8 @@ private:
 
 private:
 	QScrollBar *scrollbar;
+
+protected:
     NItemDelegate *delegate;
 
 

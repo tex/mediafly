@@ -115,61 +115,16 @@ void NListView :: on_editor_enable_inputmethod ( bool enable )
     delegate->onEnableInputMethod(enable);
 }
 
+void NListView :: setItemDelegate( QAbstractItemDelegate *newDelegate )
+{
+	QListView :: setItemDelegate(newDelegate);
+	delegate = dynamic_cast<NItemDelegate *>(newDelegate);
+	delegate->computeLayout(dynamic_cast<QWidget*>(this));
+}
+
 void NListView :: resizeEvent ( QResizeEvent * e )
 {
-	QFontMetrics fm = QFontMetrics( font());
-    int itemHeight = height() / (height()/(fm.height()*5/3));
-
-
-    if (delegate->itemHintSize( ).width() < 0 && 
-		delegate->itemHintSize().height() < 0)
-		delegate->setItemHintSize( QSize( width() , itemHeight) ) ;
-
-    if ( delegate->leftArrowIconOffset( ).isNull( ) )
-    {
-        delegate->setLeftArrowIconOffset( QPoint( itemHeight - fm.height( )*13/30, 0 ) );
-    }
-    if ( !delegate->leftArrowIconSize( ).isValid( ) )
-        delegate->setLeftArrowIconSize( QSize(fm.height( )*13/30, fm.height( )*2/3 ));
-    
-    if ( !delegate->leftIconSize( ).isValid( ))
-        delegate->setLeftIconSize( QSize(fm.height( ),fm.height( ) ) );
-    if ( delegate->leftIconOffset( ).isNull( ) )
-    {
-        if ( delegate->hasShowLeftArrowIcon( ) )
-            delegate->setLeftIconOffset( QPoint ( delegate->leftArrowIconOffset( ).x( ) 
-                                                    + itemHeight, 0 ) );
-        else
-            delegate->setLeftIconOffset( QPoint ( itemHeight, 0 ) );
-    }
-
-
-    if ( !delegate->rightIconSize( ).isValid( ))
-        delegate->setRightIconSize( QSize ( fm.height( ) , fm.height( ) - 3 ) );
-    if ( delegate->rightIconOffset( ).isNull( ) )
-        delegate->setRightIconOffset( QPoint ( width( ) - delegate->rightIconSize( ).width( ) - itemHeight ,
-                                        0 ) );
-
-    if ( delegate->captionOffset( ).isNull( ) )
-    {
-        if ( hasShowIcon( ) )
-            delegate->setCaptionOffset( QPoint ( delegate->leftIconOffset().x( ) + itemHeight, 0 ) );
-        else if ( hasShowLeftArrowIcon( ) )
-            delegate->setCaptionOffset( QPoint ( delegate->leftArrowIconOffset().x( ) + itemHeight, 0 ) );
-        else 
-            delegate->setCaptionOffset( QPoint ( itemHeight, 0 ) );
-    }
-
-    if ( !delegate->captionSize( ).isValid( ) )
-    {
-         if ( hasShowRightIcon( ) )
-            delegate->setCaptionSize(QSize(delegate->rightIconOffset( ).x( ) - delegate->captionOffset( ).x( ) ,
-                                            fm.height( ) ) ); 
-        else
-            delegate->setCaptionSize(QSize(width( ) - delegate->captionOffset( ).x( ) , 
-                                           fm.height( ) ) ); 
-    }
-
+	delegate->computeLayout(dynamic_cast<QWidget*>(this));
 	return QListView :: resizeEvent ( e );
 }
 
