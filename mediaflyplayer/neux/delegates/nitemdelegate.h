@@ -106,6 +106,7 @@ signals:
     virtual void drawIcon (QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     virtual void drawCaptionHLine (QPainter *painter, const QStyleOptionViewItem &option,  const QModelIndex &index, int length) const;
 
+    virtual void computeLayout(QWidget *parent);
 protected:
     QSize LeftArrowIconSize;
     mutable QSize ItemHintSize;

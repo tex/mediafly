@@ -350,3 +350,46 @@ void NItemDelegate::drawCaptionHLine (QPainter *painter,
     }
 }
 
+void NItemDelegate::computeLayout(QWidget *parent)
+{
+	QFontMetrics fm(parent->font());
+
+	// leftArrowIconSize is sorta of constant, compute it as early as
+	// possible.
+
+	if (!LeftArrowIconSize.isValid())
+		LeftArrowIconSize = QSize(fm.height() * 13/30, fm.height() * 2/3);
+
+	if (!ItemHintSize.isValid())
+		return;
+
+	LeftArrowIconPosition = QPoint(ItemHintSize.height() / 5, 0);
+
+	// Set size of the left icon to height if the itemHintSize. Minus small
+	// border around...
+
+	int border = ItemHintSize.height() / 5;
+
+	if (!LeftIconSize.isValid())
+		LeftIconSize = QSize(ItemHintSize.height() - border, ItemHintSize.height() - border);
+
+	LeftIconPosition = QPoint(0, 0);
+	if (hasShowLeftArrowIcon())
+		LeftIconPosition += QPoint(LeftArrowIconPosition.x() + LeftArrowIconSize.width() + 5, 0);
+
+	if (!RightIconSize.isValid())
+		RightIconSize = LeftIconSize;
+
+	RightIconPosition = QPoint(parent->width() - RightIconSize.width() - border, 0);
+
+	CaptionPosition = QPoint(5, 0);
+	if (hasShowIcon())
+		CaptionPosition += QPoint(LeftIconPosition.x() + LeftIconSize.width(), 0);
+	if (hasShowLeftArrowIcon())
+		CaptionPosition += QPoint(LeftArrowIconPosition.x() + LeftArrowIconSize.width(), 0);
+
+	CaptionSize = QSize(parent->width() - CaptionPosition.x(), ItemHintSize.height());
+	if (hasShowRightIcon())
+		CaptionSize -= QSize(parent->width() - RightIconPosition.x(), 0);
+}
+
