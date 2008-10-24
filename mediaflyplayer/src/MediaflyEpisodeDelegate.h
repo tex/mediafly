@@ -1,3 +1,6 @@
+#ifndef MediaflyEpisodeDelegate_H
+#define MediaflyEpisodeDelegate_H
+
 #include <QItemDelegate>
 #include <QPainter>
 #include <QStyleOptionViewItem>
@@ -16,4 +19,6 @@ private:
 	static int showLines;
 	static QSize iconSize;
 };
+
+#endif
 
