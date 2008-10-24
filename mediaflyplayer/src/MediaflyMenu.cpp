@@ -49,6 +49,7 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	// Remember the default item delegate that m_listView uses.
 	// 
 	m_itemDelegateDefault = m_listView->itemDelegate();
+	m_itemDelegateEpisode = new MediaflyEpisodeDelegate(m_listView);
 
 	m_lastMenuIndex = m_menuModel.index(0, 0);
 	m_lastChannelMenuIndex = QModelIndex();
@@ -145,7 +146,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	m_episodeModel.refresh(MediaflyEpisodeQuery(slug, 0, itemsReadAtOnce));
 
 	m_listView->setModel(&m_episodeModel);
-	m_listView->setItemDelegate(&m_itemDelegateEpisode);
+	m_listView->setItemDelegate(m_itemDelegateEpisode);
 }
 
 void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)

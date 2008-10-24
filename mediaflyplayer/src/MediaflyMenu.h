@@ -53,7 +53,7 @@ private:
 	void render(const QModelIndex& index);
 
 	QAbstractItemDelegate   *m_itemDelegateDefault;
-	MediaflyEpisodeDelegate  m_itemDelegateEpisode;
+	MediaflyEpisodeDelegate *m_itemDelegateEpisode;
 
 	QModelIndex              m_lastMenuIndex;
 	QModelIndex              m_lastChannelMenuIndex;
