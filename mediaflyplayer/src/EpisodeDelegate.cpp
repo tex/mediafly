@@ -28,42 +28,51 @@ using namespace mf;
 int   EpisodeDelegate::vMargin = 5;
 int   EpisodeDelegate::hMargin = 5;
 int   EpisodeDelegate::showLines = 3;
-QSize EpisodeDelegate::iconSize = QSize(50, 50);
 
-void EpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+EpisodeDelegate::EpisodeDelegate(QWidget *parent) :
+	NItemDelegate(parent)
 {
-	if (option.state & QStyle::State_Selected) {
-		painter->fillRect(option.rect, option.palette.highlight());
-		painter->setPen(option.palette.highlightedText().color());
-	} else
-		painter->setPen(option.palette.text().color());
+	QFontMetrics fm(parent->font());
 
-	QPixmap icon(index.data(mf::EpisodeModel::imageRole).value<QPixmap>());
+	// Return size big enought to hold a 'showLines' lines of text plus
+	// some spacing on top and bottom.
+
+	ItemHintSize = QSize(1, fm.height() * showLines + vMargin * 2);
+}
+
+void EpisodeDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool active) const
+{
+	QColor color = index.data(NListView::FgColorRole).value<QColor>(); 
+	if (color.isValid())
+	{
+		painter->setPen(color);
+	}
+	else
+	{
+		painter->setPen(active ? ACTIVE_COLOR : INACTIVE_COLOR);
+	}
+
 	QString episodeTitle(index.data(mf::EpisodeModel::titleRole).toString());
 	QString showTitle(index.data(mf::EpisodeModel::showTitleRole).toString());
 
-	QRect r = option.rect.adjusted(2, 2, -2, -2);
 	int hText = option.fontMetrics.height();
 
-	QRect i(QPoint(r.left()                   , r.top() + (r.height() - iconSize.height()) / 2),
-	        QPoint(r.left() + iconSize.width(), r.height()));
+	QPoint pt11(option.rect.x() + CaptionPosition.x(), option.rect.y() + CaptionPosition.y() + vMargin);
+	QPoint pt12(pt11.x() + CaptionSize.width(), pt11.y() + hText * 2);
 
-	QRect t1(QPoint(r.left() + i.width() + hMargin , r.top()),
-	         QPoint(r.width() - i.width() - hMargin, r.top() + hText * 2));
+	QRect t1(pt11, pt12);
 
-	QRect t2(QPoint(r.left() + i.width() + hMargin , r.top() + hText * 2),
-	         QPoint(r.width() - i.width() - hMargin, r.height() - vMargin));
+	QPoint pt21(option.rect.x() + CaptionPosition.x(), pt11.y() + hText * 2);
+	QPoint pt22(pt21.x() + CaptionSize.width(), pt21.y() + hText);
 
-	painter->drawPixmap(i, icon.scaled(iconSize.width(), iconSize.height()));
+	QRect t2(pt21, pt22);
+
 	painter->drawText(t1, Qt::AlignTop|Qt::AlignLeft|Qt::TextWordWrap, episodeTitle);
 	painter->drawText(t2, Qt::AlignBottom|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
 }
 
 QSize EpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
 {
-	// Return size big enought to hold a 'showLines' lines of text plus
-	// some spacing on top and bottom.
-	//
-	return QSize(1, option.fontMetrics.height() * showLines + vMargin * 2);
+	return ItemHintSize;
 }
 

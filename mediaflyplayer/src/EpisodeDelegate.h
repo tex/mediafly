@@ -27,23 +27,22 @@
 #include <QPainter>
 #include <QStyleOptionViewItem>
 #include <QModelIndex>
+#include "nitemdelegate.h"
 
 namespace mf {
 
-class EpisodeDelegate : public QItemDelegate
+class EpisodeDelegate : public NItemDelegate
 {
 public:
-	EpisodeDelegate(QObject *parent = 0) :
-		QItemDelegate(parent) { }
+	EpisodeDelegate(QWidget *parent = 0);
 
-	void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool active) const;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
 private:
 	static int vMargin;
 	static int hMargin;
 	static int showLines;
-	static QSize iconSize;
 };
 
 }
