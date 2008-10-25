@@ -21,6 +21,8 @@
  ****************************************************************************/
 
 #include "Player.h"
+#include "nmessagebox.h"
+#include "nmultilanguage.h"
 #include <QApplication>
 #include <QFileInfo>
 
@@ -29,10 +31,31 @@ QString currentPath;
 int main(int argc, char** argv)
 {
 	QApplication app(argc, argv);
+	app.setStyle("nosdstyle");
+
 	QFileInfo info(argv[0]);
 	currentPath = info.path();
-	mf::Player v;
-	v.show();
+
+	QCoreApplication::setOrganizationName("Neuros");
+	QCoreApplication::setOrganizationDomain("neurostechnology.com");
+	QCoreApplication::setApplicationName("mediafly");
+
+	NMultiLanguage lang;
+
+	//Check network state
+
+	if (1 != CoolNetworkStateCheck())
+	{
+		NMessageBox::warning(0, 
+		                     QObject::tr("Ethernet cable not detected"), 
+		                     QObject::tr("\nCheck your wireless adapter "
+		                                 "or connect a networked Ethernet cable and try again."),
+		QMessageBox::Ok, QMessageBox::Ok, DEF_MSGBOX_TIME);
+		return 0;
+	}
+
+	mf::Player v(0, app.arguments());
+
 	return app.exec();
 }
 
