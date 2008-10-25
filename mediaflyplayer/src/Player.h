@@ -29,6 +29,7 @@
 #include "PersonalizeSimple.h"
 #include "Playqueue.h"
 #include "Search.h"
+#include "nbackgroundmanagedwidget.h"
 #include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
@@ -36,7 +37,7 @@
 
 namespace mf {
 
-class Player : public QWidget
+class Player : public NBackgroundManagedWidget
 {
 	Q_OBJECT
 public:

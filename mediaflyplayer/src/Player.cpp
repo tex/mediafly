@@ -26,7 +26,7 @@
 using namespace mf;
 
 Player::Player(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
