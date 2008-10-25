@@ -160,12 +160,12 @@ void Mediafly::Query(RequestInfoBinary& requestInfoBinary)
 		if (tmp.m_path == requestInfoBinary.m_path)
 			return;
 	}
-
+#ifndef QT_NO_NETWORKPROXY
 	// Dunno why this doesn't work when in the constructor...
 
 	QUrl proxy(getenv("http_proxy"));
 	m_http.setProxy(proxy.host(), proxy.port());
-
+#endif
 	QUrl url(requestInfoBinary.m_path);
 
 	m_http.setHost(url.host(), QHttp::ConnectionModeHttp);
@@ -185,11 +185,12 @@ void Mediafly::Query (MediaflyConsumerBinary *consumer, const QString& path)
 
 void Mediafly::Query (RequestInfo& requestInfo)
 {
+#ifndef QT_NO_NETWORKPROXY
 	// Dunno why this doesn't work when in the constructor...
 
 	QUrl proxy(getenv("http_proxy"));
 	m_http.setProxy(proxy.host(), proxy.port());
-
+#endif
 	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
 
 	QStringList ls = makeParams(requestInfo.m_firstMap) + makeParams(requestInfo.m_map);
