@@ -23,6 +23,7 @@
 #include "Player.h"
 #include "nmessagebox.h"
 #include "nmultilanguage.h"
+#include "network-state.h"
 #include <QApplication>
 #include <QFileInfo>
 
@@ -42,19 +43,17 @@ int main(int argc, char** argv)
 
 	NMultiLanguage lang;
 
-	//Check network state
-
 	if (1 != CoolNetworkStateCheck())
 	{
 		NMessageBox::warning(0, 
 		                     QObject::tr("Ethernet cable not detected"), 
 		                     QObject::tr("\nCheck your wireless adapter "
 		                                 "or connect a networked Ethernet cable and try again."),
-		QMessageBox::Ok, QMessageBox::Ok, DEF_MSGBOX_TIME);
+		QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
 		return 0;
 	}
 
-	mf::Player v(0, app.arguments());
+	mf::Player v;
 
 	return app.exec();
 }
