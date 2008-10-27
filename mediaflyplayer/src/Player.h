@@ -30,6 +30,7 @@
 #include "Playqueue.h"
 #include "Search.h"
 #include "nbackgroundmanagedwidget.h"
+#include "nstdinappmanager.h"
 #include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
@@ -58,6 +59,8 @@ private:
 	Playqueue              *m_playqueue;
 	Search                 *m_search;
 
+	NStdinAppManager stdinman;
+
 private slots:
 	void handleSearchTerm(QString term);
 	void handleSearch();
@@ -70,6 +73,7 @@ private slots:
 	void showChannelsMenu();
 	void showPlayqueue();
 	void showPlay();
+	void onQuit();
 };
 
 }

@@ -21,6 +21,7 @@
  ****************************************************************************/
 
 #include "Player.h"
+#include "nappchannel.h"
 #include <QDebug>
 
 using namespace mf;
@@ -28,6 +29,13 @@ using namespace mf;
 Player::Player(QWidget *parent) :
 	NBackgroundManagedWidget(parent)
 {
+	QApplication::setQuitOnLastWindowClosed(true);
+	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
+
+	NAppChannel::sendCloseOtherApps(QStringList() 
+		<< "/usr/local/bin/mediafly"
+		<< "/usr/local/bin/more-apps");
+
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
 	m_play = new mf::Play(this);
@@ -85,6 +93,14 @@ void Player::handleNewPerson()
 {
 	m_menuModel.refresh();
 	showMenu();
+}
+
+void Player::onQuit()
+{
+	foreach (QWidget *widget, QApplication::topLevelWidgets())
+	{
+		widget->close();
+	}
 }
 
 void Player::handleShowMenu(const QModelIndex& index)
