@@ -360,8 +360,8 @@ void NItemDelegate::computeLayout(QWidget *parent)
 	if (!LeftArrowIconSize.isValid())
 		LeftArrowIconSize = QSize(fm.height() * 13/30, fm.height() * 2/3);
 
-	if (!ItemHintSize.isValid())
-		return;
+       if (!ItemHintSize.isValid())
+               ItemHintSize = QSize(parent->width() ,fm.height() * 5/3);
 
 	LeftArrowIconPosition = QPoint(ItemHintSize.height() / 5, 0);
 
