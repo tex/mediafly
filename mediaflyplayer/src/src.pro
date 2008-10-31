@@ -8,7 +8,7 @@ OBJECTS_DIR = ./build
 INCLUDEPATH += ./build
 
 TEMPLATE = app
-TARGET = mediafly
+TARGET = ../build/mediafly
 CONFIG += debug
 DEPENDPATH += .
 
