@@ -10,7 +10,7 @@ INCLUDEPATH += ./build
 INCLUDEPATH += . ../neux/edits ../neux/delegates ../neux/views ../neux/models
 
 TEMPLATE = app
-TARGET = 
+TARGET = mediafly
 CONFIG += debug
 DEPENDPATH += .
 
