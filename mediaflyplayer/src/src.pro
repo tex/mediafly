@@ -7,8 +7,6 @@ UI_DIR = ./build
 OBJECTS_DIR = ./build
 INCLUDEPATH += ./build
 
-INCLUDEPATH += . ../neux/edits ../neux/delegates ../neux/views ../neux/models
-
 TEMPLATE = app
 TARGET = mediafly
 CONFIG += debug
@@ -17,23 +15,16 @@ DEPENDPATH += .
 # Include special application config
 include (../config.pri)
 
-LIBS += -lxmmsclient++ -lboost_signals
+rootfs.files = ../build/*
+INSTALLS += rootfs
 
-RESOURCES += ../neux/resources/neux.qrc
+LIBS += -lneux -lncooler-core -lxmmsclient++ -lboost_signals
+
 RESOURCES += ../resources/mediafly.qrc
 
 FORMS += ../forms/MediaflyPlay.ui
 
 # Input
-HEADERS += ../neux/models/nmenuitemmodel.h ../neux/models/nmenuitem.h
-SOURCES += ../neux/models/nmenuitemmodel.cpp ../neux/models/nmenuitem.cpp
-HEADERS += ../neux/edits/nlineedit.h
-SOURCES += ../neux/edits/nlineedit.cpp
-HEADERS += ../neux/delegates/nitemdelegate.h
-SOURCES += ../neux/delegates/nitemdelegate.cpp
-HEADERS += ../neux/views/nhorizontalspinbox.h ../neux/views/nlistview.h ../neux/views/nribbonlistview.h ../neux/views/nspinboxmenulistview.h
-SOURCES += ../neux/views/nhorizontalspinbox.cpp ../neux/views/nlistview.cpp ../neux/views/nribbonlistview.cpp ../neux/views/nspinboxmenulistview.cpp
-
 HEADERS += Mediafly.h
 SOURCES += Mediafly.cpp
 
