@@ -21,7 +21,7 @@
  ****************************************************************************/
 
 #include "Menu.h"
-#include <QMessageBox>
+#include "nmessagebox.h"
 #include <QtDebug>
 #include <QKeyEvent>
 #include <QIcon>
@@ -168,7 +168,7 @@ void mf::Menu::updateEpisodeModel()
 
 void mf::Menu::errorHandler(const QString& errorMsg)
 {
-	QMessageBox::critical(this, "Error", errorMsg);
+	NMessageBox::critical(this, "Error", errorMsg);
 
 	// In case of an error switch to main menu. It
 	// may be used to leave the application.
@@ -256,7 +256,7 @@ void mf::Menu::selectMenu(QModelIndex& index)
 		break;
 	case mf::MenuModel::MENU_POPULAR_CHANNELS:
 	default:
-		QMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
+		NMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
 		break;
 	case mf::MenuModel::MENU_MEDIA_CHANNELS:
 		m_state = ChannelMenu;
