@@ -1,3 +1,6 @@
+#ifndef MediaflyList_H
+#define MediaflyList_H
+
 #include <QObject>
 #include <QWidget>
 #include <QListView>
@@ -22,4 +25,6 @@ private:
 	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
 };
+
+#endif
 

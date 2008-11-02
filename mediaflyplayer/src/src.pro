@@ -31,6 +31,7 @@ HEADERS += MediaflyList.h
 SOURCES += MediaflyEpisodeDelegate.cpp
 HEADERS += MediaflyEpisodeDelegate.h
 
+FORMS += ../forms/MediaflyMenu.ui
 SOURCES += MediaflyMenu.cpp
 HEADERS += MediaflyMenu.h
 
