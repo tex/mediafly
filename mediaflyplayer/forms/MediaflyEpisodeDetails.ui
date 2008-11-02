@@ -18,6 +18,13 @@
   <layout class="QGridLayout" >
    <item row="0" column="0" colspan="3" >
     <widget class="QLabel" name="m_header" >
+     <property name="font" >
+      <font>
+       <pointsize>24</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text" >
       <string>TextLabel</string>
      </property>
@@ -28,6 +35,11 @@
    </item>
    <item row="1" column="0" colspan="2" >
     <widget class="QLabel" name="m_label" >
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text" >
       <string>TextLabel</string>
      </property>
@@ -40,6 +52,11 @@
        <width>80</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
      </property>
      <property name="text" >
       <string>TextLabel</string>
@@ -76,6 +93,11 @@
    </item>
    <item row="2" column="1" colspan="2" >
     <widget class="QTextEdit" name="m_details" >
+     <property name="font" >
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
      <property name="readOnly" >
       <bool>true</bool>
      </property>
@@ -83,6 +105,11 @@
    </item>
    <item row="3" column="0" colspan="3" >
     <widget class="QTextEdit" name="m_info" >
+     <property name="font" >
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
      <property name="readOnly" >
       <bool>true</bool>
      </property>

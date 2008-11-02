@@ -15,6 +15,11 @@
   <layout class="QGridLayout" >
    <item row="0" column="0" >
     <widget class="QLabel" name="m_episodeNameLabel" >
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text" >
       <string/>
      </property>
@@ -25,6 +30,11 @@
    </item>
    <item row="1" column="0" >
     <widget class="QLabel" name="m_showTitleLabel" >
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text" >
       <string/>
      </property>
