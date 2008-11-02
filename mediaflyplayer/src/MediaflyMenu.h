@@ -2,13 +2,13 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
-#include "MediaflyList.h"
+#include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 
-class MediaflyMenu : public QWidget
+class MediaflyMenu : public QWidget, protected Ui::MediaflyMenu
 {
 	Q_OBJECT
 public:
@@ -30,12 +30,6 @@ private:
 		ChannelMenu,
 		EpisodeMenu,
 	};
-
-	QHBoxLayout     *m_hLayout;
-	QVBoxLayout     *m_vLayout;
-	MediaflyList    *m_listView;
-	QLabel          *m_header;
-	QLabel          *m_icon;
 
 	QString	         m_channelSlug;
 	State	         m_state;

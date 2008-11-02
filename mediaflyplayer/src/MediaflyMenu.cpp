@@ -12,21 +12,7 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	m_channelModel(channelModel),
 	m_episodeModel(episodeModel)
 {
-	m_hLayout = new QHBoxLayout();
-	m_vLayout = new QVBoxLayout();
-	m_listView = new MediaflyList(this);
-	m_header = new QLabel(this);
-	m_icon = new QLabel(this);
-
-	m_vLayout->addWidget(m_header);
-	m_vLayout->addWidget(m_listView);
-	m_hLayout->addWidget(m_icon);
-	m_hLayout->addLayout(m_vLayout);
-	setLayout(m_hLayout);
-
-	m_header->setAlignment(Qt::AlignRight);
-
-	m_icon->setPixmap(QPixmap(":/logo.png"));
+	setupUi(this);
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
