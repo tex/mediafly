@@ -9,7 +9,6 @@ INCLUDEPATH += ./build
 
 TEMPLATE = app
 TARGET = ../build/mediafly
-CONFIG += debug
 DEPENDPATH += .
 
 # Include special application config
