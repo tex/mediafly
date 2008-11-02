@@ -43,6 +43,7 @@ class Player : public NBackgroundManagedWidget
 	Q_OBJECT
 public:
 	Player(QWidget *parent = 0);
+	~Player();
 
 private:
 	QVBoxLayout    *m_layout;

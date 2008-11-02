@@ -22,6 +22,7 @@
 
 #include "Player.h"
 #include "nappchannel.h"
+#include "nmscontrol.h"
 #include <QDebug>
 
 using namespace mf;
@@ -35,6 +36,14 @@ Player::Player(QWidget *parent) :
 	NAppChannel::sendCloseOtherApps(QStringList() 
 		<< "/usr/local/bin/mediafly"
 		<< "/usr/local/bin/more-apps");
+
+	/* Disable Monitor */
+	NmsControl nmsControl;
+	if (nmsControl.Connect())
+	{
+		nmsControl.SetMonitorEnable(false);
+		nmsControl.Disconnect();
+	}
 
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
@@ -93,6 +102,16 @@ void Player::handleNewPerson()
 {
 	m_menuModel.refresh();
 	showMenu();
+}
+
+Player::~Player()
+{
+	NmsControl nmsControl;
+	if (nmsControl.Connect())
+	{
+		nmsControl.SetMonitorEnable(true);
+		nmsControl.Disconnect();
+	}
 }
 
 void Player::onQuit()
