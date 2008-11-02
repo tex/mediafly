@@ -10,7 +10,6 @@
 class MediaflyPlay : public QWidget, protected Ui::MediaflyPlay
 {
 	Q_OBJECT
-
 public:
 	MediaflyPlay(QWidget *parent = 0);
 	void show(const QModelIndex& index);
