@@ -54,6 +54,8 @@ int main(int argc, char** argv)
 	}
 
 	mf::Player v;
+	v.setPreferredBackground(NBackgroundManagedWidget::BackgroundImageOnly);
+	v.showMaximized();
 
 	return app.exec();
 }
