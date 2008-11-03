@@ -34,7 +34,7 @@ Player::Player(QWidget *parent) :
 	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
 
 	NAppChannel::sendCloseOtherApps(QStringList() 
-		<< "/usr/local/bin/mediafly"
+		<< "/media/SD-card/mediafly"
 		<< "/usr/local/bin/more-apps");
 
 	/* Disable Monitor */
