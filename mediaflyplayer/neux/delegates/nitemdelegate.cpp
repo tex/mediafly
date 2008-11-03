@@ -368,18 +368,19 @@ void NItemDelegate::computeLayout(QWidget *parent)
 	if (!RightIconSize.isValid())
 		RightIconSize = LeftArrowIconSize;
 
-	LeftArrowIconPosition = QPoint(ItemHintSize.height() / 5, 0);
-
-	LeftIconPosition = QPoint(0, 0);
-	if (hasShowLeftArrowIcon())
-		LeftIconPosition += QPoint(LeftArrowIconPosition.x() + LeftArrowIconSize.width() + 5, 0);
-
+	LeftArrowIconPosition = QPoint(border, 0);
+	LeftIconPosition = QPoint(LeftArrowIconPosition.x() + LeftArrowIconSize.width() + border, 0);
 	RightIconPosition = QPoint(parent->width() - RightIconSize.width() - border, 0);
 
-	CaptionPosition = QPoint(5, 0);
+	// Give a small border between left icon(s) and caption.
+	//
+	CaptionPosition = QPoint(border, 0);
+
+	// Always count with left arrow icon.
+	//
 	if (hasShowIcon())
 		CaptionPosition += QPoint(LeftIconPosition.x() + LeftIconSize.width(), 0);
-	if (hasShowLeftArrowIcon())
+	else
 		CaptionPosition += QPoint(LeftArrowIconPosition.x() + LeftArrowIconSize.width(), 0);
 
 	CaptionSize = QSize(parent->width() - CaptionPosition.x(), ItemHintSize.height());
