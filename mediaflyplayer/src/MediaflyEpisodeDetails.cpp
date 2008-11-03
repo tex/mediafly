@@ -26,15 +26,15 @@ void MediaflyEpisodeDetails::updateImage()
 
 void MediaflyEpisodeDetails::update()
 {
-	m_header->setText("Episode Details");
+	m_header->setText(tr("Episode Details"));
 	m_label->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
 	m_length->setText("???");
 	m_icon->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
-	m_details->setHtml("<b>Item details</b><br><b>Link:</b><br>" +
+	m_details->setHtml("<b>" + tr("Item details") + "</b><br><b>Link:</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlRole).toString() +
-	                  "<br><b>Publication date:</b><br>" +
+	                  "<br><b>" + tr("Publication date:") + "</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::publishedRole).toString() +
-	                  "<br><b>Enclosure:</b><br>" +
+	                  "<br><b>" + tr("Enclosure:") + "</b><br>" +
 	                  m_index.data(MediaflyEpisodeModel::urlOriginalRole).toString());
 	m_info->setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
 }

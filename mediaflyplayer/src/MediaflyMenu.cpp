@@ -104,7 +104,7 @@ void MediaflyMenu::errorHandler(const QString& errorMsg)
 
 void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 {
-	m_header->setText("Mediafly");
+	m_header->setText(tr("Mediafly"));
 	m_icon->setVisible(true);
 
 	m_listView->setItemDelegate(m_itemDelegateDefault);
@@ -119,7 +119,7 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 
 void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 {
-	m_header->setText("Media Episodes");
+	m_header->setText(tr("Media Episodes"));
 	m_icon->setVisible(false);
 
 	m_episodeModel.cancel();
@@ -137,7 +137,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 
 void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 {
-	m_header->setText("Media Channels");
+	m_header->setText(tr("Media Channels"));
 	m_icon->setVisible(true);
 
 	m_episodeModel.cancel();
@@ -173,7 +173,7 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 	case MediaflyMenuModel::MENU_POPULAR_CHANNELS:
 	case MediaflyMenuModel::MENU_PERSONALIZE:
 	default:
-		QMessageBox::information(this, "Missing feature", "Not yet implemented");
+		QMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
 		break;
 	case MediaflyMenuModel::MENU_MEDIA_CHANNELS:
 		m_state = ChannelMenu;
