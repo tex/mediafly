@@ -56,7 +56,7 @@
     <widget class="mf::List" name="m_listView" >
      <property name="font" >
       <font>
-       <pointsize>20</pointsize>
+       <pointsize>24</pointsize>
       </font>
      </property>
     </widget>
