@@ -43,16 +43,10 @@ void List::setItemDelegate(QAbstractItemDelegate *newDelegate)
 {
 	ListParent::setItemDelegate(newDelegate);
 
-	// Set this size of the right icon to size of the
-	// left arrow icon because the right icon is used
-	// as arrow...
-
-	setRightIconSize(leftArrowIconSize());
-
-	// Recompute layout with the given size of the
-	// right icon.
-
-	delegate->computeLayout(dynamic_cast<QWidget *>(this));
+	// Disable click flash because delegate may had been left
+	// with click flash enabled...
+	//
+	delegate->setClickFlashActive(false);
 }
 
 void List::keyPressEvent(QKeyEvent *event)
