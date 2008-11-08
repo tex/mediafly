@@ -248,6 +248,11 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 			// get return notification.
 
 			Mediafly::getMediafly()->Authentication_SetMFUserAsDefault(&m_setUserAsDefaultData, accountName);
+
+			// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
+			// Channel menu will be shown by calling slot setUserAsDefaultReady()...
+
+			m_listView->setModel(NULL);
 		}
 		else
 			// Already set as default. Just proceed to ChannelMenu and it will reads
@@ -255,10 +260,6 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 			//
 			m_state = ChannelMenu;
 
-		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
-		// Channel menu will be shown by calling slot setUserAsDefaultReady()...
-
-		m_listView->setModel(NULL);
 		break;
 	}
 	case MediaflyMenuModel::MENU_PERSONALIZE:
