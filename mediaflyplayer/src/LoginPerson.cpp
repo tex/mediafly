@@ -22,7 +22,7 @@
 
 #include "LoginPerson.h"
 #include "Mediafly.h"
-#include <QMessageBox>
+#include "nmessagebox.h"
 
 using namespace mf;
 
@@ -59,8 +59,9 @@ void LoginPerson::handleCancelButtonClick()
 
 void LoginPerson::handleBindMFUserDone()
 {
-	QMessageBox::information(this, tr("Congratulations!"),
-	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"));
+	NMessageBox::information(this, tr("Congratulations!"),
+	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"),
+	                         QMessageBox::Ok, QMessageBox::Ok, 5 * 1000);
 	emit newPerson();
 }
 
