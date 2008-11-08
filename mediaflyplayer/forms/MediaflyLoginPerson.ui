@@ -31,7 +31,7 @@
     </widget>
    </item>
    <item row="2" column="2" colspan="2" >
-    <widget class="QLineEdit" name="m_username" />
+    <widget class="NLineEdit" name="m_username" />
    </item>
    <item row="3" column="1" >
     <widget class="QLabel" name="label_3" >
@@ -41,7 +41,7 @@
     </widget>
    </item>
    <item row="3" column="2" colspan="2" >
-    <widget class="QLineEdit" name="m_password" />
+    <widget class="NLineEdit" name="m_password" />
    </item>
    <item row="5" column="1" >
     <widget class="QPushButton" name="m_accept" >
@@ -124,6 +124,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>nlineedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
