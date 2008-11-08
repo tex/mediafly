@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 		                     QObject::tr("Ethernet cable not detected"), 
 		                     QObject::tr("\nCheck your wireless adapter "
 		                                 "or connect a networked Ethernet cable and try again."),
-		QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
+		                     QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
 		return 0;
 	}
 
