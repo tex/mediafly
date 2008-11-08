@@ -5,7 +5,9 @@
 #include <QStringList>
 #include <QList>
 
-class MediaflyMenuModel : public mf::UsersModel
+using namespace mf;
+
+class MediaflyMenuModel : public UsersModel
 {
 public:
 	enum Roles

@@ -1,7 +1,7 @@
 #include "MediaflyMenuModel.h"
 
 MediaflyMenuModel::MediaflyMenuModel(QObject *parent) :
-	mf::UsersModel(parent)
+	UsersModel(parent)
 {
 	m_name << tr("Search") << tr("Media Channels") << tr("Popular Channels") << tr("Personalize");
 	m_slug << MENU_SEARCH << MENU_MEDIA_CHANNELS << MENU_POPULAR_CHANNELS << MENU_PERSONALIZE;
@@ -12,7 +12,7 @@ MediaflyMenuModel::MediaflyMenuModel(QObject *parent) :
 
 int MediaflyMenuModel::rowCount(const QModelIndex& parent) const
 {
-	int usersRowCount = mf::UsersModel::rowCount(parent);
+	int usersRowCount = UsersModel::rowCount(parent);
 	if (usersRowCount == 0)
 	{
 		return m_name.size();
@@ -26,7 +26,7 @@ int MediaflyMenuModel::rowCount(const QModelIndex& parent) const
 QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 {
 	int rowCount = parent.row();
-	int usersRowCount = mf::UsersModel::rowCount(parent);
+	int usersRowCount = UsersModel::rowCount(parent);
 
 	if (usersRowCount == 0)
 	{
@@ -43,20 +43,20 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 			switch (role) {
 			case nameRole:
 			{
-				QString name = mf::UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString() + QString(tr("'s Mediafly"));
-				if (mf::UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool())
+				QString name = UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString() + QString(tr("'s Mediafly"));
+				if (UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool())
 					name = "<b>" + name + "</b>";
 				return name;
 			}
 			case origNameRole:
 			{
-				QString accountName = mf::UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString();
+				QString accountName = UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString();
 				qDebug() << __PRETTY_FUNCTION__ << "origNameRole:" <<  accountName;
 				return accountName;
 			}
 			case defaultRole:
 			{
-				bool isDefault = mf::UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool();
+				bool isDefault = UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool();
 				qDebug() << __PRETTY_FUNCTION__ << "isDefault:" << isDefault;
 				return isDefault;
 			}
