@@ -2,7 +2,8 @@
 #include <QDebug>
 
 MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
-	QWidget(parent)
+	QWidget(parent),
+	m_menuModel()
 {
 	m_episodeDetails = new MediaflyEpisodeDetails(this);
 	m_menu = new MediaflyMenu(m_menuModel, m_channelModel, m_episodeModel, this);

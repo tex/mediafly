@@ -69,3 +69,25 @@ FORMS += ../forms/MediaflyPlayAudio.ui
 HEADERS += MediaflyPlayAudio.h
 SOURCES += MediaflyPlayAudio.cpp
 
+HEADERS += MediaflyAuthentication_SetMFUserAsDefaultData.h
+
+HEADERS += MediaflyAuthentication_GetBoundMFUsersData.h
+SOURCES += MediaflyAuthentication_GetBoundMFUsersData.cpp
+
+HEADERS += User.h
+
+HEADERS += UsersModel.h
+SOURCES += UsersModel.cpp
+
+FORMS += ../forms/MediaflyLoginPerson.ui
+
+FORMS += ../forms/MediaflyPersonalize.ui
+HEADERS += MediaflyPersonalize.h
+SOURCES += MediaflyPersonalize.cpp
+
+HEADERS += MediaflyLoginPerson.h
+SOURCES += MediaflyLoginPerson.cpp
+
+HEADERS += MediaflyAuthentication_BindMFUserData.h
+SOURCES += MediaflyAuthentication_BindMFUserData.cpp
+

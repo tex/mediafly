@@ -41,7 +41,7 @@ void MediaflyList::keyPressEvent(QKeyEvent *event)
 
 void MediaflyList::paintEvent(QPaintEvent * e)
 {
-	if (model() && model()->rowCount(rootIndex()) < 1)
+	if (!model() || (model() && model()->rowCount(rootIndex()) < 1))
 	{
 		QPainter painter(viewport());
 		QRect rect = painter.viewport();

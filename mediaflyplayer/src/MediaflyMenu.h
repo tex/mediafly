@@ -2,6 +2,8 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
+#include "MediaflyPersonalize.h"
+#include "MediaflyLoginPerson.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -52,6 +54,13 @@ private:
 	QModelIndex              m_lastMenuIndex;
 	QModelIndex              m_lastChannelMenuIndex;
 
+	MediaflyAuthentication_SetMFUserAsDefaultData m_setUserAsDefaultData;
+
+	MediaflyPersonalize* m_personalize;
+	MediaflyLoginPerson* m_loginPerson;
+
+	QString m_channelLabel;
+
 private slots:
 	void handleEnterKey();
 	void handleRightKey();
@@ -59,8 +68,10 @@ private slots:
 	void uploadNextPartOfMenu();
 
 private slots:
+	void updateMenuModel();
 	void updateChannelModel();
 	void updateEpisodeModel();
 	void errorHandler(const QString& errorMsg);
+	void setUserAsDefaultReady();
 };
 

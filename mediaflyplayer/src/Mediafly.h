@@ -7,7 +7,9 @@
 #include "MediaflySessionInfo.h"
 #include "MediaflyConsumer.h"
 #include "MediaflyConsumerBinary.h"
-
+#include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
+#include "MediaflyAuthentication_GetBoundMFUsersData.h"
+#include "MediaflyAuthentication_BindMFUserData.h"
 #include <QObject>
 #include <QMap>
 #include <QString>
@@ -55,7 +57,7 @@ private:
 	QString computeHash(QMap<QString, QString>& map, QString token_id);
 	QStringList makeParams(QMap<QString, QString>& map);
 	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map);
-	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session);
+	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session, bool useHttps = false);
 	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg, bool& expiredToken);
 	void Query (RequestInfo& requestInfo);
 	void Query (RequestInfoBinary& requestInfoBinary);
@@ -178,7 +180,7 @@ public:
 	 * </response>
 	 */
 	QDomDocument Authentication_GetUserAssociationCode (const Mediafly::SessionInfo& session);
-
+#endif
 	/**
 	 * This method returns a list of account names bound to the calling device.
 	 * Response:
@@ -195,7 +197,7 @@ public:
 	 *   <mfusers />
 	 * </response>
 	 */
-	QDomDocument Authentication_GetBoundMFUsers (const Mediafly::SessionInfo& session);
+	void Authentication_GetBoundMFUsers (MediaflyAuthentication_GetBoundMFUsersData *data);
 
 	/**
 	 * Call this method to add an account to a list of users that can have a
@@ -226,7 +228,7 @@ public:
 	 * account to be used. If there are any other accounts bound to the device their
 	 * default status is turned off.
 	 */
-	QDomDocument Authentication_BindMFUser (const Mediafly::SessionInfo& session, QString accountName, QString password, bool deflt = false);
+	void Authentication_BindMFUser (MediaflyAuthentication_BindMFUserData* data, QString accountName, QString password, bool deflt = false);
 
 	/**
 	 * This call will mark a specified user as a default user to be used across the API
@@ -243,8 +245,8 @@ public:
 	 * @param  accountName account name already bound to the device that should be set
 	 * as default.
 	 */
-	QDomDocument Authentication_SetMFUserAsDefault (const Mediafly::SessionInfo& session, QString accountName);
-
+	void Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUserAsDefaultData *data, QString accountName);
+#if 0
 	/**
 	 * Call this method to remove a user from a device personalization. The user must
 	 * be already bound to the device for the call to succeed.

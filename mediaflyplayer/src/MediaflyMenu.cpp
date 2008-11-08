@@ -5,14 +5,24 @@
 #include <QKeyEvent>
 #include <QIcon>
 
-MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& channelModel, MediaflyEpisodeModel& episodeModel, QWidget *parent) :
+MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
+                           MediaflyChannelModel& channelModel,
+                           MediaflyEpisodeModel& episodeModel,
+                           QWidget *parent) :
 	QWidget(parent),
 	m_state(Menu),
 	m_menuModel(menuModel),
 	m_channelModel(channelModel),
-	m_episodeModel(episodeModel)
+	m_episodeModel(episodeModel),
+	m_channelLabel(tr("Media Channels"))
 {
 	setupUi(this);
+
+	m_loginPerson = new MediaflyLoginPerson();
+	m_personalize = new MediaflyPersonalize(m_loginPerson);
+
+	connect(m_loginPerson, SIGNAL(newPerson()),
+	        &m_menuModel, SLOT(refresh()));
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
@@ -23,6 +33,9 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	connect(m_listView, SIGNAL(leftPressed()),
 	        this, SLOT(handleLeftKey()));
 
+	connect(&m_menuModel, SIGNAL(refreshed()),
+	        this, SLOT(updateMenuModel()));
+
 	connect(&m_channelModel, SIGNAL(refreshed()),
 	        this, SLOT(updateChannelModel()));
 
@@ -32,6 +45,9 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	connect(Mediafly::getMediafly(), SIGNAL(readError(const QString&)),
 	        this, SLOT(errorHandler(const QString&)));
 
+	connect(&m_setUserAsDefaultData, SIGNAL(ready()),
+	        this, SLOT(setUserAsDefaultReady()));
+
 	// Remember the default item delegate that m_listView uses.
 	// 
 	m_itemDelegateDefault = m_listView->itemDelegate();
@@ -40,7 +56,45 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel, MediaflyChannelModel& c
 	m_lastMenuIndex = m_menuModel.index(0, 0);
 	m_lastChannelMenuIndex = QModelIndex();
 
+	m_menuModel.refresh();
+
 	render(QModelIndex());
+}
+
+void MediaflyMenu::setUserAsDefaultReady()
+{
+	// User has been set as default, we can continue...
+	//
+	m_state = ChannelMenu;
+	render(QModelIndex());
+}
+
+void MediaflyMenu::updateMenuModel()
+{
+	qDebug() << __PRETTY_FUNCTION__;
+
+	QAbstractItemModel *model = m_listView->model();
+	if (model != &m_menuModel)
+		return;
+
+	// Remember current selected index (position)
+	// if episode menu is already shown.
+
+	if (m_listView->currentIndex().isValid()) {
+		m_lastMenuIndex = m_listView->currentIndex();
+	} else if (!m_lastMenuIndex.isValid()) {
+		m_lastMenuIndex = m_menuModel.index(0, 0);
+	}
+
+	m_listView->setModel(NULL);
+	m_listView->setModel(model);
+
+	// setModel itself doesn't "refresh", we
+	// have to call 'update' to repaint it and
+	// 'setCurrentIndex' to select the first item.
+
+	m_listView->update(m_lastMenuIndex);
+	m_listView->setCurrentIndex(m_lastMenuIndex);
 }
 
 void MediaflyMenu::updateChannelModel()
@@ -94,8 +148,7 @@ void MediaflyMenu::errorHandler(const QString& errorMsg)
 {
 	QMessageBox::critical(this, "Error", errorMsg);
 
-	// In case of an error switch to main menu. This
-	// menu doesn't require internet connection and it
+	// In case of an error switch to main menu. It
 	// may be used to leave the application.
 
 	m_state = Menu;
@@ -106,6 +159,8 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 {
 	m_header->setText(tr("Mediafly"));
 	m_icon->setVisible(true);
+
+	m_channelModel.cancel();
 
 	m_listView->setItemDelegate(m_itemDelegateDefault);
 
@@ -137,7 +192,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 
 void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 {
-	m_header->setText(tr("Media Channels"));
+	m_header->setText(m_channelLabel);
 	m_icon->setVisible(true);
 
 	m_episodeModel.cancel();
@@ -171,12 +226,46 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 	switch (index.data(MediaflyMenuModel::slugRole).toInt()) {
 	case MediaflyMenuModel::MENU_SEARCH:
 	case MediaflyMenuModel::MENU_POPULAR_CHANNELS:
-	case MediaflyMenuModel::MENU_PERSONALIZE:
 	default:
 		QMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
 		break;
 	case MediaflyMenuModel::MENU_MEDIA_CHANNELS:
 		m_state = ChannelMenu;
+		break;
+	case MediaflyMenuModel::MENU_USER:
+	{
+		// Set correct episode menu's label.
+
+		QString accountName = index.data(MediaflyMenuModel::origNameRole).toString();
+		m_channelLabel = accountName + tr("'s Mediafly");
+
+		// If selected user not default already, make him default...
+
+		if (index.data(MediaflyMenuModel::defaultRole).toBool() == false)
+		{
+			// m_setUserAsDefaultData (ready()) signal's callback (setUserAsDefaultReady())
+			// sets m_state to ChannelMenu and renders the menu when we sucessfully
+			// get return notification.
+
+			Mediafly::getMediafly()->Authentication_SetMFUserAsDefault(&m_setUserAsDefaultData, accountName);
+		}
+		else
+			// Already set as default. Just proceed to ChannelMenu and it will reads
+			// the user's menu.
+			//
+			m_state = ChannelMenu;
+
+		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
+		// Channel menu will be shown by calling slot setUserAsDefaultReady()...
+
+		m_listView->setModel(NULL);
+		break;
+	}
+	case MediaflyMenuModel::MENU_PERSONALIZE:
+		m_personalize->show();
+		break;
+	case MediaflyMenuModel::MENU_ADD_PERSON:
+		m_loginPerson->show();
 		break;
 	}
 }

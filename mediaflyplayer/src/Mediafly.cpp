@@ -242,14 +242,14 @@ QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
 	return QString(hash.result().toHex());
 }
 
-void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session)
+void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session, bool useHttps)
 {
 	QMap<QString, QString> firstMap;
 	firstMap[QString("app_id")] = m_appId;
 	firstMap[QString("token")] = session.token();
 	firstMap[QString("call_sig")] = computeHash(map, session.tokenId());
 
-	Query(consumer, function, firstMap, map);
+	Query(consumer, function, firstMap, map, useHttps);
 }
 
 void Mediafly::read(const QDomDocument& doc)
@@ -397,7 +397,7 @@ QDomDocument Mediafly::Authentication_GetUserAssociationCode (const Mediafly::Se
 	checkResponse(doc);
 	return doc;
 }
-
+#endif
 /**
  * This method returns a list of account names bound to the calling device.
  * Response:
@@ -414,11 +414,10 @@ QDomDocument Mediafly::Authentication_GetUserAssociationCode (const Mediafly::Se
  *   <mfusers />
  * </response>
  */
-QDomDocument Mediafly::Authentication_GetBoundMFUsers (const Mediafly::SessionInfo& session) {
+void Mediafly::Authentication_GetBoundMFUsers (MediaflyAuthentication_GetBoundMFUsersData* data)
+{
 	QMap<QString, QString> map;
-	QDomDocument doc = Query("Authentication.GetBoundMFUsers", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, "Authentication.GetBoundMFUsers", map, m_sessionInfo);
 }
 
 /**
@@ -450,16 +449,14 @@ QDomDocument Mediafly::Authentication_GetBoundMFUsers (const Mediafly::SessionIn
  * account to be used. If there are any other accounts bound to the device their
  * default status is turned off.
  */
-QDomDocument Mediafly::Authentication_BindMFUser (const Mediafly::SessionInfo& session, QString accountName, QString password, bool deflt) {
+void Mediafly::Authentication_BindMFUser (MediaflyAuthentication_BindMFUserData* data, QString accountName, QString password, bool deflt)
+{
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;
 	map["password"] = password;
 	map["default"] = deflt ? "true" : "false";
-	QDomDocument doc = Query("Authentication.BindMFUser", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, QString("Authentication.BindMFUser"), map, m_sessionInfo, true);
 }
-
 
 /**
  * This call will mark a specified user as a default user to be used across the API
@@ -476,14 +473,15 @@ QDomDocument Mediafly::Authentication_BindMFUser (const Mediafly::SessionInfo& s
  * @param  accountName account name already bound to the device that should be set
  * as default.
  */
-QDomDocument Mediafly::Authentication_SetMFUserAsDefault (const Mediafly::SessionInfo& session, QString accountName) {
+void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUserAsDefaultData *data,
+                                                  QString accountName)
+{
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;
-	QDomDocument doc = Query("Authentication.SetMFUserAsDefault", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, QString("Authentication.SetMFUserAsDefault"), map, m_sessionInfo);
 }
 
+#if 0
 /**
  * Call this method to remove a user from a device personalization. The user must
  * be already bound to the device for the call to succeed.

@@ -1,17 +1,19 @@
 #ifndef MediaflyMenuModel_H
 #define MediaflyMenuModel_H
 
-#include <QAbstractListModel>
+#include "UsersModel.h"
 #include <QStringList>
 #include <QList>
 
-class MediaflyMenuModel : public QAbstractListModel
+class MediaflyMenuModel : public mf::UsersModel
 {
 public:
 	enum Roles
 	{
 		nameRole = Qt::DisplayRole,
-		slugRole = Qt::UserRole + 1000,
+		slugRole = Qt::UserRole + 2000,
+		origNameRole,
+		defaultRole,
 	};
 
 	enum Menus
@@ -19,21 +21,23 @@ public:
 		MENU_SEARCH = 0,
 		MENU_MEDIA_CHANNELS,
 		MENU_POPULAR_CHANNELS,
-		MENU_PERSONALIZE
+		MENU_PERSONALIZE,
+		MENU_USER,
+		MENU_ADD_PERSON,
+		MENU_FRIENDS_CHANNELS
 	};
 
-	MediaflyMenuModel();
+	MediaflyMenuModel(QObject *parent = 0);
 
 	int rowCount(const QModelIndex& parent = QModelIndex()) const;
 	QVariant data(const QModelIndex& parent, int role) const;
 
 private:
 	QStringList m_name;
+	QStringList m_name_users;
 	QList<int>  m_slug;
+	QList<int>  m_slug_users;
 };
-
-
-
 
 #endif
 
