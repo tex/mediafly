@@ -67,7 +67,7 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 	switch (role) {
 	case nameRole: return m_data.at(index.row()).getAccountName();
 	case passwordRole: return m_data.at(index.row()).getPassword();
-	case defaultRole:
+	case isDefaultRole:
 	{
 		bool isDefault = m_data.at(index.row()).isDefault();
 		qDebug() << __PRETTY_FUNCTION__ << "isDefault:" << isDefault;

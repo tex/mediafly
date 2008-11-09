@@ -14,8 +14,8 @@ public:
 	{
 		nameRole = Qt::DisplayRole,
 		slugRole = Qt::UserRole + 2000,
-		origNameRole,
-		defaultRole,
+		isUserRole,
+		isDefaultRole,
 	};
 
 	enum Menus

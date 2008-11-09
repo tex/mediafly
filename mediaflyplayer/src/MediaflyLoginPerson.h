@@ -9,12 +9,17 @@ class MediaflyLoginPerson : public QWidget, private Ui::MediaflyLoginPerson
 	Q_OBJECT
 public:
 	MediaflyLoginPerson(QWidget* parent = 0); 
+	void clear();
 
 signals:
+	// Signals that new person has been signed in
+	// successfuly.
+	//
 	void newPerson();
 
-public slots:
-	void show();
+	// Signals that user want's to leave the dialog.
+	//
+	void back();
 
 private:
 	MediaflyAuthentication_BindMFUserData m_data;

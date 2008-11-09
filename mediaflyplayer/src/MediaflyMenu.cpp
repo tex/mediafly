@@ -18,12 +18,6 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
 {
 	setupUi(this);
 
-	m_loginPerson = new MediaflyLoginPerson();
-	m_personalize = new MediaflyPersonalize(m_loginPerson);
-
-	connect(m_loginPerson, SIGNAL(newPerson()),
-	        &m_menuModel, SLOT(refresh()));
-
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
 	connect(m_listView, SIGNAL(enterPressed()),
@@ -236,12 +230,12 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 	{
 		// Set correct episode menu's label.
 
-		QString accountName = index.data(MediaflyMenuModel::origNameRole).toString();
+		QString accountName = index.data(MediaflyMenuModel::nameRole).toString();
 		m_channelLabel = accountName + tr("'s Mediafly");
 
 		// If selected user not default already, make him default...
 
-		if (index.data(MediaflyMenuModel::defaultRole).toBool() == false)
+		if (index.data(MediaflyMenuModel::isDefaultRole).toBool() == false)
 		{
 			// m_setUserAsDefaultData (ready()) signal's callback (setUserAsDefaultReady())
 			// sets m_state to ChannelMenu and renders the menu when we sucessfully
@@ -263,10 +257,10 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 		break;
 	}
 	case MediaflyMenuModel::MENU_PERSONALIZE:
-		m_personalize->show();
+		emit showPersonalize();
 		break;
 	case MediaflyMenuModel::MENU_ADD_PERSON:
-		m_loginPerson->show();
+		emit showLoginPerson();
 		break;
 	}
 }

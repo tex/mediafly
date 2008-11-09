@@ -19,7 +19,7 @@ public:
 	{
 		nameRole = Qt::DisplayRole,
 		passwordRole = Qt::UserRole + 1000,
-		defaultRole,
+		isDefaultRole,
 	};
 
 	UsersModel(QObject *parent = 0);

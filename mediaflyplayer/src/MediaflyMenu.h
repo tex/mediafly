@@ -2,8 +2,6 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
-#include "MediaflyPersonalize.h"
-#include "MediaflyLoginPerson.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -24,6 +22,8 @@ public:
 signals:
 	void showPlayMenu(const QModelIndex& index);
 	void showShowMenu(const QModelIndex& index);
+	void showPersonalize();
+	void showLoginPerson();
 
 private:
 	enum State
@@ -55,9 +55,6 @@ private:
 	QModelIndex              m_lastChannelMenuIndex;
 
 	MediaflyAuthentication_SetMFUserAsDefaultData m_setUserAsDefaultData;
-
-	MediaflyPersonalize* m_personalize;
-	MediaflyLoginPerson* m_loginPerson;
 
 	QString m_channelLabel;
 

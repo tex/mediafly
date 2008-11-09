@@ -33,6 +33,7 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 		switch (role) {
 		case nameRole: return m_name.at(rowCount);
 		case slugRole: return m_slug.at(rowCount);
+		case isUserRole: return false;
 		default:       return QVariant();
 		}
 	}
@@ -41,25 +42,9 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 		if (rowCount < usersRowCount)
 		{
 			switch (role) {
-			case nameRole:
-			{
-				QString name = UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString() + QString(tr("'s Mediafly"));
-				if (UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool())
-					name = "<b>" + name + "</b>";
-				return name;
-			}
-			case origNameRole:
-			{
-				QString accountName = UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString();
-				qDebug() << __PRETTY_FUNCTION__ << "origNameRole:" <<  accountName;
-				return accountName;
-			}
-			case defaultRole:
-			{
-				bool isDefault = UsersModel::data(createIndex(rowCount, 0), UsersModel::defaultRole).toBool();
-				qDebug() << __PRETTY_FUNCTION__ << "isDefault:" << isDefault;
-				return isDefault;
-			}
+			case nameRole: return UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString();
+			case isUserRole: return true;
+			case isDefaultRole: return UsersModel::data(createIndex(rowCount, 0), UsersModel::isDefaultRole).toBool();
 			case slugRole: return MENU_USER;
 			default:       return QVariant();
 			}
@@ -69,6 +54,7 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 			switch (role) {
 			case nameRole: return m_name_users.at(rowCount - usersRowCount);
 			case slugRole: return m_slug_users.at(rowCount - usersRowCount);
+			case isUserRole: return false;
 			default:       return QVariant();
 			}
 		}

@@ -5,14 +5,14 @@ class MediaflyPersonalize : public QWidget, private Ui::MediaflyPersonalize
 {
 	Q_OBJECT
 public:
-	MediaflyPersonalize(MediaflyLoginPerson* loginPerson, QWidget *parent = 0);
-	void show();
+	MediaflyPersonalize(QWidget *parent = 0);
+	void clear();
+
+signals:
+	void showLoginPerson();
 
 private slots:
 	void handleContinueButtonClick();
 	void handleEnterButtonClick();
-
-protected:
-	MediaflyLoginPerson* m_loginPerson;
 };
 

@@ -91,3 +91,6 @@ SOURCES += MediaflyLoginPerson.cpp
 HEADERS += MediaflyAuthentication_BindMFUserData.h
 SOURCES += MediaflyAuthentication_BindMFUserData.cpp
 
+HEADERS += MediaflyMenuDelegate.h
+SOURCES += MediaflyMenuDelegate.cpp
+

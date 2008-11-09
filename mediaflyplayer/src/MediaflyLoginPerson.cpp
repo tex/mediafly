@@ -21,26 +21,22 @@ void MediaflyLoginPerson::handleAcceptButtonClick()
 	Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
 }
 
-void MediaflyLoginPerson::show()
+void MediaflyLoginPerson::clear()
 {
-	m_username->clear();
 	m_password->clear();
-	QWidget::show();
+	m_username->clear();
+	m_username->setFocus();
 }
 
 void MediaflyLoginPerson::handleCancelButtonClick()
 {
-	hide();
+	emit back();
 }
 
 void MediaflyLoginPerson::handleBindMFUserDone()
 {
-	// Binding of MF user succeeded.
-	//
-	emit newPerson();
-
 	QMessageBox::information(this, tr("Congratilations!"),
 	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"));
-	hide();
+	emit newPerson();
 }
 

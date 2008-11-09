@@ -1,9 +1,12 @@
 #include "MediaflyList.h"
+#include "MediaflyMenuModel.h"
+#include "MediaflyMenuDelegate.h"
 #include <QPainter>
 
 MediaflyList::MediaflyList(QWidget *parent) :
 	MediaflyListParent(parent)
 {
+	setItemDelegate(new MediaflyMenuDelegate());
 }
 
 MediaflyList::~MediaflyList()
