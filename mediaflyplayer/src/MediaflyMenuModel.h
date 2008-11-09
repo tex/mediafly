@@ -26,7 +26,8 @@ public:
 		MENU_PERSONALIZE,
 		MENU_USER,
 		MENU_ADD_PERSON,
-		MENU_FRIENDS_CHANNELS
+		MENU_FRIENDS_CHANNELS,
+		MENU_REMOVE_PERSON,
 	};
 
 	MediaflyMenuModel(QObject *parent = 0);

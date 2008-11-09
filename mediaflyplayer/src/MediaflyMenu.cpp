@@ -40,7 +40,10 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
 	        this, SLOT(errorHandler(const QString&)));
 
 	connect(&m_setUserAsDefaultData, SIGNAL(ready()),
-	        this, SLOT(setUserAsDefaultReady()));
+	        this, SLOT(showChannelMenu()));
+
+	connect(&m_unbindMFUserData, SIGNAL(done()),
+	        this, SLOT(showChannelMenu()));
 
 	// Remember the default item delegate that m_listView uses.
 	// 
@@ -52,14 +55,6 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
 
 	m_menuModel.refresh();
 
-	render(QModelIndex());
-}
-
-void MediaflyMenu::setUserAsDefaultReady()
-{
-	// User has been set as default, we can continue...
-	//
-	m_state = ChannelMenu;
 	render(QModelIndex());
 }
 
@@ -237,14 +232,14 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 
 		if (index.data(MediaflyMenuModel::isDefaultRole).toBool() == false)
 		{
-			// m_setUserAsDefaultData (ready()) signal's callback (setUserAsDefaultReady())
+			// m_setUserAsDefaultData (ready()) signal's callback (showChannelMenu())
 			// sets m_state to ChannelMenu and renders the menu when we sucessfully
 			// get return notification.
 
 			Mediafly::getMediafly()->Authentication_SetMFUserAsDefault(&m_setUserAsDefaultData, accountName);
 
 			// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
-			// Channel menu will be shown by calling slot setUserAsDefaultReady()...
+			// Channel menu will be shown by calling slot showChannelMenu()...
 
 			m_listView->setModel(NULL);
 		}
@@ -262,6 +257,16 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 	case MediaflyMenuModel::MENU_ADD_PERSON:
 		emit showLoginPerson();
 		break;
+	case MediaflyMenuModel::MENU_REMOVE_PERSON:
+	{
+		Mediafly::getMediafly()->Channels_UnbindMFUser(&m_unbindMFUserData);
+
+		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
+		// Channel menu will be shown by calling slot showChannelMenu()...
+
+		m_listView->setModel(NULL);
+		break;
+	}
 	}
 }
 
@@ -351,7 +356,7 @@ void MediaflyMenu::uploadNextPartOfMenu()
 	}
 }
 
-void MediaflyMenu::showChannelsMenu()
+void MediaflyMenu::showChannelMenu()
 {
 	m_state = ChannelMenu;
 	render(QModelIndex());

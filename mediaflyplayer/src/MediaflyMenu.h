@@ -2,6 +2,7 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
+#include "MediaflyChannels_UnbindMFUserData.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -24,6 +25,9 @@ signals:
 	void showShowMenu(const QModelIndex& index);
 	void showPersonalize();
 	void showLoginPerson();
+
+public slots:
+	void showChannelMenu();
 
 private:
 	enum State
@@ -55,6 +59,7 @@ private:
 	QModelIndex              m_lastChannelMenuIndex;
 
 	MediaflyAuthentication_SetMFUserAsDefaultData m_setUserAsDefaultData;
+	MediaflyChannels_UnbindMFUserData             m_unbindMFUserData;
 
 	QString m_channelLabel;
 
@@ -69,6 +74,5 @@ private slots:
 	void updateChannelModel();
 	void updateEpisodeModel();
 	void errorHandler(const QString& errorMsg);
-	void setUserAsDefaultReady();
 };
 

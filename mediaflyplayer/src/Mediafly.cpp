@@ -481,7 +481,6 @@ void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUs
 	Query(data, QString("Authentication.SetMFUserAsDefault"), map, m_sessionInfo);
 }
 
-#if 0
 /**
  * Call this method to remove a user from a device personalization. The user must
  * be already bound to the device for the call to succeed.
@@ -494,14 +493,12 @@ void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUs
  * <?xml version="1.0" encoding="utf-8"?>
  * <response status="ok" />
  */
-QDomDocument Mediafly::Channels_UnbindMFUser (const Mediafly::SessionInfo& session) {
+void Mediafly::Channels_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data)
+{
 	QMap<QString, QString> map;
-	QDomDocument doc = Query("Channels.UnbindMFUser", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, QString("Channels.UnbindMFUser"), map, m_sessionInfo);
 }
-
-
+#if 0
 /**
  * This method returns the next channel from the user’s playlist, relative to the
  * specified channel.

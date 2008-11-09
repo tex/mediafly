@@ -88,7 +88,7 @@ void MediaflyPlayer::showMenu()
 
 void MediaflyPlayer::showChannelsMenu()
 {
-	m_menu->showChannelsMenu();
+	m_menu->showChannelMenu();
 	m_view->setCurrentWidget(m_menu);
 }
 

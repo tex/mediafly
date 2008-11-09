@@ -94,3 +94,6 @@ SOURCES += MediaflyAuthentication_BindMFUserData.cpp
 HEADERS += MediaflyMenuDelegate.h
 SOURCES += MediaflyMenuDelegate.cpp
 
+HEADERS += MediaflyChannels_UnbindMFUserData.h
+SOURCES += MediaflyChannels_UnbindMFUserData.cpp
+

@@ -6,8 +6,8 @@ MediaflyMenuModel::MediaflyMenuModel(QObject *parent) :
 	m_name << tr("Search") << tr("Media Channels") << tr("Popular Channels") << tr("Personalize");
 	m_slug << MENU_SEARCH << MENU_MEDIA_CHANNELS << MENU_POPULAR_CHANNELS << MENU_PERSONALIZE;
 
-	m_name_users << tr("Search") << tr("Popular Channels") << tr("Friend's Channels") << tr("Add Person");
-	m_slug_users << MENU_SEARCH << MENU_POPULAR_CHANNELS << MENU_FRIENDS_CHANNELS << MENU_ADD_PERSON;
+	m_name_users << tr("Search") << tr("Popular Channels") << tr("Friend's Channels") << tr("Add Person") << tr("Remove Person");
+	m_slug_users << MENU_SEARCH << MENU_POPULAR_CHANNELS << MENU_FRIENDS_CHANNELS << MENU_ADD_PERSON << MENU_REMOVE_PERSON;
 }
 
 int MediaflyMenuModel::rowCount(const QModelIndex& parent) const
