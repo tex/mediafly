@@ -149,6 +149,7 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 		if (i + 1 != parameters.size())
 			path += "&";
 	}
+	qDebug() << path;
 	return path;
 }
 
@@ -194,8 +195,6 @@ void Mediafly::Query (RequestInfo& requestInfo)
 	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
 
 	QStringList ls = makeParams(requestInfo.m_firstMap) + makeParams(requestInfo.m_map);
-
-	qDebug() << ls;
 
  	int id = m_http.get(makePath(requestInfo.m_method, ls));
 	m_connection.insert(id, requestInfo);
@@ -493,10 +492,11 @@ void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUs
  * <?xml version="1.0" encoding="utf-8"?>
  * <response status="ok" />
  */
-void Mediafly::Channels_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data)
+void Mediafly::Channels_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName)
 {
 	QMap<QString, QString> map;
-	Query(data, QString("Channels.UnbindMFUser"), map, m_sessionInfo);
+	map["accountName"] = accountName;
+	Query(data, QString("Authentication.UnbindMFUser"), map, m_sessionInfo);
 }
 #if 0
 /**

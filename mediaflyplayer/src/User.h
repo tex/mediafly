@@ -10,6 +10,7 @@ namespace mf
 class User
 {
 public:
+	User() {}
 	User(QString accountName, bool isDefault = false, QString password = "") :
 		m_accountName(accountName),
 		m_password(password),

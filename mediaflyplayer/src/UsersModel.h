@@ -28,6 +28,8 @@ public:
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
 
+	QString getDefaultAccountName() const;
+
 signals:
 	void refreshed();
 

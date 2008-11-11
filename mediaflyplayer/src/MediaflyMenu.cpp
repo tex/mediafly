@@ -43,7 +43,7 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
 	        this, SLOT(showChannelMenu()));
 
 	connect(&m_unbindMFUserData, SIGNAL(done()),
-	        this, SLOT(showChannelMenu()));
+	        &m_menuModel, SLOT(refresh()));
 
 	// Remember the default item delegate that m_listView uses.
 	// 
@@ -73,6 +73,9 @@ void MediaflyMenu::updateMenuModel()
 		m_lastMenuIndex = m_listView->currentIndex();
 	} else if (!m_lastMenuIndex.isValid()) {
 		m_lastMenuIndex = m_menuModel.index(0, 0);
+	}
+	if (m_lastMenuIndex.row() > m_menuModel.rowCount()) {
+		m_lastMenuIndex = m_menuModel.index(m_menuModel.rowCount() - 1, 0);
 	}
 
 	m_listView->setModel(NULL);
@@ -157,7 +160,6 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 	m_listView->setModel(&m_menuModel);
 
 	m_listView->setCurrentIndex(m_lastMenuIndex);
-
 	m_listView->setEnabled(true);
 }
 
@@ -259,7 +261,7 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 		break;
 	case MediaflyMenuModel::MENU_REMOVE_PERSON:
 	{
-		Mediafly::getMediafly()->Channels_UnbindMFUser(&m_unbindMFUserData);
+		Mediafly::getMediafly()->Channels_UnbindMFUser(&m_unbindMFUserData, m_menuModel.getDefaultAccountName());
 
 		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
 		// Channel menu will be shown by calling slot showChannelMenu()...

@@ -77,3 +77,13 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 	}
 }
 
+QString UsersModel::getDefaultAccountName() const
+{
+	mf::User user;
+	foreach(user, m_data) {
+		if (user.isDefault())
+			return user.getAccountName();
+	}
+	return QString();
+}
+
