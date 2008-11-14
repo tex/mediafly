@@ -261,7 +261,7 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 		break;
 	case MediaflyMenuModel::MENU_REMOVE_PERSON:
 	{
-		Mediafly::getMediafly()->Channels_UnbindMFUser(&m_unbindMFUserData, m_menuModel.getDefaultAccountName());
+		Mediafly::getMediafly()->Authentication_UnbindMFUser(&m_unbindMFUserData, m_menuModel.getDefaultAccountName());
 
 		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
 		// Channel menu will be shown by calling slot showChannelMenu()...

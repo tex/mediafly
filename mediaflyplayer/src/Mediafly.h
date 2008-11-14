@@ -260,7 +260,7 @@ public:
 	 * <?xml version="1.0" encoding="utf-8"?>
 	 * <response status="ok" />
 	 */
-	void Channels_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName);
+	void Authentication_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName);
 #if 0
 	/**
 	 * This method returns the next channel from the user’s playlist, relative to the

@@ -492,7 +492,7 @@ void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUs
  * <?xml version="1.0" encoding="utf-8"?>
  * <response status="ok" />
  */
-void Mediafly::Channels_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName)
+void Mediafly::Authentication_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName)
 {
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;
