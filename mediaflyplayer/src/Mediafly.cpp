@@ -492,7 +492,7 @@ void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUs
  * <?xml version="1.0" encoding="utf-8"?>
  * <response status="ok" />
  */
-void Mediafly::Authentication_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName)
+void Mediafly::Authentication_UnbindMFUser (MediaflyCheckResponseOk *data, QString accountName)
 {
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;
@@ -650,7 +650,7 @@ QDomDocument Mediafly::Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafl
 	checkResponse(doc);
 	return doc;
 }
-
+#endif
 
 /**
  * This method removes an episode from user’s playlists.
@@ -659,15 +659,14 @@ QDomDocument Mediafly::Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafl
  * @param  episodeSlug (required):  the slug of the episode that you want to remove
  * from the playlists.
  */
-QDomDocument Mediafly::Playlists_RemoveEpisodeFromPlaylist (const Mediafly::SessionInfo& session, QString episodeSlug ) {
+void Mediafly::Playlists_RemoveEpisodeFromPlaylist (MediaflyCheckResponseOk *data, QString episodeSlug)
+{
 	QMap<QString, QString> map;
 	map["episodeSlug"] = episodeSlug;
-	QDomDocument doc = Query("Playlists.RemoveEpisodeFromPlaylist", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, "Playlists.RemoveEpisodeFromPlaylist", map, m_sessionInfo);
 }
 
-
+#if 0
 /**
  * This method returns a list of episodes for the specified show.
  * Response:

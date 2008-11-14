@@ -10,7 +10,7 @@
 #include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
 #include "MediaflyAuthentication_GetBoundMFUsersData.h"
 #include "MediaflyAuthentication_BindMFUserData.h"
-#include "MediaflyChannels_UnbindMFUserData.h"
+#include "MediaflyCheckResponseOk.h"
 #include <QObject>
 #include <QMap>
 #include <QString>
@@ -260,7 +260,7 @@ public:
 	 * <?xml version="1.0" encoding="utf-8"?>
 	 * <response status="ok" />
 	 */
-	void Authentication_UnbindMFUser (MediaflyChannels_UnbindMFUserData *data, QString accountName);
+	void Authentication_UnbindMFUser (MediaflyCheckResponseOk *data, QString accountName);
 #if 0
 	/**
 	 * This method returns the next channel from the user’s playlist, relative to the
@@ -381,7 +381,7 @@ public:
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
 	QDomDocument Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafly::SessionInfo& session, QString channelSlug, QString episodeSlug, QString mediaType );
-
+#endif
 
 	/**
 	 * This method removes an episode from user’s playlists.
@@ -390,9 +390,9 @@ public:
 	 * @param  episodeSlug (required):  the slug of the episode that you want to remove
 	 * from the playlists.
 	 */
-	QDomDocument Playlists_RemoveEpisodeFromPlaylist (const Mediafly::SessionInfo& session, QString episodeSlug );
+	void Playlists_RemoveEpisodeFromPlaylist (MediaflyCheckResponseOk *data, QString episodeSlug);
 
-
+#if 0
 	/**
 	 * This method returns a list of episodes for the specified show.
 	 * Response:
