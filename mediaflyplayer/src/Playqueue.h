@@ -5,6 +5,7 @@
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
 #include "MediaflyCheckResponseOk.h"
+#include "MediaflyPlay.h"
 #include <QWidget>
 
 namespace mf {
@@ -13,13 +14,14 @@ class Playqueue : public QWidget, private Ui::MediaflyPlayqueue
 {
 	Q_OBJECT
 public:
-	Playqueue(MediaflyEpisodeModel& episodeModel, QWidget *parent = 0);
+	Playqueue(MediaflyEpisodeModel& episodeModel, MediaflyPlay *mediaflyPlay, QWidget *parent = 0);
 
 signals:
 	void back();
 
 private:
 	MediaflyEpisodeModel     &m_episodeModel;
+	MediaflyPlay             *m_mediaflyPlay;
 	MediaflyEpisodeDelegate  *m_itemDelegate;
 	MediaflyCheckResponseOk   m_checkResponseOk;
 
@@ -31,6 +33,7 @@ private slots:
 	void handleNowPlayingClicked();
 	void handleRemoveButtonClicked();
 	void handleCheckResponseOkDone();
+	void handleStateChange();
 };
 
 }

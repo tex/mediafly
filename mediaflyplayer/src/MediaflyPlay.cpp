@@ -67,6 +67,7 @@ void MediaflyPlay::update()
 		m_audio->show(m_index);
 		m_stackedWidget->setCurrentWidget(m_audio);
 	}
+	emit stateChange();
 }
 
 void MediaflyPlay::show(const QModelIndex& index)
@@ -88,5 +89,14 @@ void MediaflyPlay::keyPressEvent(QKeyEvent *event)
 		event->ignore();
 		break;
 	}
+}
+
+void MediaflyPlay::getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength)
+{
+	currentIndex = m_index;
+
+	// TODO
+	// songPosition = ...
+	// songLength = ...
 }
 

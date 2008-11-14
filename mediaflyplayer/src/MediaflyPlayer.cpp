@@ -9,7 +9,7 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 	m_play = new MediaflyPlay(this);
 	m_loginPerson = new MediaflyLoginPerson();
 	m_personalize = new MediaflyPersonalize(m_loginPerson);
-	m_playqueue = new mf::Playqueue(m_episodeModel, this);
+	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
 
 	m_view = new QStackedWidget(this);
 	m_layout = new QVBoxLayout(this);

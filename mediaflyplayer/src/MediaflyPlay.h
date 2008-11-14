@@ -13,11 +13,13 @@ class MediaflyPlay : public QWidget, protected Ui::MediaflyPlay
 public:
 	MediaflyPlay(QWidget *parent = 0);
 	void show(const QModelIndex& index);
+	void getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength);
 
 signals:
 	void back();
 	void backToChannelsMenu();
 	void showPlayqueue();
+	void stateChange();
 
 private:
 	enum State

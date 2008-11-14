@@ -3,9 +3,10 @@
 
 using namespace mf;
 
-Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, QWidget *parent) :
+Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, MediaflyPlay *mediaflyPlay, QWidget *parent) :
 	QWidget(parent),
-	m_episodeModel(episodeModel)
+	m_episodeModel(episodeModel),
+	m_mediaflyPlay(mediaflyPlay)
 {
 	setupUi(this);
 
@@ -26,6 +27,22 @@ Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, QWidget *parent) :
 
 	connect(&m_checkResponseOk, SIGNAL(done()),
 	        this, SLOT(handleCheckResponseOkDone()));
+
+	connect(m_mediaflyPlay, SIGNAL(stateChange()),
+		this, SLOT(handleStateChange()));
+}
+
+void Playqueue::handleStateChange()
+{
+	QModelIndex index;
+	QString songPosition;
+	QString songLength;
+
+	m_mediaflyPlay->getState(index, songPosition, songLength);
+
+	m_songName->setText(index.data(MediaflyEpisodeModel::titleRole).toString());
+	m_songLength->setText(songLength);
+	m_songPosition->setText(songPosition);
 }
 
 void Playqueue::uploadNextPartOfMenu()
