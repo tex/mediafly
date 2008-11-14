@@ -42,7 +42,7 @@ MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
 	connect(&m_setUserAsDefaultData, SIGNAL(ready()),
 	        this, SLOT(showChannelMenu()));
 
-	connect(&m_unbindMFUserData, SIGNAL(done()),
+	connect(&m_checkResponseOk, SIGNAL(done()),
 	        &m_menuModel, SLOT(refresh()));
 
 	// Remember the default item delegate that m_listView uses.
@@ -261,7 +261,7 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 		break;
 	case MediaflyMenuModel::MENU_REMOVE_PERSON:
 	{
-		Mediafly::getMediafly()->Authentication_UnbindMFUser(&m_unbindMFUserData, m_menuModel.getDefaultAccountName());
+		Mediafly::getMediafly()->Authentication_UnbindMFUser(&m_checkResponseOk, m_menuModel.getDefaultAccountName());
 
 		// Remove model to let the MediaflyList render 'Loading menu... Please wait' message.
 		// Channel menu will be shown by calling slot showChannelMenu()...

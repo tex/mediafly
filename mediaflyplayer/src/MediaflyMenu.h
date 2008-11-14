@@ -2,7 +2,7 @@
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
-#include "MediaflyChannels_UnbindMFUserData.h"
+#include "MediaflyCheckResponseOk.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -59,7 +59,7 @@ private:
 	QModelIndex              m_lastChannelMenuIndex;
 
 	MediaflyAuthentication_SetMFUserAsDefaultData m_setUserAsDefaultData;
-	MediaflyChannels_UnbindMFUserData             m_unbindMFUserData;
+	MediaflyCheckResponseOk                       m_checkResponseOk;
 
 	QString m_channelLabel;
 
