@@ -52,6 +52,13 @@ void MediaflyEpisodeModel::refresh()
 	refresh(query);
 }
 
+void MediaflyEpisodeModel::refreshFull()
+{
+	clear();
+	MediaflyEpisodeQuery query(m_query.channelSlug(), 0, m_query.offset() + m_query.limit(), m_query.mediaType());
+	refresh(query);
+}
+
 void MediaflyEpisodeModel::cancel()
 {
 	m_mediafly->abort();

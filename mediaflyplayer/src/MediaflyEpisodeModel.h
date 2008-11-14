@@ -41,6 +41,7 @@ public:
 
 	void refresh(const MediaflyEpisodeQuery& query);
 	void refresh();
+	void refreshFull();
 	void cancel();
 
 	int totalRowCount() const;
