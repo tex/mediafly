@@ -97,3 +97,7 @@ SOURCES += MediaflyMenuDelegate.cpp
 HEADERS += MediaflyCheckResponseOk.h
 SOURCES += MediaflyCheckResponseOk.cpp
 
+FORMS += ../forms/MediaflyPlayqueue.ui
+HEADERS += Playqueue.h
+SOURCES += Playqueue.cpp
+
