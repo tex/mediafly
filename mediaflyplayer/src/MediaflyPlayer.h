@@ -3,6 +3,7 @@
 #include "MediaflyPlay.h"
 #include "MediaflyPersonalize.h"
 #include "MediaflyLoginPerson.h"
+#include "Playqueue.h"
 #include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
@@ -27,6 +28,7 @@ private:
 	MediaflyPlay           *m_play;
 	MediaflyPersonalize    *m_personalize;
 	MediaflyLoginPerson    *m_loginPerson;
+	mf::Playqueue          *m_playqueue;
 
 private slots:
 	void handlePlayMenu(const QModelIndex& index);
@@ -36,5 +38,7 @@ private slots:
 	void handleNewPerson();
 	void showMenu();
 	void showChannelsMenu();
+	void showPlayqueue();
+	void showPlay();
 };
 

@@ -17,6 +17,7 @@ public:
 signals:
 	void back();
 	void backToChannelsMenu();
+	void showPlayqueue();
 
 private:
 	enum State
@@ -36,6 +37,7 @@ private:
 private slots:
 	void handleChannelsButtonClicked();
 	void handleNextEpisodeButtonClicked();
+	void handlePlayqueueButtonClicked();
 };
 
 #endif

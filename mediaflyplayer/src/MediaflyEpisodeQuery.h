@@ -27,6 +27,7 @@ public:
 	int limit() const { return m_limit; }
 	const QString& mediaType() const { return m_mediaType; }
 
+	void setChannelSlug(QString channelSlug) { m_channelSlug = channelSlug; }
 private:
 	QString m_channelSlug;
 	int     m_offset;

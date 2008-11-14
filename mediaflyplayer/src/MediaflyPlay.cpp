@@ -10,6 +10,8 @@ MediaflyPlay::MediaflyPlay(QWidget *parent) :
 	        this, SLOT(handleChannelsButtonClicked()));
 	connect(m_nextEpisodeButton, SIGNAL(clicked()),
 	        this, SLOT(handleNextEpisodeButtonClicked()));
+	connect(m_playqueueButton, SIGNAL(clicked()),
+	        this, SLOT(handlePlayqueueButtonClicked()));
 }
 
 void MediaflyPlay::handleChannelsButtonClicked()
@@ -26,6 +28,13 @@ void MediaflyPlay::handleNextEpisodeButtonClicked()
 	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index)) {
 		update();
 	}
+}
+
+void MediaflyPlay::handlePlayqueueButtonClicked()
+{
+	m_video->hide();
+	m_audio->hide();
+	emit showPlayqueue();
 }
 
 void MediaflyPlay::updateStateIndicator(enum State state)
