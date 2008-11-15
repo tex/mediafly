@@ -785,7 +785,7 @@ QDomDocument Mediafly::Shows_GetPrevEpisodeForShow (const Mediafly::SessionInfo&
 	checkResponse(doc);
 	return doc;
 }
-
+#endif
 
 /**
  * This method allows you to post real time playback information up to the Mediafly
@@ -798,17 +798,16 @@ QDomDocument Mediafly::Shows_GetPrevEpisodeForShow (const Mediafly::SessionInfo&
  * @param  position
  * @param  episodeLength
  */
-QDomDocument Mediafly::Experience_PostExperienceForEpisode (const Mediafly::SessionInfo& session, QString episodeSlug, int position, int episodeLength ) {
+void Mediafly::Experience_PostExperienceForEpisode (MediaflyCheckResponseOk *data, QString episodeSlug, int position, int episodeLength)
+{
 	QMap<QString, QString> map;
 	map["episodeSlug"] = episodeSlug;
 	map["position"] = QString::number(position);
 	map["episodeLength"] = QString::number(episodeLength);
-	QDomDocument doc = Query("Experience.PostExperienceForEpisode", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, "Experience.PostExperienceForEpisode", map, m_sessionInfo);
 }
 
-
+#if 0
 /**
  * This method returns a list of shows and/or episodes based on the specified
  * search term.  Please note: shows include additional attributes in the result set

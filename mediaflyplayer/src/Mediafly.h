@@ -486,7 +486,7 @@ public:
 	 * @param  mediaType
 	 */
 	QDomDocument Shows_GetPrevEpisodeForShow (const Mediafly::SessionInfo& session, QString showSlug, QString episodeSlug, QString mediaType );
-
+#endif
 
 	/**
 	 * This method allows you to post real time playback information up to the Mediafly
@@ -499,9 +499,9 @@ public:
 	 * @param  position
 	 * @param  episodeLength
 	 */
-	QDomDocument Experience_PostExperienceForEpisode (const Mediafly::SessionInfo& session, QString episodeSlug, int position, int episodeLength );
+	void Experience_PostExperienceForEpisode (MediaflyCheckResponseOk *data, QString episodeSlug, int position, int episodeLength);
 
-
+#if 0
 	/**
 	 * This method returns a list of shows and/or episodes based on the specified
 	 * search term.  Please note: shows include additional attributes in the result set
