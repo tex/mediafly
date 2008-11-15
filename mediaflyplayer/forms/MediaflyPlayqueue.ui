@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>318</height>
+    <width>712</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -23,6 +23,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>Mediafly Playqueue</string>
        </property>
@@ -36,6 +41,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>Total length: ??</string>
        </property>
@@ -44,7 +54,13 @@
     </layout>
    </item>
    <item row="1" column="0" colspan="4" >
-    <widget class="mf::List" name="m_listView" />
+    <widget class="mf::List" name="m_listView" >
+     <property name="font" >
+      <font>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item row="2" column="0" colspan="4" >
     <layout class="QHBoxLayout" name="horizontalLayout_2" >
@@ -68,6 +84,11 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>></string>
        </property>
@@ -83,6 +104,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
        </property>
        <property name="text" >
         <string>Current playing song's name</string>
@@ -108,6 +134,11 @@
      </item>
      <item>
       <widget class="QLabel" name="m_songPosition" >
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>Position</string>
        </property>
@@ -121,6 +152,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>/</string>
        </property>
@@ -128,6 +164,11 @@
      </item>
      <item>
       <widget class="QLabel" name="m_songLength" >
+       <property name="font" >
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
        <property name="text" >
         <string>Song's length</string>
        </property>
@@ -137,6 +178,11 @@
    </item>
    <item row="5" column="0" >
     <widget class="QPushButton" name="m_nowPlaying" >
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text" >
       <string>&lt; Now Playing</string>
      </property>
@@ -157,6 +203,11 @@
    </item>
    <item row="5" column="1" >
     <widget class="QPushButton" name="m_removeButton" >
+     <property name="font" >
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
      <property name="text" >
       <string>Remove selected from playlist</string>
      </property>
