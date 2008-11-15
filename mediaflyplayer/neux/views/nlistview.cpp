@@ -119,6 +119,7 @@ void NListView :: setItemDelegate( QAbstractItemDelegate *newDelegate )
 {
 	QListView :: setItemDelegate(newDelegate);
 	delegate = dynamic_cast<NItemDelegate *>(newDelegate);
+	Q_ASSERT(delegate);
 	delegate->computeLayout(dynamic_cast<QWidget*>(this));
 }
 
