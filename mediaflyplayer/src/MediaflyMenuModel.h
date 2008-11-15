@@ -12,8 +12,9 @@ class MediaflyMenuModel : public UsersModel
 public:
 	enum Roles
 	{
-		nameRole = Qt::DisplayRole,
-		slugRole = Qt::UserRole + 2000,
+		displayRole = Qt::DisplayRole,
+		nameRole = Qt::UserRole + 2000,
+		slugRole, 
 		isUserRole,
 		isDefaultRole,
 	};

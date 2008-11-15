@@ -31,7 +31,9 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 	if (usersRowCount == 0)
 	{
 		switch (role) {
-		case nameRole: return m_name.at(rowCount);
+		case displayRole: // Fall throught...
+		case nameRole:
+			return m_name.at(rowCount);
 		case slugRole: return m_slug.at(rowCount);
 		case isUserRole: return false;
 		default:       return QVariant();
@@ -42,6 +44,7 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 		if (rowCount < usersRowCount)
 		{
 			switch (role) {
+			case displayRole: return UsersModel::data(createIndex(rowCount, 0), Qt::DisplayRole).toString();
 			case nameRole: return UsersModel::data(createIndex(rowCount, 0), UsersModel::nameRole).toString();
 			case isUserRole: return true;
 			case isDefaultRole: return UsersModel::data(createIndex(rowCount, 0), UsersModel::isDefaultRole).toBool();
@@ -52,7 +55,9 @@ QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
 		else
 		{
 			switch (role) {
-			case nameRole: return m_name_users.at(rowCount - usersRowCount);
+			case displayRole: // Fall throught...
+			case nameRole:
+				return m_name_users.at(rowCount - usersRowCount);
 			case slugRole: return m_slug_users.at(rowCount - usersRowCount);
 			case isUserRole: return false;
 			default:       return QVariant();
