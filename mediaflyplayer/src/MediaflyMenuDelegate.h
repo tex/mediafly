@@ -9,7 +9,7 @@
 class MediaflyMenuDelegate : public QItemDelegate
 {
 public:
-	MediaflyMenuDelegate(QObject *parent = 0) :
+	MediaflyMenuDelegate(QWidget *parent = 0) :
 		QItemDelegate(parent) { }
 	void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };

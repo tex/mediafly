@@ -17,8 +17,9 @@ class UsersModel : public QAbstractListModel
 public:
 	enum Roles
 	{
-		nameRole = Qt::DisplayRole,
-		passwordRole = Qt::UserRole + 1000,
+		displayRole = Qt::DisplayRole,
+		nameRole = Qt::UserRole + 1000,
+		passwordRole, 
 		isDefaultRole,
 	};
 

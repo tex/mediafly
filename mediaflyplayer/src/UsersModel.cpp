@@ -65,6 +65,7 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const
 		return QVariant();
 
 	switch (role) {
+	case displayRole: return m_data.at(index.row()).getAccountName() + tr("'s Mediafly");
 	case nameRole: return m_data.at(index.row()).getAccountName();
 	case passwordRole: return m_data.at(index.row()).getPassword();
 	case isDefaultRole:
