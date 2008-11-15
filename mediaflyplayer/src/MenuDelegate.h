@@ -23,18 +23,18 @@
 #ifndef mfMenuDelegate_H
 #define mfMenuDelegate_H
 
-#include <QItemDelegate>
+#include <nitemdelegate.h>
 #include <QPainter>
 #include <QStyleOptionViewItem>
 #include <QModelIndex>
 
 namespace mf {
 
-class MenuDelegate : public QItemDelegate
+class MenuDelegate : public NItemDelegate
 {
 public:
 	MenuDelegate(QWidget *parent = 0) :
-		QItemDelegate(parent) { }
+		NItemDelegate(parent) { }
 
 	void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };

@@ -42,6 +42,6 @@ void mf::MenuDelegate::paint(QPainter *painter, const QStyleOptionViewItem& opti
 		font.setWeight(QFont::Normal);
 	painter->setFont(font);
 
-	painter->drawText(option.rect, label);
+	NItemDelegate::paint(painter, option, index);
 }
 
