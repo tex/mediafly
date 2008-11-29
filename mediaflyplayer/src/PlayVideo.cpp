@@ -43,6 +43,17 @@ void PlayVideo::show(const QModelIndex& index)
 
 void PlayVideo::hide()
 {
-	// TODO STOP
+}
+
+void PlayVideo::play()
+{
+}
+
+void PlayVideo::pause()
+{
+}
+
+void PlayVideo::getState(QString& songPosition, QString& songLength)
+{
 }
 

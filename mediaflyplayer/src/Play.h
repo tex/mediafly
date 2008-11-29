@@ -23,9 +23,9 @@
 #ifndef MediaflyPlay_H
 #define MediaflyPlay_H
 
-#include "ui_MediaflyPlay.h"
 #include "PlayAudio.h"
 #include "PlayVideo.h"
+#include "ui_MediaflyPlay.h"
 #include <QModelIndex>
 #include <QKeyEvent>
 
@@ -65,6 +65,7 @@ private slots:
 	void handleChannelsButtonClicked();
 	void handleNextEpisodeButtonClicked();
 	void handlePlayqueueButtonClicked();
+	void handleStateChange();
 };
 
 }

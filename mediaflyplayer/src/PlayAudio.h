@@ -23,21 +23,56 @@
 #ifndef mfPlayAudio_H
 #define mfPlayAudio_H
 
+// XMMS2's headers MUST be included first. Don't forget to include MediaflyPlayAudio.h
+// first too if used in another headers. And don't forget to include another headers that
+// include this header first...
+
+#include <xmmsclient/xmmsclient++.h>
+
 #include "ui_MediaflyPlayAudio.h"
 #include <QModelIndex>
+#include <QHash>
+#include <QVariant>
 
 namespace mf {
 
 class PlayAudio : public QWidget, private Ui::MediaflyPlayAudio
 {
-	Q_OBJECT
+	Q_OBJECT	
 public:
 	PlayAudio(QWidget *parent = 0);
+	~PlayAudio();
+
 	void show(const QModelIndex& index);
 	void hide();
+	void play();
+	void pause();
+
+	void getState(QString& songPosition, QString& songLength);
+
+signals:
+	void stateChange();
 
 private:
 	QModelIndex m_index;
+
+	typedef QHash<QString, QVariant> MusicInfo;
+
+	void setUrl(QString url);
+	void disconnect();
+	bool connect();
+	bool handlePlaytime(const unsigned int& playtime);
+	bool playqueueGetMediaInfo(const Xmms::PropDict &info);
+	bool handlePlaylist(const Xmms::List<unsigned int> &list);
+	bool handleStatusChanged(const Xmms::Playback::Status& status);
+	static void propDictToQHash(const std::string&         key,
+	                            const Xmms::Dict::Variant& value,
+	                            const std::string&         source,
+	                            MusicInfo&                 musicInfo);
+
+	Xmms::Client *m_xmmsClient;
+	unsigned int  m_songPosition;
+	unsigned int  m_songLength;
 
 private slots:
 	void updateImage();

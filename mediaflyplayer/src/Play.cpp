@@ -36,6 +36,15 @@ Play::Play(QWidget *parent) :
 	        this, SLOT(handleNextEpisodeButtonClicked()));
 	connect(m_playqueueButton, SIGNAL(clicked()),
 	        this, SLOT(handlePlayqueueButtonClicked()));
+	connect(m_audio, SIGNAL(stateChange()),
+	        this, SLOT(handleStateChange()));
+	connect(m_video, SIGNAL(stateChange()),
+	        this, SLOT(handleStateChange()));
+}
+
+void Play::handleStateChange()
+{
+	emit stateChange();
 }
 
 void Play::handleChannelsButtonClicked()
@@ -63,15 +72,26 @@ void Play::handlePlayqueueButtonClicked()
 void Play::updateStateIndicator(enum State state)
 {
 	switch (state) {
-	case STOP:
-		m_playStateButton->setText("|");
-		break;
 	case PAUSE:
+	{
 		m_playStateButton->setText("||");
+		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+		if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+			m_video->pause();
+		else
+			m_audio->pause();
 		break;
+	}
 	case PLAY:
+	{
 		m_playStateButton->setText(">");
+		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+		if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+			m_video->play();
+		else
+			m_audio->play();
 		break;
+	}
 	default:
 		Q_ASSERT(false);
 	}
@@ -82,12 +102,14 @@ void Play::update()
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
 	{
+		m_audio->hide();
 		m_video->show(m_index);
 		m_stackedWidget->setCurrentWidget(m_video);
 	}
 	else
 	{
 		m_audio->show(m_index);
+		m_video->hide();
 		m_stackedWidget->setCurrentWidget(m_audio);
 	}
 	emit stateChange();
@@ -118,8 +140,14 @@ void Play::getState(QModelIndex &currentIndex, QString &songPosition, QString &s
 {
 	currentIndex = m_index;
 
-	// TODO
-	// songPosition = ...
-	// songLength = ...
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+	{
+		m_video->getState(songPosition, songLength);
+	}
+	else
+	{
+		m_audio->getState(songPosition, songLength);
+	}
 }
 

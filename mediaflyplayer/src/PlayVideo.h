@@ -35,6 +35,13 @@ public:
 	PlayVideo(QWidget *parent = 0);
 	void show(const QModelIndex& index);
 	void hide();
+	void play();
+	void pause();
+
+	void getState(QString& songPosition, QString& songLength);
+
+signals:
+	void stateChange();
 
 private:
 	QModelIndex m_index;

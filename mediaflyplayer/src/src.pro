@@ -17,6 +17,8 @@ DEPENDPATH += .
 # Include special application config
 include (../config.pri)
 
+LIBS += -lxmmsclient++ -lboost_signals
+
 RESOURCES += ../resources/mediafly.qrc
 
 FORMS += ../forms/MediaflyPlay.ui
@@ -49,8 +51,6 @@ HEADERS += ChannelEntry.h
 HEADERS += EpisodeEntry.h
 
 HEADERS += EpisodeQuery.h
-
-HEADERS += MediaflyEpisodeQuery.h
 
 HEADERS += EpisodeModelData.h
 SOURCES += EpisodeModelData.cpp
@@ -128,4 +128,7 @@ HEADERS += Playqueue.h
 SOURCES += Playqueue.cpp
 
 QMAKE_CLEAN += ../../build/* ./build/* ./qrc_*.cpp ./Makefile
+
+HEADERS += nxmmsmainloop.h
+SOURCES += nxmmsmainloop.cpp
 
