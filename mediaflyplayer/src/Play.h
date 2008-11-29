@@ -27,6 +27,7 @@
 #include "PlayVideo.h"
 #include "ui_MediaflyPlay.h"
 #include "CheckResponseOk.h"
+#include "nmediakeychannel.h"
 #include <QModelIndex>
 #include <QKeyEvent>
 
@@ -57,11 +58,14 @@ private:
 
 	QModelIndex             m_index;
 	mf::CheckResponseOk     m_checkResponseOk;
+	NMediaKeyClient         m_mediakeyChannel;
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();
 	void updateStateIndicator(enum State state);
 	QString toTime(unsigned int msec) const;
+	void regMediaKey();
+	void unregMediaKey();
 
 private slots:
 	void handleChannelsButtonClicked();
@@ -69,6 +73,13 @@ private slots:
 	void handlePlayqueueButtonClicked();
 	void handlePlayStateButtonClicked();
 	void handleStateChange();
+
+	void handleEscape();
+	void handleMediaPlay();
+	void handleMediaStop();
+	void handleMediaNext();
+	void handleMediaPrevious();
+	void handleBack();
 };
 
 }

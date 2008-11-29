@@ -46,6 +46,24 @@ Play::Play(QWidget *parent) :
 	        this, SLOT(handleStateChange()));
 }
 
+void Play::regMediaKey()
+{
+        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaPlay);
+        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaStop);
+        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaNext);
+        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaPrevious);
+        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_Back);
+}
+
+void Play::unregMediaKey()
+{
+        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaPlay);
+        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaStop);
+        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaNext);
+        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaPrevious);
+        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_Back);
+}
+
 void Play::handleStateChange()
 {
 	int position, length;
@@ -178,13 +196,66 @@ void Play::show(const QModelIndex& index)
 	update();
 }
 
+void Play::handleEscape()
+{
+	m_video->hide();
+	m_audio->hide();
+	emit back();
+}
+
+void Play::handleMediaPlay()
+{
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+		m_video->play();
+	else
+		m_audio->play();
+}
+
+void Play::handleMediaStop()
+{
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+		m_video->pause();
+	else
+		m_audio->pause();
+}
+
+void Play::handleMediaNext()
+{
+	handleNextEpisodeButtonClicked();
+}
+
+void Play::handleMediaPrevious()
+{
+	handlePlayqueueButtonClicked();
+}
+
+void Play::handleBack()
+{
+	handleChannelsButtonClicked();
+}
+
 void Play::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Escape:
-		m_video->hide();
-		m_audio->hide();
-		emit back();
+		handleEscape();
+		break;
+	case Qt::Key_MediaPlay:
+		handleMediaPlay();
+		break;
+	case Qt::Key_MediaStop:
+		handleMediaStop();
+		break;
+	case Qt::Key_MediaNext:
+		handleMediaNext();
+		break;
+	case Qt::Key_MediaPrevious:
+		handleMediaPrevious();
+		break;
+	case Qt::Key_Back:
+		handleBack();
 		break;
 	default:
 		event->ignore();
