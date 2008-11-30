@@ -23,9 +23,8 @@ void MediaflyPlay::handleChannelsButtonClicked()
 
 void MediaflyPlay::handleNextEpisodeButtonClicked()
 {
-	m_video->hide();
-	m_audio->hide();
-	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index)) {
+	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index))
+	{
 		update();
 	}
 }
