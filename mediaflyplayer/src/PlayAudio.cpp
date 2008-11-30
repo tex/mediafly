@@ -178,6 +178,12 @@ void PlayAudio::getState(QString& songPosition, QString& songLength)
 	songLength = toTime(m_songLength);
 }
 
+void PlayAudio::getState(int& songPosition, int& songLength)
+{
+	songPosition = m_songPosition;
+	songLength = m_songLength;
+}
+
 bool PlayAudio::handlePlaylist(const Xmms::List<unsigned int> &list)
 {
 	m_xmmsClient->medialib.getInfo(*list)(boost::bind(&PlayAudio::playqueueGetMediaInfo, this, _1));

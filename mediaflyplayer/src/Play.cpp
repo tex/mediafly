@@ -44,6 +44,25 @@ Play::Play(QWidget *parent) :
 
 void Play::handleStateChange()
 {
+	int position, length;
+
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
+		m_video->getState(position, length);
+	else
+		m_audio->getState(position, length);
+
+	if (length == 0)
+	{
+		// Total length of the song is unknown. Set it to
+		// song position + 1 to let the user know that
+		// total length is unknown (it looks good on the screen).
+
+		length = position + 1;
+	}
+	m_progressBar->setRange(0, length);
+	m_progressBar->setValue(position);
+
 	emit stateChange();
 }
 

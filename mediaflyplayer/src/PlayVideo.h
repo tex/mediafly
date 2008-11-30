@@ -39,6 +39,7 @@ public:
 	void pause();
 
 	void getState(QString& songPosition, QString& songLength);
+	void getState(int& songPosition, int& songLength);
 
 signals:
 	void stateChange();
