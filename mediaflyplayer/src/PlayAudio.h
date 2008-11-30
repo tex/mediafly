@@ -58,6 +58,7 @@ private:
 
 	typedef QHash<QString, QVariant> MusicInfo;
 
+	QString toTime(unsigned int msec) const;
 	void setUrl(QString url);
 	void disconnect();
 	bool connect();
