@@ -4,12 +4,15 @@
 #include <QDebug>
 #include <QNetworkInterface>
 #include <QUrl>
+#include <QFile>
 
 #include <stdlib.h>
 
+extern QString  currentPath;
+
 Mediafly*       Mediafly::m_mediafly = NULL;
-const QString   Mediafly::m_appId = "dfcfefff34d0458fa3df0e0c7a6feb6c";
-const QString   Mediafly::m_sharedSecret = "N38r0s0sd";
+      QString   Mediafly::m_appId;
+      QString   Mediafly::m_sharedSecret;
 const QString   Mediafly::m_server = "api.mediafly.com";
 const QString   Mediafly::m_prefix = "/api/rest/1.1/Mediafly.";
 
@@ -111,6 +114,14 @@ void Mediafly::handleRequestFinished(int id, bool error)
 
 Mediafly::Mediafly()
 {
+	QFile config(currentPath + "/.mediafly.conf");
+	if (config.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		m_appId = config.readLine().trimmed();
+		m_sharedSecret = config.readLine().trimmed();
+		qDebug() << "m_appId:" << m_appId << ", m_sharedSecret:" << m_sharedSecret;
+	}
+
 	m_thirdPartyUserId = QNetworkInterface::interfaceFromName("eth0").hardwareAddress();
 
 	connect(&m_http, SIGNAL(requestFinished(int, bool)),

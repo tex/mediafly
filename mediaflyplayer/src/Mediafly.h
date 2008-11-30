@@ -26,8 +26,8 @@ private:
 
 	static Mediafly        *m_mediafly;
 
-	static const QString    m_appId;
-	static const QString    m_sharedSecret;
+	static       QString    m_appId;
+	static       QString    m_sharedSecret;
 	static const QString    m_server;
 	static const QString    m_prefix;
 
