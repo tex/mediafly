@@ -41,6 +41,7 @@ PlayAudio::PlayAudio(QWidget *parent) :
 
 PlayAudio::~PlayAudio()
 {
+	hide();
 	disconnect();
 }
 
@@ -93,6 +94,8 @@ bool PlayAudio::connect()
 
 void PlayAudio::show(const QModelIndex& index)
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_index = index;
 
 	QObject::connect(m_index.model(), SIGNAL(refreshed()),
@@ -116,6 +119,9 @@ void PlayAudio::show(const QModelIndex& index)
 
 void PlayAudio::setUrl(QString url)
 {
+	qDebug() << __PRETTY_FUNCTION__ << "Url to play:" << url;
+
+	m_xmmsClient->playback.stop();
 	m_xmmsClient->playlist.clear();
 	m_xmmsClient->playlist.addUrl(url.toAscii().data());
 	m_xmmsClient->playlist.listEntries()(Xmms::bind(&PlayAudio::handlePlaylist, this));
@@ -123,8 +129,12 @@ void PlayAudio::setUrl(QString url)
 
 void PlayAudio::play()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	if (m_xmmsClient)
+	{
 		m_xmmsClient->playback.start();
+	}
 }
 
 void PlayAudio::pause()
@@ -142,6 +152,7 @@ void PlayAudio::updateImage()
 
 void PlayAudio::hide()
 {
+	m_xmmsClient->playback.stop();
 	m_xmmsClient->playlist.clear();
 }
 

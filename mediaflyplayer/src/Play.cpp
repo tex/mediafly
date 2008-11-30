@@ -64,8 +64,6 @@ void Play::handleNextEpisodeButtonClicked()
 
 void Play::handlePlayqueueButtonClicked()
 {
-	m_video->hide();
-	m_audio->hide();
 	emit showPlayqueue();
 }
 
@@ -76,7 +74,7 @@ void Play::updateStateIndicator(enum State state)
 	{
 		m_playStateButton->setText("||");
 		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-		if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+		if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 			m_video->pause();
 		else
 			m_audio->pause();
@@ -86,7 +84,7 @@ void Play::updateStateIndicator(enum State state)
 	{
 		m_playStateButton->setText(">");
 		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-		if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+		if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 			m_video->play();
 		else
 			m_audio->play();
@@ -100,14 +98,18 @@ void Play::updateStateIndicator(enum State state)
 void Play::update()
 {
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 	{
+		qDebug() << "Recognized as video";
+
 		m_audio->hide();
 		m_video->show(m_index);
 		m_stackedWidget->setCurrentWidget(m_video);
 	}
 	else
 	{
+		qDebug() << "Recognized as audio";
+
 		m_audio->show(m_index);
 		m_video->hide();
 		m_stackedWidget->setCurrentWidget(m_audio);
@@ -141,7 +143,7 @@ void Play::getState(QModelIndex &currentIndex, QString &songPosition, QString &s
 	currentIndex = m_index;
 
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
+	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 	{
 		m_video->getState(songPosition, songLength);
 	}
