@@ -49,7 +49,6 @@ signals:
 private:
 	enum State
 	{
-		STOP,
 		PAUSE,
 		PLAY,
 	}
@@ -65,6 +64,7 @@ private slots:
 	void handleChannelsButtonClicked();
 	void handleNextEpisodeButtonClicked();
 	void handlePlayqueueButtonClicked();
+	void handlePlayStateButtonClicked();
 	void handleStateChange();
 };
 

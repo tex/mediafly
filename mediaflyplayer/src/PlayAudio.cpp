@@ -115,7 +115,6 @@ void PlayAudio::show(const QModelIndex& index)
 	// Start playing a new song.
 
 	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
-	play();
 }
 
 void PlayAudio::setUrl(QString url)

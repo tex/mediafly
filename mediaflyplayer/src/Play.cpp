@@ -26,7 +26,8 @@
 using namespace mf;
 
 Play::Play(QWidget *parent) :
-	QWidget(parent)
+	QWidget(parent),
+	m_state(PAUSE)
 {
 	setupUi(this);
 
@@ -36,6 +37,8 @@ Play::Play(QWidget *parent) :
 	        this, SLOT(handleNextEpisodeButtonClicked()));
 	connect(m_playqueueButton, SIGNAL(clicked()),
 	        this, SLOT(handlePlayqueueButtonClicked()));
+	connect(m_playStateButton, SIGNAL(clicked()),
+	        this, SLOT(handlePlayStateButtonClicked()));
 	connect(m_audio, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));
 	connect(m_video, SIGNAL(stateChange()),
@@ -86,12 +89,27 @@ void Play::handlePlayqueueButtonClicked()
 	emit showPlayqueue();
 }
 
+void Play::handlePlayStateButtonClicked()
+{
+	switch (m_state) {
+	case PAUSE:
+		m_state = PLAY;
+		break;
+	case PLAY:
+		m_state = PAUSE;
+		break;
+	default:
+		Q_ASSERT(false);
+	}
+	updateStateIndicator(m_state);
+}
+
 void Play::updateStateIndicator(enum State state)
 {
 	switch (state) {
 	case PAUSE:
 	{
-		m_playStateButton->setText("||");
+		m_playStateButton->setText("|");
 		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 		if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 			m_video->pause();
@@ -133,6 +151,10 @@ void Play::update()
 		m_video->hide();
 		m_stackedWidget->setCurrentWidget(m_audio);
 	}
+
+	m_state = PLAY;
+	updateStateIndicator(m_state);
+
 	emit stateChange();
 }
 
