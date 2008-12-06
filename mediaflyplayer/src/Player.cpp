@@ -110,6 +110,7 @@ void Player::handleNewPerson()
 
 Player::~Player()
 {
+	/* Enable Monitor */
 	NmsControl nmsControl;
 	if (nmsControl.Connect())
 	{
