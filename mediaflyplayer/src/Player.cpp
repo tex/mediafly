@@ -23,6 +23,7 @@
 #include "Player.h"
 #include "nappchannel.h"
 #include "nmscontrol.h"
+#include "nssaverchannel.h"
 #include <QDebug>
 
 using namespace mf;
@@ -44,6 +45,9 @@ Player::Player(QWidget *parent) :
 		nmsControl.SetMonitorEnable(false);
 		nmsControl.Disconnect();
 	}
+
+	/* Disable Screen Saver */
+	NSSaverClient::enable(false);
 
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
@@ -112,6 +116,9 @@ Player::~Player()
 		nmsControl.SetMonitorEnable(true);
 		nmsControl.Disconnect();
 	}
+
+	/* Enable Screen Saver */
+	NSSaverClient::enable(false);
 }
 
 void Player::onQuit()
