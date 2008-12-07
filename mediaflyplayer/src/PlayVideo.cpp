@@ -48,6 +48,7 @@ PlayVideo::~PlayVideo()
 	delete m_timer;
 
 	m_nmsControl->Disconnect();
+	delete m_nmsControl;
 }
 
 void PlayVideo::show(const QModelIndex& index)
