@@ -51,8 +51,8 @@ signals:
 private:
 	enum State
 	{
-		PAUSE,
-		PLAY,
+		MP_PAUSE,
+		MP_PLAY,
 	}
 	m_state;
 

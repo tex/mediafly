@@ -29,6 +29,25 @@ PlayVideo::PlayVideo(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
+
+	m_nmsControl = new NmsControl();
+	m_nmsControl->Connect();
+
+	m_timer = new QTimer(this);
+	m_timer->setInterval(500);
+
+	connect(m_timer, SIGNAL(timeout()),
+	        this, SLOT(handleTimeout()));
+}
+
+PlayVideo::~PlayVideo()
+{
+	hide();
+
+	m_timer->stop();
+	delete m_timer;
+
+	m_nmsControl->Disconnect();
 }
 
 void PlayVideo::show(const QModelIndex& index)
@@ -38,22 +57,47 @@ void PlayVideo::show(const QModelIndex& index)
 	m_episodeNameLabel->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
 	m_showTitleLabel->setText(m_index.data(mf::EpisodeModel::showTitleRole).toString());
 	
-	// TODO PLAY
+	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
 }
 
-void PlayVideo::hide()
+void PlayVideo::setUrl(QString url)
 {
+	// Get video properties...
+
+	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
+	m_songLength = m_mediaInfo.GetDuration();
+
+	// Play video...
+
+	m_nmsControl->Play(url);
+	m_timer->start();
 }
 
 void PlayVideo::play()
 {
+	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::pause()
 {
+	m_nmsControl->PauseUnpause();
+}
+
+void PlayVideo::hide()
+{
+	m_timer->stop();
+	m_nmsControl->StopPlay();
+}
+
+void PlayVideo::handleTimeout()
+{
+	m_songPosition = m_nmsControl->GetPlayTime();
+	emit stateChange();
 }
 
 void PlayVideo::getState(int& songPosition, int& songLength)
 {
+	songPosition = m_songPosition;
+	songLength = m_songLength;
 }
 

@@ -25,6 +25,8 @@
 
 #include "ui_MediaflyPlayVideo.h"
 #include <QModelIndex>
+#include <QTimer>
+#include "nmscontrol.h"
 
 namespace mf {
 
@@ -33,6 +35,8 @@ class PlayVideo : public QWidget, private Ui::MediaflyPlayVideo
 	Q_OBJECT
 public:
 	PlayVideo(QWidget *parent = 0);
+	~PlayVideo();
+
 	void show(const QModelIndex& index);
 	void hide();
 	void play();
@@ -45,6 +49,18 @@ signals:
 
 private:
 	QModelIndex m_index;
+	long        m_songPosition;
+	long        m_songLength;
+	NMediaInfo  m_mediaInfo;
+
+	NmsControl *m_nmsControl;
+	QTimer     *m_timer;
+
+	void setUrl(QString url);
+	QString toTime(unsigned int msec) const;
+
+private slots:
+	void handleTimeout();
 };
 
 }

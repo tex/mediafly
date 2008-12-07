@@ -28,7 +28,7 @@ using namespace mf;
 
 Play::Play(QWidget *parent) :
 	QWidget(parent),
-	m_state(PAUSE)
+	m_state(MP_PAUSE)
 {
 	setupUi(this);
 
@@ -123,11 +123,11 @@ void Play::handlePlayqueueButtonClicked()
 void Play::handlePlayStateButtonClicked()
 {
 	switch (m_state) {
-	case PAUSE:
-		m_state = PLAY;
+	case MP_PAUSE:
+		m_state = MP_PLAY;
 		break;
-	case PLAY:
-		m_state = PAUSE;
+	case MP_PLAY:
+		m_state = MP_PAUSE;
 		break;
 	default:
 		Q_ASSERT(false);
@@ -138,7 +138,7 @@ void Play::handlePlayStateButtonClicked()
 void Play::updateStateIndicator(enum State state)
 {
 	switch (state) {
-	case PAUSE:
+	case MP_PAUSE:
 	{
 		m_playStateButton->setText("|");
 		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
@@ -148,7 +148,7 @@ void Play::updateStateIndicator(enum State state)
 			m_audio->pause();
 		break;
 	}
-	case PLAY:
+	case MP_PLAY:
 	{
 		m_playStateButton->setText(">");
 		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
@@ -183,7 +183,7 @@ void Play::update()
 		m_stackedWidget->setCurrentWidget(m_audio);
 	}
 
-	m_state = PLAY;
+	m_state = MP_PLAY;
 	updateStateIndicator(m_state);
 
 	emit stateChange();
