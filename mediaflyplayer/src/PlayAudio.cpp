@@ -59,8 +59,11 @@ void PlayAudio::disconnect()
 
 bool PlayAudio::handlePlaytime(const unsigned int &playtime)
 {
-	m_songPosition = playtime;
-	emit stateChange();
+	if (playtime - m_songPosition > 500)
+	{
+		m_songPosition = playtime;
+		emit stateChange();
+	}
 	return true;
 }
 
@@ -120,6 +123,9 @@ void PlayAudio::show(const QModelIndex& index)
 void PlayAudio::setUrl(QString url)
 {
 	qDebug() << __PRETTY_FUNCTION__ << "Url to play:" << url;
+
+	m_songPosition = 0;
+	m_songLength = 0;
 
 	m_xmmsClient->playback.stop();
 	m_xmmsClient->playlist.clear();
