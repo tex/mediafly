@@ -32,18 +32,17 @@ Play::Play(QWidget *parent) :
 {
 	setupUi(this);
 
-	connect(m_changeChannelsButton, SIGNAL(clicked()),
-	        this, SLOT(handleChannelsButtonClicked()));
-	connect(m_nextEpisodeButton, SIGNAL(clicked()),
-	        this, SLOT(handleNextEpisodeButtonClicked()));
-	connect(m_playqueueButton, SIGNAL(clicked()),
-	        this, SLOT(handlePlayqueueButtonClicked()));
-	connect(m_playStateButton, SIGNAL(clicked()),
-	        this, SLOT(handlePlayStateButtonClicked()));
+	regMediaKey();
+
 	connect(m_audio, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));
 	connect(m_video, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));
+}
+
+Play::~Play()
+{
+	unregMediaKey();
 }
 
 void Play::regMediaKey()
@@ -238,6 +237,8 @@ void Play::handleBack()
 
 void Play::keyPressEvent(QKeyEvent *event)
 {
+	qDebug() << __PRETTY_FUNCTION__ << "event->key() ==" << event->key();
+
 	switch (event->key()) {
 	case Qt::Key_Escape:
 		handleEscape();

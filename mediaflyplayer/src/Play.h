@@ -38,6 +38,7 @@ class Play : public QWidget, protected Ui::MediaflyPlay
 	Q_OBJECT
 public:
 	Play(QWidget *parent = 0);
+	~Play();
 
 	void show(const QModelIndex& index);
 	void getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength);
