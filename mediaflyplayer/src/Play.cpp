@@ -49,7 +49,9 @@ void Play::handleStateChange()
 {
 	int position, length;
 
+	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+
 	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 		m_video->getState(position, length);
 	else
@@ -65,6 +67,8 @@ void Play::handleStateChange()
 	}
 	m_progressBar->setRange(0, length);
 	m_progressBar->setValue(position);
+
+	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
 
 	emit stateChange();
 }

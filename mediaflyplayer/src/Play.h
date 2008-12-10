@@ -26,6 +26,7 @@
 #include "PlayAudio.h"
 #include "PlayVideo.h"
 #include "ui_MediaflyPlay.h"
+#include "CheckResponseOk.h"
 #include <QModelIndex>
 #include <QKeyEvent>
 
@@ -54,7 +55,8 @@ private:
 	}
 	m_state;
 
-	QModelIndex m_index;
+	QModelIndex             m_index;
+	mf::CheckResponseOk     m_checkResponseOk;
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();
