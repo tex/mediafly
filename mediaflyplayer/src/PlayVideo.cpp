@@ -68,6 +68,8 @@ void PlayVideo::setUrl(QString url)
 	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
 	m_songLength = m_mediaInfo.GetDuration();
 
+	qDebug() << __PRETTY_FUNCTION__ << "url:" << url << ", song length:" << m_songLength;
+
 	// Play video...
 
 	m_nmsControl->Play(url);
@@ -76,16 +78,22 @@ void PlayVideo::setUrl(QString url)
 
 void PlayVideo::play()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::pause()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::hide()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_timer->stop();
 	m_nmsControl->StopPlay();
 }
@@ -93,6 +101,9 @@ void PlayVideo::hide()
 void PlayVideo::handleTimeout()
 {
 	m_songPosition = m_nmsControl->GetPlayTime();
+
+	qDebug() << __PRETTY_FUNCTION__ << "song position:" << m_songPosition;
+
 	emit stateChange();
 }
 
