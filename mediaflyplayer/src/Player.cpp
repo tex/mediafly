@@ -34,9 +34,11 @@ Player::Player(QWidget *parent) :
 	QApplication::setQuitOnLastWindowClosed(true);
 	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
 
-	NAppChannel::sendCloseOtherApps(QStringList() 
-		<< "/media/SD-card/mediafly"
-		<< "/usr/local/bin/more-apps");
+// Temporary disable this feature during developement.
+// 
+//	NAppChannel::sendCloseOtherApps(QStringList() 
+//		<< "/media/SD-card/mediafly"
+//		<< "/usr/local/bin/more-apps");
 
 	/* Disable Monitor */
 	NmsControl nmsControl;
