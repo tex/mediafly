@@ -25,6 +25,8 @@
 
 #include "ui_MediaflyPersonalize.h"
 
+class QKeyEvent;
+
 namespace mf {
 
 class Personalize : public QWidget, private Ui::MediaflyPersonalize
@@ -36,10 +38,10 @@ public:
 
 signals:
 	void showLoginPerson();
+	void hide();
 
-private slots:
-	void handleContinueButtonClick();
-	void handleEnterButtonClick();
+private:
+	void keyPressEvent(QKeyEvent *event);
 };
 
 }

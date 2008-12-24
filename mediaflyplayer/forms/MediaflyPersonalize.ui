@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
+    <width>518</width>
     <height>536</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
    <item row="0" column="0" >
     <widget class="QStackedWidget" name="m_stackedWidget" >
      <property name="currentIndex" >
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_0" >
       <layout class="QGridLayout" name="gridLayout_2" >
@@ -174,7 +174,7 @@
           </font>
          </property>
          <property name="text" >
-          <string>Continue setup</string>
+          <string>Continue setup     ></string>
          </property>
         </widget>
        </item>
@@ -327,7 +327,7 @@
           </font>
          </property>
          <property name="text" >
-          <string>Enter Username and Password</string>
+          <string>Enter Username and Password     ></string>
          </property>
         </widget>
        </item>

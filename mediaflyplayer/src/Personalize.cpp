@@ -21,6 +21,7 @@
  ****************************************************************************/
 
 #include "Personalize.h"
+#include <QKeyEvent>
 
 using namespace mf;
 
@@ -28,11 +29,6 @@ Personalize::Personalize(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
-
-	connect(m_ContinueButton, SIGNAL(clicked()),
-	        this, SLOT(handleContinueButtonClick()));
-	connect(m_EnterButton, SIGNAL(clicked()),
-	        this, SLOT(handleEnterButtonClick()));
 }
 
 void Personalize::clear()
@@ -40,13 +36,29 @@ void Personalize::clear()
 	m_stackedWidget->setCurrentIndex(0);
 }
 
-void Personalize::handleContinueButtonClick()
+void Personalize::keyPressEvent(QKeyEvent *event)
 {
-	m_stackedWidget->setCurrentIndex(1);
-}
+	QWidget::keyPressEvent(event);
 
-void Personalize::handleEnterButtonClick()
-{
-	emit showLoginPerson();
+	switch (event->key()) {
+	case Qt::Key_Right:
+	case Qt::Key_Return:
+	case Qt::Key_Enter:
+		if (m_stackedWidget->currentIndex() == m_stackedWidget->count() - 1)
+			emit showLoginPerson();
+		else
+			m_stackedWidget->setCurrentIndex(
+				m_stackedWidget->currentIndex() + 1
+			);
+	case Qt::Key_Left:
+	case Qt::Key_Escape:
+	case Qt::Key_Back:
+		if (m_stackedWidget->currentIndex() == 0)
+			emit hide();
+		else
+			m_stackedWidget->setCurrentIndex(
+				m_stackedWidget->currentIndex() - 1
+			);
+	}
 }
 
