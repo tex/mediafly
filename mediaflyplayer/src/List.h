@@ -48,6 +48,7 @@ signals:
 	void enterPressed();
 	void leftPressed();
 	void rightPressed();
+	void exitPressed();
 
 private:
 	void keyPressEvent(QKeyEvent *event);

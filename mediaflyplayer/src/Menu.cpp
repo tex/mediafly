@@ -47,6 +47,8 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 	        this, SLOT(handleRightKey()));
 	connect(m_listView, SIGNAL(leftPressed()),
 	        this, SLOT(handleLeftKey()));
+	connect(m_listView, SIGNAL(exitPressed()),
+		this, SLOT(handleExitKey()));
 
 	connect(&m_menuModel, SIGNAL(refreshed()),
 	        this, SLOT(updateMenuModel()));
@@ -388,6 +390,19 @@ void mf::Menu::handleLeftKey()
 		return;
 	}
 	render(index);
+}
+
+void mf::Menu::handleExitKey()
+{
+	qDebug() << __PRETTY_FUNCTION__;
+
+	switch (m_state) {
+	case MainMenu:
+		QCoreApplication::exit(0);
+		break;
+	default:
+		return;
+	}
 }
 
 void mf::Menu::uploadNextPartOfMenu()
