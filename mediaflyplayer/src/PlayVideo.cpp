@@ -34,7 +34,6 @@ PlayVideo::PlayVideo(QWidget *parent) :
 	m_nmsControl->Connect();
 
 	m_timer = new QTimer(this);
-	m_timer->setInterval(500);
 
 	connect(m_timer, SIGNAL(timeout()),
 	        this, SLOT(handleTimeout()));
@@ -98,7 +97,7 @@ void PlayVideo::setUrl(QString url)
 	// Play video...
 
 	m_nmsControl->Play(url);
-	m_timer->start();
+	m_timer->start(500);
 }
 
 void PlayVideo::play()
