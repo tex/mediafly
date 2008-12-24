@@ -61,8 +61,33 @@ void PlayVideo::show(const QModelIndex& index)
 	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
 }
 
+QString PlayVideo::mountUrl(QString url)
+{
+	QString cmd;
+
+	cmd = "mkdir /tmp/httpfs";
+	system(cmd.toAscii());
+
+	cmd = "/media/SD-card/httpfs " + url + " /tmp/httpfs";
+	system(cmd.toAscii());
+
+	return QString("/tmp/httpfs/") + url.right(url.lastIndexOf("/"));
+}
+
+void PlayVideo::umountUrl()
+{
+	QString cmd;
+
+	cmd = "fusermount -u /tmp/httpfs";
+	system(cmd.toAscii());
+}
+
 void PlayVideo::setUrl(QString url)
 {
+	// Mount httpfs filesystem with given url.
+
+	url = mountUrl(url);
+
 	// Get video properties...
 
 	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
@@ -93,6 +118,8 @@ void PlayVideo::pause()
 void PlayVideo::hide()
 {
 	qDebug() << __PRETTY_FUNCTION__;
+
+	umountUrl();
 
 	m_timer->stop();
 	m_nmsControl->StopPlay();

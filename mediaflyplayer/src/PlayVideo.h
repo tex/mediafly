@@ -59,6 +59,17 @@ private:
 	void setUrl(QString url);
 	QString toTime(unsigned int msec) const;
 
+	/**
+	 * Mount given url with httpfs fuse filesystem.
+	 * @return full path to mounted file in local mount point
+	 */
+	QString mountUrl(QString url);
+
+	/**
+	 * Unmount httpfs fuse filesystem.
+	 */
+	void umountUrl();
+
 private slots:
 	void handleTimeout();
 };
