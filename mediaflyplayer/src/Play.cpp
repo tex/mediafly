@@ -67,6 +67,12 @@ void Play::handleStateChange()
 {
 	int position, length;
 
+	// Ignore signal if current status is different that MP_PLAY.
+	// It is spurious signal...
+
+	if (m_state != MP_PLAY)
+		return;
+
 	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 
