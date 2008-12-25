@@ -12,8 +12,7 @@ public:
 	void clear();
 
 signals:
-	// Signals that new person has been signed in
-	// successfuly.
+	// Signals that new person has been signed in successfuly.
 	//
 	void newPerson();
 

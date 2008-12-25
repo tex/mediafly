@@ -35,7 +35,7 @@ void MediaflyLoginPerson::handleCancelButtonClick()
 
 void MediaflyLoginPerson::handleBindMFUserDone()
 {
-	QMessageBox::information(this, tr("Congratilations!"),
+	QMessageBox::information(this, tr("Congratulations!"),
 	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"));
 	emit newPerson();
 }
