@@ -11,8 +11,6 @@
 extern QString  currentPath;
 
 Mediafly*       Mediafly::m_mediafly = NULL;
-      QString   Mediafly::m_appId;
-      QString   Mediafly::m_sharedSecret;
 const QString   Mediafly::m_server = "api.mediafly.com";
 const QString   Mediafly::m_prefix = "/api/rest/1.1/Mediafly.";
 
