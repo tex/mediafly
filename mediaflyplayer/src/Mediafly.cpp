@@ -117,10 +117,16 @@ Mediafly::Mediafly()
 	{
 		m_appId = config.readLine().trimmed();
 		m_sharedSecret = config.readLine().trimmed();
-		qDebug() << "m_appId:" << m_appId << ", m_sharedSecret:" << m_sharedSecret;
 	}
 
-	m_thirdPartyUserId = QNetworkInterface::interfaceFromName("eth0").hardwareAddress();
+	// Get the third party user id from hardware address of the first
+	// network non-loop interface.
+
+	foreach (QNetworkInterface networkInterface, QNetworkInterface::allInterfaces())
+		if ((m_thirdPartyUserId = networkInterface.hardwareAddress()) != "00:00:00:00:00:00")
+			break;
+
+	qDebug() << "m_appId:" << m_appId << ", m_sharedSecret:" << m_sharedSecret << ", m_thirdPartyUserId:" << m_thirdPartyUserId;
 
 	connect(&m_http, SIGNAL(requestFinished(int, bool)),
 	        this, SLOT(handleRequestFinished(int, bool)));
