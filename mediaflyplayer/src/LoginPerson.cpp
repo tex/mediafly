@@ -31,18 +31,8 @@ LoginPerson::LoginPerson(QWidget* parent) :
 {
 	setupUi(this);
 
-	connect(m_accept, SIGNAL(clicked()),
-	        this, SLOT(handleAcceptButtonClick()));
-	connect(m_cancel, SIGNAL(clicked()),
-	        this, SLOT(handleCancelButtonClick()));
-
 	connect(&m_data, SIGNAL(done()),
 	        this, SLOT(handleBindMFUserDone()));
-}
-
-void LoginPerson::handleAcceptButtonClick()
-{
-	Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
 }
 
 void LoginPerson::clear()
@@ -52,16 +42,40 @@ void LoginPerson::clear()
 	m_username->setFocus();
 }
 
-void LoginPerson::handleCancelButtonClick()
-{
-	emit back();
-}
-
 void LoginPerson::handleBindMFUserDone()
 {
 	NMessageBox::information(this, tr("Congratulations!"),
 	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"),
 	                         QMessageBox::Ok, QMessageBox::Ok, 5 * 1000);
 	emit newPerson();
+}
+
+void LoginPerson::keyPressEvent(QKeyEvent *event)
+{
+	QWidget::keyPressEvent(event);
+
+	switch(event->key()) {
+	case Qt::Key_Right:
+	case Qt::Key_Enter:
+	case Qt::Key_Return:
+		Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
+		break;
+	case Qt::Key_Left:
+	case Qt::Key_Escape:
+	case Qt::Key_Back:
+		emit back();
+		break;
+	case Qt::Key_Up:
+	case Qt::Key_PageUp:
+		m_username->setFocus();
+		break;
+	case Qt::Key_Down:
+	case Qt::Key_PageDown:
+		m_password->setFocus();
+		break;
+	default:
+		event->ignore();
+		break;
+	}
 }
 

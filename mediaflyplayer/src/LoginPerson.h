@@ -45,11 +45,11 @@ signals:
 	void back();
 
 private:
+	void keyPressEvent(QKeyEvent *event);
+
 	auth::BindMFUserData m_data;
 
 private slots:
-	void handleAcceptButtonClick();
-	void handleCancelButtonClick();
 	void handleBindMFUserDone();
 };
 
