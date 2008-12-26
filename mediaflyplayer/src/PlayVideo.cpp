@@ -22,6 +22,7 @@
 
 #include "PlayVideo.h"
 #include "EpisodeModel.h"
+#include "nmessagebox.h"
 
 using namespace mf;
 
@@ -64,21 +65,24 @@ QString PlayVideo::mountUrl(QString url)
 {
 	QString cmd;
 
-	cmd = "mkdir /tmp/httpfs";
+	cmd = "mkdir /media/SD-card/httpfs_mp";
 	system(cmd.toAscii());
 
-	cmd = "/media/SD-card/httpfs " + url + " /tmp/httpfs";
+	cmd = "/media/SD-card/httpfs " + url + " /media/SD-card/httpfs_mp";
 	system(cmd.toAscii());
 
-	return QString("/tmp/httpfs/") + url.right(url.lastIndexOf("/"));
+//	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
+
+	QString ret = "/media/SD-card/3.mpg";
+	return ret;
 }
 
 void PlayVideo::umountUrl()
 {
 	QString cmd;
 
-	cmd = "fusermount -u /tmp/httpfs";
-	system(cmd.toAscii());
+//	cmd = "fusermount -u /tmp/httpfs";
+//	system(cmd.toAscii());
 }
 
 void PlayVideo::setUrl(QString url)
@@ -92,26 +96,28 @@ void PlayVideo::setUrl(QString url)
 	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
 	m_songLength = m_mediaInfo.GetDuration();
 
+//	NMessageBox::warning(0, "", "Url: " + url + ", length: " + m_songLength, QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
+
 	qDebug() << __PRETTY_FUNCTION__ << "url:" << url << ", song length:" << m_songLength;
 
 	// Play video...
 
-	m_nmsControl->Play(url);
-	m_timer->start(500);
+//	m_nmsControl->Play(url);
+//	m_timer->start(500);
 }
 
 void PlayVideo::play()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
-	m_nmsControl->PauseUnpause();
+//	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::pause()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
-	m_nmsControl->PauseUnpause();
+//	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::hide()
@@ -120,8 +126,8 @@ void PlayVideo::hide()
 
 	umountUrl();
 
-	m_timer->stop();
-	m_nmsControl->StopPlay();
+//	m_timer->stop();
+//	m_nmsControl->StopPlay();
 }
 
 void PlayVideo::handleTimeout()
