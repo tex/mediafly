@@ -1,6 +1,6 @@
+#include "Play.h"
 #include "MediaflyEpisodeDetails.h"
 #include "MediaflyMenu.h"
-#include "MediaflyPlay.h"
 #include "MediaflyPersonalize.h"
 #include "MediaflyLoginPerson.h"
 #include "Playqueue.h"
@@ -25,7 +25,7 @@ private:
 
 	MediaflyEpisodeDetails *m_episodeDetails;
 	MediaflyMenu           *m_menu;
-	MediaflyPlay           *m_play;
+	mf::Play               *m_play;
 	MediaflyPersonalize    *m_personalize;
 	MediaflyLoginPerson    *m_loginPerson;
 	mf::Playqueue          *m_playqueue;

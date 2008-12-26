@@ -1,7 +1,9 @@
-#include "MediaflyPlay.h"
+#include "Play.h"
 #include "MediaflyEpisodeModel.h"
 
-MediaflyPlay::MediaflyPlay(QWidget *parent) :
+using namespace mf;
+
+Play::Play(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
@@ -14,14 +16,14 @@ MediaflyPlay::MediaflyPlay(QWidget *parent) :
 	        this, SLOT(handlePlayqueueButtonClicked()));
 }
 
-void MediaflyPlay::handleChannelsButtonClicked()
+void Play::handleChannelsButtonClicked()
 {
 	m_video->hide();
 	m_audio->hide();
 	emit backToChannelsMenu();
 }
 
-void MediaflyPlay::handleNextEpisodeButtonClicked()
+void Play::handleNextEpisodeButtonClicked()
 {
 	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index))
 	{
@@ -29,14 +31,14 @@ void MediaflyPlay::handleNextEpisodeButtonClicked()
 	}
 }
 
-void MediaflyPlay::handlePlayqueueButtonClicked()
+void Play::handlePlayqueueButtonClicked()
 {
 	m_video->hide();
 	m_audio->hide();
 	emit showPlayqueue();
 }
 
-void MediaflyPlay::updateStateIndicator(enum State state)
+void Play::updateStateIndicator(enum State state)
 {
 	switch (state) {
 	case STOP:
@@ -53,7 +55,7 @@ void MediaflyPlay::updateStateIndicator(enum State state)
 	}
 }
 
-void MediaflyPlay::update()
+void Play::update()
 {
 	QString format = m_index.data(MediaflyEpisodeModel::formatRole).toString();
 	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
@@ -69,14 +71,14 @@ void MediaflyPlay::update()
 	emit stateChange();
 }
 
-void MediaflyPlay::show(const QModelIndex& index)
+void Play::show(const QModelIndex& index)
 {
 	m_index = index;
 
 	update();
 }
 
-void MediaflyPlay::keyPressEvent(QKeyEvent *event)
+void Play::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Escape:
@@ -90,7 +92,7 @@ void MediaflyPlay::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-void MediaflyPlay::getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength)
+void Play::getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength)
 {
 	currentIndex = m_index;
 

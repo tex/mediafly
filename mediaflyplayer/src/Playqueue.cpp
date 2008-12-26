@@ -3,7 +3,7 @@
 
 using namespace mf;
 
-Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, MediaflyPlay *mediaflyPlay, QWidget *parent) :
+Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent) :
 	QWidget(parent),
 	m_episodeModel(episodeModel),
 	m_mediaflyPlay(mediaflyPlay)

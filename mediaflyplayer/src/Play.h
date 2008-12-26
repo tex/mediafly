@@ -7,11 +7,14 @@
 #include <QModelIndex>
 #include <QKeyEvent>
 
-class MediaflyPlay : public QWidget, protected Ui::MediaflyPlay
+namespace mf {
+
+class Play : public QWidget, protected Ui::MediaflyPlay
 {
 	Q_OBJECT
 public:
-	MediaflyPlay(QWidget *parent = 0);
+	Play(QWidget *parent = 0);
+
 	void show(const QModelIndex& index);
 	void getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength);
 
@@ -41,6 +44,8 @@ private slots:
 	void handleNextEpisodeButtonClicked();
 	void handlePlayqueueButtonClicked();
 };
+
+}
 
 #endif
 
