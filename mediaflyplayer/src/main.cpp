@@ -37,6 +37,10 @@ int main(int argc, char** argv)
 	QFileInfo info(argv[0]);
 	currentPath = info.path();
 
+	// Use hard path during test phase...
+	//
+	currentPath = "/media/SD-card/";
+
 	QCoreApplication::setOrganizationName("Neuros");
 	QCoreApplication::setOrganizationDomain("neurostechnology.com");
 	QCoreApplication::setApplicationName("mediafly");
