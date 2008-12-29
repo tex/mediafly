@@ -6,14 +6,14 @@
     <x>0</x>
     <y>0</y>
     <width>501</width>
-    <height>413</height>
+    <height>384</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" >
-   <item row="0" column="0" >
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
     <widget class="QLabel" name="m_episodeNameLabel" >
      <property name="font" >
       <font>
@@ -28,7 +28,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
+   <item>
     <widget class="QLabel" name="m_showTitleLabel" >
      <property name="font" >
       <font>
@@ -43,15 +43,18 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" >
-    <widget class="QWidget" native="1" name="m_videoWidget" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item>
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
      </property>
-    </widget>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
