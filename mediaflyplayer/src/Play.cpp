@@ -120,11 +120,6 @@ void Play::handleNextEpisodeButtonClicked()
 	}
 }
 
-void Play::handlePlayqueueButtonClicked()
-{
-	emit showPlayqueue();
-}
-
 void Play::handlePlayStateButtonClicked()
 {
 	switch (m_state) {
@@ -231,11 +226,6 @@ void Play::handleMediaNext()
 	handleNextEpisodeButtonClicked();
 }
 
-void Play::handleMediaPrevious()
-{
-	handlePlayqueueButtonClicked();
-}
-
 void Play::handleBack()
 {
 	handleChannelsButtonClicked();
@@ -258,8 +248,8 @@ void Play::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_MediaNext:
 		handleMediaNext();
 		break;
-	case Qt::Key_MediaPrevious:
-		handleMediaPrevious();
+	case Qt::Key_Up:
+		emit showPlayqueue();
 		break;
 	case Qt::Key_Back:
 		handleBack();
