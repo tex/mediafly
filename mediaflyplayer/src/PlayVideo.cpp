@@ -31,12 +31,16 @@ using namespace mf;
 PlayVideo::PlayVideo(QWidget *parent) :
 	NBackgroundManagedWidget(parent)
 {
-	setPreferredBackground(NBackgroundManagedWidget::BackgroundVideoOnly);
-
 	setupUi(this);
 
+	setPreferredBackground(NBackgroundManagedWidget::BackgroundVideoOnly);
+
 	m_nmsControl = new NmsControl();
-	m_nmsControl->Connect();
+	if (!m_nmsControl || !m_nmsControl->Connect())
+	{
+		NMessageBox::warning(NULL, "Failed to connect to NMS!", "Internal error, video playback unavailable.", QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
+	}
+	m_nmsControl->SetMonitorEnable(false);
 
 	NSSaverClient::enable(false);
 
@@ -55,6 +59,7 @@ PlayVideo::~PlayVideo()
 
 	NSSaverClient::enable(true);
 
+	m_nmsControl->SetMonitorEnable(true);
 	m_nmsControl->Disconnect();
 	delete m_nmsControl;
 }
@@ -83,6 +88,9 @@ QString PlayVideo::mountUrl(QString url)
 	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
 #endif
 	QString ret = "/media/SD-card/title2.avi";
+	m_episodeNameLabel->setText(ret);
+	m_showTitleLabel->setText("---");
+
 	return ret;
 }
 
@@ -111,8 +119,18 @@ void PlayVideo::setUrl(QString url)
 
 	// Play video...
 
-	m_nmsControl->Play(url);
-	m_timer->start(500);
+	switch (m_nmsControl->Play(url)) {
+	case 0:
+		m_timer->start(500);
+		m_showTitleLabel->setText("OK");
+		break;
+	case 1:
+		m_showTitleLabel->setText("video locked");
+		break;
+	default:
+		m_showTitleLabel->setText("video format not known");
+		break;
+	}
 }
 
 void PlayVideo::play()
