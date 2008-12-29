@@ -27,10 +27,11 @@
 #include <QModelIndex>
 #include <QTimer>
 #include "nmscontrol.h"
+#include "nbackgroundmanagedwidget.h"
 
 namespace mf {
 
-class PlayVideo : public QWidget, private Ui::MediaflyPlayVideo
+class PlayVideo : public NBackgroundManagedWidget, private Ui::MediaflyPlayVideo
 {
 	Q_OBJECT
 public:

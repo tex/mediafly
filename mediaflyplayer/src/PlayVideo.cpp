@@ -23,16 +23,22 @@
 #include "PlayVideo.h"
 #include "EpisodeModel.h"
 #include "nmessagebox.h"
+#include "nvideoplaybacksettings.h"
+#include "nssaverchannel.h"
 
 using namespace mf;
 
 PlayVideo::PlayVideo(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
+	setPreferredBackground(NBackgroundManagedWidget::BackgroundVideoOnly);
+
 	setupUi(this);
 
 	m_nmsControl = new NmsControl();
 	m_nmsControl->Connect();
+
+	NSSaverClient::enable(false);
 
 	m_timer = new QTimer(this);
 
@@ -46,6 +52,8 @@ PlayVideo::~PlayVideo()
 
 	m_timer->stop();
 	delete m_timer;
+
+	NSSaverClient::enable(true);
 
 	m_nmsControl->Disconnect();
 	delete m_nmsControl;
@@ -63,6 +71,7 @@ void PlayVideo::show(const QModelIndex& index)
 
 QString PlayVideo::mountUrl(QString url)
 {
+#if 0
 	QString cmd;
 
 	cmd = "mkdir /media/SD-card/httpfs_mp";
@@ -71,18 +80,20 @@ QString PlayVideo::mountUrl(QString url)
 	cmd = "/media/SD-card/httpfs " + url + " /media/SD-card/httpfs_mp";
 	system(cmd.toAscii());
 
-//	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
-
-	QString ret = "/media/SD-card/3.mpg";
+	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
+#endif
+	QString ret = "/media/SD-card/title2.avi";
 	return ret;
 }
 
 void PlayVideo::umountUrl()
 {
+#if 0
 	QString cmd;
 
-//	cmd = "fusermount -u /tmp/httpfs";
-//	system(cmd.toAscii());
+	cmd = "fusermount -u /tmp/httpfs";
+	system(cmd.toAscii());
+#endif
 }
 
 void PlayVideo::setUrl(QString url)
@@ -96,28 +107,26 @@ void PlayVideo::setUrl(QString url)
 	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
 	m_songLength = m_mediaInfo.GetDuration();
 
-//	NMessageBox::warning(0, "", "Url: " + url + ", length: " + m_songLength, QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
-
 	qDebug() << __PRETTY_FUNCTION__ << "url:" << url << ", song length:" << m_songLength;
 
 	// Play video...
 
-//	m_nmsControl->Play(url);
-//	m_timer->start(500);
+	m_nmsControl->Play(url);
+	m_timer->start(500);
 }
 
 void PlayVideo::play()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
-//	m_nmsControl->PauseUnpause();
+	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::pause()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
-//	m_nmsControl->PauseUnpause();
+	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::hide()
@@ -126,8 +135,8 @@ void PlayVideo::hide()
 
 	umountUrl();
 
-//	m_timer->stop();
-//	m_nmsControl->StopPlay();
+	m_timer->stop();
+	m_nmsControl->StopPlay();
 }
 
 void PlayVideo::handleTimeout()
