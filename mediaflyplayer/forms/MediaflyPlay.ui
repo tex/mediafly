@@ -17,7 +17,7 @@
   </property>
   <layout class="QGridLayout" >
    <item row="1" column="0" colspan="5" >
-    <widget class="QProgressBar" name="m_progressBar" />
+    <widget class="NTimeBar" name="m_progressBar" />
    </item>
    <item row="2" column="0" >
     <widget class="QPushButton" name="m_changeChannelsButton" >
@@ -128,6 +128,11 @@
    <extends>QWidget</extends>
    <header>PlayVideo.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>NTimeBar</class>
+   <extends>QProgressBar</extends>
+   <header>ntimebar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
