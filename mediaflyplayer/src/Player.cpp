@@ -21,9 +21,9 @@
  ****************************************************************************/
 
 #include "Player.h"
-#include "nappchannel.h"
 #include "nmscontrol.h"
 #include "nssaverchannel.h"
+
 #include <QDebug>
 
 using namespace mf;
@@ -35,23 +35,6 @@ Player::Player(QWidget *parent) :
 
 	QApplication::setQuitOnLastWindowClosed(true);
 	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
-
-// Temporary disable this feature during developement.
-// 
-//	NAppChannel::sendCloseOtherApps(QStringList() 
-//		<< "/media/SD-card/mediafly"
-//		<< "/usr/local/bin/more-apps");
-
-	/* Disable Monitor */
-	NmsControl nmsControl;
-	if (nmsControl.Connect())
-	{
-		nmsControl.SetMonitorEnable(false);
-		nmsControl.Disconnect();
-	}
-
-	/* Disable Screen Saver */
-	NSSaverClient::enable(false);
 
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
@@ -114,16 +97,6 @@ void Player::handleNewPerson()
 
 Player::~Player()
 {
-	/* Enable Monitor */
-	NmsControl nmsControl;
-	if (nmsControl.Connect())
-	{
-		nmsControl.SetMonitorEnable(true);
-		nmsControl.Disconnect();
-	}
-
-	/* Enable Screen Saver */
-	NSSaverClient::enable(false);
 }
 
 void Player::onQuit()

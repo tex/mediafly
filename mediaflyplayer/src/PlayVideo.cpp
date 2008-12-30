@@ -42,8 +42,6 @@ PlayVideo::PlayVideo(QWidget *parent) :
 	}
 	m_nmsControl->SetMonitorEnable(false);
 
-	NSSaverClient::enable(false);
-
 	m_timer = new QTimer(this);
 
 	connect(m_timer, SIGNAL(timeout()),
@@ -56,8 +54,6 @@ PlayVideo::~PlayVideo()
 
 	m_timer->stop();
 	delete m_timer;
-
-	NSSaverClient::enable(true);
 
 	m_nmsControl->SetMonitorEnable(true);
 	m_nmsControl->Disconnect();
@@ -72,6 +68,8 @@ void PlayVideo::show(const QModelIndex& index)
 	m_showTitleLabel->setText(m_index.data(mf::EpisodeModel::showTitleRole).toString());
 	
 	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
+
+	NSSaverClient::enable(false);
 }
 
 QString PlayVideo::mountUrl(QString url)
@@ -155,6 +153,8 @@ void PlayVideo::hide()
 
 	m_timer->stop();
 	m_nmsControl->StopPlay();
+
+	NSSaverClient::enable(true);
 }
 
 void PlayVideo::handleTimeout()

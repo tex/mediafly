@@ -21,9 +21,11 @@
  ****************************************************************************/
 
 #include "Player.h"
+#include "nappchannel.h"
 #include "nmessagebox.h"
 #include "nmultilanguage.h"
 #include "network-state.h"
+
 #include <QApplication>
 #include <QFileInfo>
 
@@ -57,8 +59,13 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
+// Temporary disable this feature during developement.
+//
+//	NAppChannel::sendCloseOtherApps(QStringList()
+//		<< "/media/SD-card/mediafly"
+//		<< "/usr/local/bin/more-apps");
+
 	mf::Player v;
-	v.setPreferredBackground(NBackgroundManagedWidget::BackgroundImageOnly);
 	v.showMaximized();
 
 	return app.exec();
