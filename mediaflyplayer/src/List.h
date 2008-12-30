@@ -23,11 +23,11 @@
 #ifndef mfList_H
 #define mfList_H
 
+#include "nribbonlistview.h"
+
 #include <QObject>
-#include <QWidget>
 #include <QListView>
 #include <QKeyEvent>
-#include "nribbonlistview.h"
 
 namespace mf {
 

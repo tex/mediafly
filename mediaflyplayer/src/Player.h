@@ -31,7 +31,6 @@
 #include "Search.h"
 #include "nbackgroundmanagedwidget.h"
 #include "nstdinappmanager.h"
-#include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
 #include <QVBoxLayout>

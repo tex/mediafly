@@ -32,9 +32,6 @@
 #include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
 
 namespace mf {
 
