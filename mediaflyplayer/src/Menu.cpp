@@ -30,7 +30,7 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
                    mf::ChannelModel&     channelModel,
                    mf::EpisodeModel&     episodeModel,
                    QWidget *parent) :
-	QWidget(parent),
+	NBackgroundManagedWidget(parent),
 	m_state(MainMenu),
 	m_menuModel(menuModel),
 	m_channelModel(channelModel),
@@ -38,6 +38,8 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 	m_channelLabel(tr("Media Channels"))
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundImageOnly);
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));

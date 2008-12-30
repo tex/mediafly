@@ -31,6 +31,8 @@ using namespace mf;
 Player::Player(QWidget *parent) :
 	NBackgroundManagedWidget(parent)
 {
+	setPreferredBackground(BackgroundImageOnly);
+
 	QApplication::setQuitOnLastWindowClosed(true);
 	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
 

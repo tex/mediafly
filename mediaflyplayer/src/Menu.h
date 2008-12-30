@@ -29,6 +29,7 @@
 #include "EpisodeDelegate.h"
 #include "SearchQuery.h"
 #include "CheckResponseOk.h"
+#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -37,7 +38,7 @@
 
 namespace mf {
 
-class Menu : public QWidget, protected Ui::MediaflyMenu
+class Menu : public NBackgroundManagedWidget, protected Ui::MediaflyMenu
 {
 	Q_OBJECT
 public:

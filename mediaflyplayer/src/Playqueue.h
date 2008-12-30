@@ -23,7 +23,7 @@
 #ifndef Playqueue_H
 #define Playqueue_H
 
-#include "Play.h"
+#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyPlayqueue.h"
 #include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
@@ -32,7 +32,9 @@
 
 namespace mf {
 
-class Playqueue : public QWidget, private Ui::MediaflyPlayqueue
+class Play;
+
+class Playqueue : public NBackgroundManagedWidget, private Ui::MediaflyPlayqueue
 {
 	Q_OBJECT
 public:

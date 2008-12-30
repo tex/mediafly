@@ -29,14 +29,17 @@
 
 #include <xmmsclient/xmmsclient++.h>
 
+#include "nbackgroundmanagedwidget.h"
+
 #include "ui_MediaflyPlayAudio.h"
+
 #include <QModelIndex>
 #include <QHash>
 #include <QVariant>
 
 namespace mf {
 
-class PlayAudio : public QWidget, private Ui::MediaflyPlayAudio
+class PlayAudio : public NBackgroundManagedWidget, private Ui::MediaflyPlayAudio
 {
 	Q_OBJECT	
 public:

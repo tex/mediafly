@@ -20,19 +20,21 @@
  *
  ****************************************************************************/
 
+#include "Play.h"
 #include "Playqueue.h"
 
 using namespace mf;
 
 Playqueue::Playqueue(mf::EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent) :
-	QWidget(parent),
+	NBackgroundManagedWidget(parent),
 	m_episodeModel(episodeModel),
 	m_mediaflyPlay(mediaflyPlay)
 {
 	setupUi(this);
 
-	m_itemDelegate = new EpisodeDelegate(m_listView);
+	setPreferredBackground(BackgroundPreferVideo);
 
+	m_itemDelegate = new EpisodeDelegate(m_listView);
 	m_listView->setModel(&m_episodeModel);
 	m_listView->setItemDelegate(m_itemDelegate);
 

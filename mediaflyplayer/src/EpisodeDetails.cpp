@@ -27,9 +27,11 @@
 using namespace mf;
 
 EpisodeDetails::EpisodeDetails(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundImageOnly);
 }
 
 void EpisodeDetails::show(const QModelIndex& index)

@@ -26,9 +26,11 @@
 using namespace mf;
 
 Personalize::Personalize(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundImageOnly);
 }
 
 void Personalize::clear()

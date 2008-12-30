@@ -27,9 +27,11 @@
 using namespace mf;
 
 LoginPerson::LoginPerson(QWidget* parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundImageOnly);
 
 	connect(&m_data, SIGNAL(done()),
 	        this, SLOT(handleBindMFUserDone()));

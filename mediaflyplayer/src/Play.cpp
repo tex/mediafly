@@ -27,10 +27,12 @@
 using namespace mf;
 
 Play::Play(QWidget *parent) :
-	QWidget(parent),
+	NBackgroundManagedWidget(parent),
 	m_state(MP_PAUSE)
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundPreferVideo);
 
 	regMediaKey();
 

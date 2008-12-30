@@ -32,9 +32,11 @@
 using namespace mf;
 
 PlayAudio::PlayAudio(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+
+	setPreferredBackground(BackgroundPreferVideo);
 
 	m_xmmsClient = new Xmms::Client("Mediafly");
 	connect();
