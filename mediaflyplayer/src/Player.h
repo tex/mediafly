@@ -1,3 +1,6 @@
+#ifndef mfPlayer_H
+#define mfPlayer_H
+
 #include "Play.h"
 #include "MediaflyEpisodeDetails.h"
 #include "MediaflyMenu.h"
@@ -9,11 +12,13 @@
 #include <QStackedWidget>
 #include <QVBoxLayout>
 
-class MediaflyPlayer : public QWidget
+namespace mf {
+
+class Player : public QWidget
 {
 	Q_OBJECT
 public:
-	MediaflyPlayer(QWidget *parent = 0);
+	Player(QWidget *parent = 0);
 
 private:
 	QVBoxLayout    *m_layout;
@@ -25,10 +30,10 @@ private:
 
 	MediaflyEpisodeDetails *m_episodeDetails;
 	MediaflyMenu           *m_menu;
-	mf::Play               *m_play;
+	Play                   *m_play;
 	MediaflyPersonalize    *m_personalize;
 	MediaflyLoginPerson    *m_loginPerson;
-	mf::Playqueue          *m_playqueue;
+	Playqueue              *m_playqueue;
 
 private slots:
 	void handlePlayMenu(const QModelIndex& index);
@@ -41,4 +46,8 @@ private slots:
 	void showPlayqueue();
 	void showPlay();
 };
+
+}
+
+#endif
 

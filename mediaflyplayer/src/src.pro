@@ -55,8 +55,8 @@ FORMS += ../forms/MediaflyEpisodeDetails.ui
 HEADERS += MediaflyEpisodeDetails.h
 SOURCES += MediaflyEpisodeDetails.cpp
 
-HEADERS += MediaflyPlayer.h
-SOURCES += MediaflyPlayer.cpp
+HEADERS += Player.h
+SOURCES += Player.cpp
 
 HEADERS += Play.h
 SOURCES += Play.cpp

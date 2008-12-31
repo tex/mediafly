@@ -1,4 +1,4 @@
-#include "MediaflyPlayer.h"
+#include "Player.h"
 #include <QApplication>
 #include <QFileInfo>
 
@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 	QApplication app(argc, argv);
 	QFileInfo info(argv[0]);
 	currentPath = info.path();
-	MediaflyPlayer v;
+	mf::Player v;
 	v.show();
 	return app.exec();
 }

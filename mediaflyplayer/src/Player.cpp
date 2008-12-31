@@ -1,7 +1,9 @@
-#include "MediaflyPlayer.h"
+#include "Player.h"
 #include <QDebug>
 
-MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
+using namespace mf;
+
+Player::Player(QWidget *parent) :
 	QWidget(parent)
 {
 	m_episodeDetails = new MediaflyEpisodeDetails(this);
@@ -57,53 +59,53 @@ MediaflyPlayer::MediaflyPlayer(QWidget *parent) :
 	        this, SLOT(showPlay()));
 }
 
-void MediaflyPlayer::handleNewPerson()
+void Player::handleNewPerson()
 {
 	m_menuModel.refresh();
 	showMenu();
 }
 
-void MediaflyPlayer::handleShowMenu(const QModelIndex& index)
+void Player::handleShowMenu(const QModelIndex& index)
 {
 	m_view->setCurrentWidget(m_episodeDetails);
 	m_episodeDetails->show(index);
 }
 
-void MediaflyPlayer::handlePlayMenu(const QModelIndex& index)
+void Player::handlePlayMenu(const QModelIndex& index)
 {
 	m_view->setCurrentWidget(m_play);
 	m_play->show(index);
 }
 
-void MediaflyPlayer::showPlay()
+void Player::showPlay()
 {
 	m_view->setCurrentWidget(m_play);
 }
 
-void MediaflyPlayer::handlePersonalize()
+void Player::handlePersonalize()
 {
 	m_personalize->clear();
 	m_view->setCurrentWidget(m_personalize);
 }
 
-void MediaflyPlayer::handleLoginPerson()
+void Player::handleLoginPerson()
 {
 	m_loginPerson->clear();
 	m_view->setCurrentWidget(m_loginPerson);
 }
 
-void MediaflyPlayer::showMenu()
+void Player::showMenu()
 {
 	m_view->setCurrentWidget(m_menu);
 }
 
-void MediaflyPlayer::showChannelsMenu()
+void Player::showChannelsMenu()
 {
 	m_menu->showChannelMenu();
 	m_view->setCurrentWidget(m_menu);
 }
 
-void MediaflyPlayer::showPlayqueue()
+void Player::showPlayqueue()
 {
 	m_view->setCurrentWidget(m_playqueue);
 }
