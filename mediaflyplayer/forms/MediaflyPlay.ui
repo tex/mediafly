@@ -91,7 +91,7 @@
       <number>1</number>
      </property>
      <widget class="mf::PlayAudio" name="m_audio" />
-     <widget class="MediaflyPlayVideo" name="m_video" />
+     <widget class="mf::PlayVideo" name="m_video" />
     </widget>
    </item>
   </layout>
@@ -104,9 +104,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MediaflyPlayVideo</class>
+   <class>mf::PlayVideo</class>
    <extends>QWidget</extends>
-   <header>MediaflyPlayVideo.h</header>
+   <header>PlayVideo.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

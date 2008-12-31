@@ -1,13 +1,15 @@
-#include "MediaflyPlayVideo.h"
+#include "PlayVideo.h"
 #include "MediaflyEpisodeModel.h"
 
-MediaflyPlayVideo::MediaflyPlayVideo(QWidget *parent) :
+using namespace mf;
+
+PlayVideo::PlayVideo(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
 }
 
-void MediaflyPlayVideo::show(const QModelIndex& index)
+void PlayVideo::show(const QModelIndex& index)
 {
 	m_index = index;
 
@@ -17,7 +19,7 @@ void MediaflyPlayVideo::show(const QModelIndex& index)
 	// TODO PLAY
 }
 
-void MediaflyPlayVideo::hide()
+void PlayVideo::hide()
 {
 	// TODO STOP
 }

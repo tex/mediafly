@@ -3,7 +3,7 @@
 
 #include "ui_MediaflyPlay.h"
 #include "PlayAudio.h"
-#include "MediaflyPlayVideo.h"
+#include "PlayVideo.h"
 #include <QModelIndex>
 #include <QKeyEvent>
 

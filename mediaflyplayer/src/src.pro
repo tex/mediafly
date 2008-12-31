@@ -62,8 +62,8 @@ HEADERS += Play.h
 SOURCES += Play.cpp
 
 FORMS += ../forms/MediaflyPlayVideo.ui
-HEADERS += MediaflyPlayVideo.h
-SOURCES += MediaflyPlayVideo.cpp
+HEADERS += PlayVideo.h
+SOURCES += PlayVideo.cpp
 
 FORMS += ../forms/MediaflyPlayAudio.ui
 HEADERS += PlayAudio.h
