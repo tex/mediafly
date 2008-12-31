@@ -9,7 +9,7 @@ Player::Player(QWidget *parent) :
 	m_episodeDetails = new MediaflyEpisodeDetails(this);
 	m_menu = new MediaflyMenu(m_menuModel, m_channelModel, m_episodeModel, this);
 	m_play = new mf::Play(this);
-	m_loginPerson = new MediaflyLoginPerson();
+	m_loginPerson = new mf::LoginPerson();
 	m_personalize = new Personalize(m_loginPerson);
 	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
 

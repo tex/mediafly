@@ -1,7 +1,6 @@
 #ifndef mfPersonalize_H
 #define mfPersonalize_H
 
-#include "MediaflyLoginPerson.h"
 #include "ui_MediaflyPersonalize.h"
 
 namespace mf {

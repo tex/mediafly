@@ -1,8 +1,10 @@
-#include "MediaflyLoginPerson.h"
+#include "LoginPerson.h"
 #include "Mediafly.h"
 #include <QMessageBox>
 
-MediaflyLoginPerson::MediaflyLoginPerson(QWidget* parent) :
+using namespace mf;
+
+LoginPerson::LoginPerson(QWidget* parent) :
 	QWidget(parent)
 {
 	setupUi(this);
@@ -16,24 +18,24 @@ MediaflyLoginPerson::MediaflyLoginPerson(QWidget* parent) :
 	        this, SLOT(handleBindMFUserDone()));
 }
 
-void MediaflyLoginPerson::handleAcceptButtonClick()
+void LoginPerson::handleAcceptButtonClick()
 {
 	Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
 }
 
-void MediaflyLoginPerson::clear()
+void LoginPerson::clear()
 {
 	m_password->clear();
 	m_username->clear();
 	m_username->setFocus();
 }
 
-void MediaflyLoginPerson::handleCancelButtonClick()
+void LoginPerson::handleCancelButtonClick()
 {
 	emit back();
 }
 
-void MediaflyLoginPerson::handleBindMFUserDone()
+void LoginPerson::handleBindMFUserDone()
 {
 	QMessageBox::information(this, tr("Congratulations!"),
 	                         tr("Your new Mediafly account link has been successfully added to the Mediafly main menu"));

@@ -1,14 +1,16 @@
-#ifndef MediaflyLoginPerson_H
-#define MediaflyLoginPerson_H
+#ifndef mfLoginPerson_H
+#define mfLoginPerson_H
 
 #include "MediaflyAuthentication_BindMFUserData.h"
 #include "ui_MediaflyLoginPerson.h"
 
-class MediaflyLoginPerson : public QWidget, private Ui::MediaflyLoginPerson
+namespace mf {
+
+class LoginPerson : public QWidget, private Ui::MediaflyLoginPerson
 {
 	Q_OBJECT
 public:
-	MediaflyLoginPerson(QWidget* parent = 0); 
+	LoginPerson(QWidget* parent = 0); 
 	void clear();
 
 signals:
@@ -28,6 +30,8 @@ private slots:
 	void handleCancelButtonClick();
 	void handleBindMFUserDone();
 };
+
+}
 
 #endif
 

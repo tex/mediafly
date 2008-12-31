@@ -5,7 +5,7 @@
 #include "MediaflyEpisodeDetails.h"
 #include "MediaflyMenu.h"
 #include "Personalize.h"
-#include "MediaflyLoginPerson.h"
+#include "LoginPerson.h"
 #include "Playqueue.h"
 #include <QWidget>
 #include <QObject>
@@ -32,7 +32,7 @@ private:
 	MediaflyMenu           *m_menu;
 	Play                   *m_play;
 	Personalize            *m_personalize;
-	MediaflyLoginPerson    *m_loginPerson;
+	LoginPerson            *m_loginPerson;
 	Playqueue              *m_playqueue;
 
 private slots:

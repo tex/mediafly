@@ -85,8 +85,8 @@ FORMS += ../forms/MediaflyPersonalize.ui
 HEADERS += Personalize.h
 SOURCES += Personalize.cpp
 
-HEADERS += MediaflyLoginPerson.h
-SOURCES += MediaflyLoginPerson.cpp
+HEADERS += LoginPerson.h
+SOURCES += LoginPerson.cpp
 
 HEADERS += MediaflyAuthentication_BindMFUserData.h
 SOURCES += MediaflyAuthentication_BindMFUserData.cpp
