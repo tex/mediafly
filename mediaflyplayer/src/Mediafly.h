@@ -4,7 +4,7 @@
 #include "MediaflyChannelModelData.h"
 #include "MediaflyEpisodeModelData.h"
 #include "MediaflyEpisodeQuery.h"
-#include "MediaflySessionInfo.h"
+#include "SessionInfo.h"
 #include "MediaflyConsumer.h"
 #include "MediaflyConsumerBinary.h"
 #include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
@@ -58,7 +58,7 @@ private:
 	QString computeHash(QMap<QString, QString>& map, QString token_id);
 	QStringList makeParams(QMap<QString, QString>& map);
 	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map);
-	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session, bool useHttps = false);
+	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps = false);
 	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg, bool& expiredToken);
 	void Query (RequestInfo& requestInfo);
 	void Query (RequestInfoBinary& requestInfoBinary);
@@ -68,7 +68,7 @@ private:
 
 	// SESSION HANDLING //
 
-	MediaflySessionInfo m_sessionInfo;
+	mf::SessionInfo m_sessionInfo;
 
 	/**
 	 * This method retrieves a session token from the server.  This method returns a
@@ -167,7 +167,7 @@ public:
 	 *   <tokeninfo id="TOKENID" applicationId=”APP_ID" expires="EXPIRATION" />
 	 * </response>
 	 */
-	QDomDocument Authentication_GetTokenInfo (const Mediafly::SessionInfo& session);
+	QDomDocument Authentication_GetTokenInfo (const mf::SessionInfo& session);
 
 	/**
 	 * This method returns a unique, user-friendly code that the user can enter into
@@ -180,7 +180,7 @@ public:
 	 *   <code value="CODE" />
 	 * </response>
 	 */
-	QDomDocument Authentication_GetUserAssociationCode (const Mediafly::SessionInfo& session);
+	QDomDocument Authentication_GetUserAssociationCode (const mf::SessionInfo& session);
 #endif
 	/**
 	 * This method returns a list of account names bound to the calling device.
@@ -288,7 +288,7 @@ public:
 	 * @param  capitalizeChannelNames (optional):  whether channel names will be
 	 * capitalized (defaults to “true”, excepts values “true” or “false”)
 	 */
-	QDomDocument Playlists_GetNextChannelForPlaylist (const Mediafly::SessionInfo& session, QString channelSlug, bool capitalizeChannelNames);
+	QDomDocument Playlists_GetNextChannelForPlaylist (const mf::SessionInfo& session, QString channelSlug, bool capitalizeChannelNames);
 
 	/**
 	 * This method returns the previous channel from the user’s playlist, relative to
@@ -315,7 +315,7 @@ public:
 	 * @param  capitalizeChannelNames (optional):  whether channel names will be
 	 * capitalized (defaults to “true”, excepts values “true” or “false”)
 	 */
-	QDomDocument Playlists_GetPrevChannelForPlaylist (const Mediafly::SessionInfo& session, QString channelSlug, bool capitalizeChannelNames );
+	QDomDocument Playlists_GetPrevChannelForPlaylist (const mf::SessionInfo& session, QString channelSlug, bool capitalizeChannelNames );
 
 	/**
 	 * This method returns the next episode in the specified channel relative to the
@@ -347,7 +347,7 @@ public:
 	 * @param  mediaType (optional):  include or exclude content based on its type
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
-	QDomDocument Playlists_GetNextEpisodeForChannelPlaylist (const Mediafly::SessionInfo& session, QString channelSlug, QString episodeSlug, QString mediaType);
+	QDomDocument Playlists_GetNextEpisodeForChannelPlaylist (const mf::SessionInfo& session, QString channelSlug, QString episodeSlug, QString mediaType);
 
 
 	/**
@@ -380,7 +380,7 @@ public:
 	 * @param  mediaType  (optional):  include or exclude content based on its type
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
-	QDomDocument Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafly::SessionInfo& session, QString channelSlug, QString episodeSlug, QString mediaType );
+	QDomDocument Playlists_GetPrevEpisodeForChannelPlaylist (const mf::SessionInfo& session, QString channelSlug, QString episodeSlug, QString mediaType );
 #endif
 
 	/**
@@ -422,7 +422,7 @@ public:
 	 * @param  mediaType  (optional):  include or exclude content based on its type
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
-	QDomDocument Shows_GetEpisodesForShow (const Mediafly::SessionInfo& session, QString showSlug, int offset, int limit, QString mediaType );
+	QDomDocument Shows_GetEpisodesForShow (const mf::SessionInfo& session, QString showSlug, int offset, int limit, QString mediaType );
 
 
 	/**
@@ -455,7 +455,7 @@ public:
 	 * @param  mediaType  (optional):  include or exclude content based on its type
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
-	QDomDocument Shows_GetNextEpisodeForShow (const Mediafly::SessionInfo& session, QString showSlug, QString episodeSlug, QString mediaType );
+	QDomDocument Shows_GetNextEpisodeForShow (const mf::SessionInfo& session, QString showSlug, QString episodeSlug, QString mediaType );
 
 
 	/**
@@ -485,7 +485,7 @@ public:
 	 * @param  episodeSlug
 	 * @param  mediaType
 	 */
-	QDomDocument Shows_GetPrevEpisodeForShow (const Mediafly::SessionInfo& session, QString showSlug, QString episodeSlug, QString mediaType );
+	QDomDocument Shows_GetPrevEpisodeForShow (const mf::SessionInfo& session, QString showSlug, QString episodeSlug, QString mediaType );
 #endif
 
 	/**
@@ -547,7 +547,7 @@ public:
 	 * increases the time it takes to calculate the search results and is therefore
 	 * discouraged.
 	 */
-	QDomDocument Search_Query (const Mediafly::SessionInfo& session, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts = false );
+	QDomDocument Search_Query (const mf::SessionInfo& session, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts = false );
 
 
 	/**
@@ -574,7 +574,7 @@ public:
 	 * in.  The default is to use server side logic to determine the channel
 	 * automatically.
 	 */
-	QDomDocument Subscriptions_Subscribe (const Mediafly::SessionInfo& session, QString slug, QString subscriptionType, QString channel );
+	QDomDocument Subscriptions_Subscribe (const mf::SessionInfo& session, QString slug, QString subscriptionType, QString channel );
 
 
 	/**
@@ -599,7 +599,7 @@ public:
 	 * @param  subscriptionType (optional):  unsubscribe from a “show” or an “episode”
 	 * (default: “show”)
 	 */
-	QDomDocument Subscriptions_Unsubscribe (const Mediafly::SessionInfo& session, QString slug, QString subscriptionType );
+	QDomDocument Subscriptions_Unsubscribe (const mf::SessionInfo& session, QString slug, QString subscriptionType );
 
 
 	/**
@@ -618,7 +618,7 @@ public:
 	 * </response>
 	 * @param  episodeSlug
 	 */
-	QDomDocument Episodes_GetEpisodeInfo (const Mediafly::SessionInfo& session, QString episodeSlug );
+	QDomDocument Episodes_GetEpisodeInfo (const mf::SessionInfo& session, QString episodeSlug );
 #endif
 };
 

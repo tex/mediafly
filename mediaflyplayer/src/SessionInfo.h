@@ -1,13 +1,15 @@
 #include <QString>
 
-class MediaflySessionInfo
+namespace mf {
+
+class SessionInfo
 {
 	QString m_token;
 	QString m_tokenId;
 public:
-	MediaflySessionInfo() { }
+	SessionInfo() { }
 
-	MediaflySessionInfo(const QString& token, const QString& tokenId) :
+	SessionInfo(const QString& token, const QString& tokenId) :
 		m_token (token), m_tokenId (tokenId) { }
 
 	const QString& token() const { return m_token; }
@@ -16,4 +18,6 @@ public:
 	void setToken(const QString& token) { m_token = token; }
 	void setTokenId(const QString& tokenId) { m_tokenId = tokenId; }
 };
+
+}
 

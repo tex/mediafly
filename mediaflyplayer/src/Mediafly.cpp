@@ -256,7 +256,7 @@ QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
 	return QString(hash.result().toHex());
 }
 
-void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const MediaflySessionInfo& session, bool useHttps)
+void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps)
 {
 	QMap<QString, QString> firstMap;
 	firstMap[QString("app_id")] = m_appId;
