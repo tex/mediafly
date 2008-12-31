@@ -82,8 +82,8 @@ SOURCES += UsersModel.cpp
 FORMS += ../forms/MediaflyLoginPerson.ui
 
 FORMS += ../forms/MediaflyPersonalize.ui
-HEADERS += MediaflyPersonalize.h
-SOURCES += MediaflyPersonalize.cpp
+HEADERS += Personalize.h
+SOURCES += Personalize.cpp
 
 HEADERS += MediaflyLoginPerson.h
 SOURCES += MediaflyLoginPerson.cpp

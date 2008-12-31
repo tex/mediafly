@@ -1,11 +1,16 @@
+#ifndef mfPersonalize_H
+#define mfPersonalize_H
+
 #include "MediaflyLoginPerson.h"
 #include "ui_MediaflyPersonalize.h"
 
-class MediaflyPersonalize : public QWidget, private Ui::MediaflyPersonalize
+namespace mf {
+
+class Personalize : public QWidget, private Ui::MediaflyPersonalize
 {
 	Q_OBJECT
 public:
-	MediaflyPersonalize(QWidget *parent = 0);
+	Personalize(QWidget *parent = 0);
 	void clear();
 
 signals:
@@ -15,4 +20,8 @@ private slots:
 	void handleContinueButtonClick();
 	void handleEnterButtonClick();
 };
+
+}
+
+#endif
 

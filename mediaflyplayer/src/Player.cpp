@@ -10,7 +10,7 @@ Player::Player(QWidget *parent) :
 	m_menu = new MediaflyMenu(m_menuModel, m_channelModel, m_episodeModel, this);
 	m_play = new mf::Play(this);
 	m_loginPerson = new MediaflyLoginPerson();
-	m_personalize = new MediaflyPersonalize(m_loginPerson);
+	m_personalize = new Personalize(m_loginPerson);
 	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
 
 	m_view = new QStackedWidget(this);

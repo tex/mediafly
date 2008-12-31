@@ -1,6 +1,8 @@
-#include "MediaflyPersonalize.h"
+#include "Personalize.h"
 
-MediaflyPersonalize::MediaflyPersonalize(QWidget *parent) :
+using namespace mf;
+
+Personalize::Personalize(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
@@ -11,17 +13,17 @@ MediaflyPersonalize::MediaflyPersonalize(QWidget *parent) :
 	        this, SLOT(handleEnterButtonClick()));
 }
 
-void MediaflyPersonalize::clear()
+void Personalize::clear()
 {
 	m_stackedWidget->setCurrentIndex(0);
 }
 
-void MediaflyPersonalize::handleContinueButtonClick()
+void Personalize::handleContinueButtonClick()
 {
 	m_stackedWidget->setCurrentIndex(1);
 }
 
-void MediaflyPersonalize::handleEnterButtonClick()
+void Personalize::handleEnterButtonClick()
 {
 	emit showLoginPerson();
 }
