@@ -1,4 +1,4 @@
-#include "MediaflyMenuModel.h"
+#include "MenuModel.h"
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
 #include "MediaflyEpisodeDelegate.h"
@@ -13,7 +13,7 @@ class MediaflyMenu : public QWidget, protected Ui::MediaflyMenu
 {
 	Q_OBJECT
 public:
-	MediaflyMenu(MediaflyMenuModel&     menuModel,
+	MediaflyMenu(mf::MenuModel&         menuModel,
 	             MediaflyChannelModel&  channelModel,
 	             MediaflyEpisodeModel&  episodeModel,
 	             QWidget               *parent = 0); 
@@ -40,7 +40,7 @@ private:
 	QString	         m_channelSlug;
 	State	         m_state;
 
-	MediaflyMenuModel&    m_menuModel;
+	mf::MenuModel&        m_menuModel;
 	MediaflyChannelModel& m_channelModel;
 	MediaflyEpisodeModel& m_episodeModel;
 

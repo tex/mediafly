@@ -1,6 +1,8 @@
-#include "MediaflyMenuModel.h"
+#include "MenuModel.h"
 
-MediaflyMenuModel::MediaflyMenuModel(QObject *parent) :
+using namespace mf;
+
+MenuModel::MenuModel(QObject *parent) :
 	UsersModel(parent)
 {
 	m_name /* << tr("Search") */ << tr("Media Channels") /* << tr("Popular Channels") */ << tr("Personalize");
@@ -10,7 +12,7 @@ MediaflyMenuModel::MediaflyMenuModel(QObject *parent) :
 	m_slug_users /* << MENU_SEARCH << MENU_POPULAR_CHANNELS << MENU_FRIENDS_CHANNELS */ << MENU_ADD_PERSON << MENU_REMOVE_PERSON;
 }
 
-int MediaflyMenuModel::rowCount(const QModelIndex& parent) const
+int MenuModel::rowCount(const QModelIndex& parent) const
 {
 	int usersRowCount = UsersModel::rowCount(parent);
 	if (usersRowCount == 0)
@@ -23,7 +25,7 @@ int MediaflyMenuModel::rowCount(const QModelIndex& parent) const
 	}
 }
 
-QVariant MediaflyMenuModel::data(const QModelIndex& parent, int role) const
+QVariant MenuModel::data(const QModelIndex& parent, int role) const
 {
 	int rowCount = parent.row();
 	int usersRowCount = UsersModel::rowCount(parent);

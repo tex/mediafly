@@ -1,13 +1,13 @@
-#ifndef MediaflyMenuModel_H
-#define MediaflyMenuModel_H
+#ifndef mfMenuModel_H
+#define mfMenuModel_H
 
 #include "UsersModel.h"
 #include <QStringList>
 #include <QList>
 
-using namespace mf;
+namespace mf {
 
-class MediaflyMenuModel : public UsersModel
+class MenuModel : public UsersModel
 {
 public:
 	enum Roles
@@ -31,7 +31,7 @@ public:
 		MENU_REMOVE_PERSON,
 	};
 
-	MediaflyMenuModel(QObject *parent = 0);
+	MenuModel(QObject *parent = 0);
 
 	int rowCount(const QModelIndex& parent = QModelIndex()) const;
 	QVariant data(const QModelIndex& parent, int role) const;
@@ -42,6 +42,8 @@ private:
 	QList<int>  m_slug;
 	QList<int>  m_slug_users;
 };
+
+}
 
 #endif
 

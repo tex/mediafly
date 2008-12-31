@@ -5,7 +5,7 @@
 #include <QKeyEvent>
 #include <QIcon>
 
-MediaflyMenu::MediaflyMenu(MediaflyMenuModel& menuModel,
+MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
                            MediaflyChannelModel& channelModel,
                            MediaflyEpisodeModel& episodeModel,
                            QWidget *parent) :
@@ -214,25 +214,25 @@ void MediaflyMenu::render(const QModelIndex& index)
 
 void MediaflyMenu::selectMenu(QModelIndex& index)
 {
-	switch (index.data(MediaflyMenuModel::slugRole).toInt()) {
-	case MediaflyMenuModel::MENU_SEARCH:
-	case MediaflyMenuModel::MENU_POPULAR_CHANNELS:
+	switch (index.data(mf::MenuModel::slugRole).toInt()) {
+	case mf::MenuModel::MENU_SEARCH:
+	case mf::MenuModel::MENU_POPULAR_CHANNELS:
 	default:
 		QMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
 		break;
-	case MediaflyMenuModel::MENU_MEDIA_CHANNELS:
+	case mf::MenuModel::MENU_MEDIA_CHANNELS:
 		m_state = ChannelMenu;
 		break;
-	case MediaflyMenuModel::MENU_USER:
+	case mf::MenuModel::MENU_USER:
 	{
 		// Set correct episode menu's label.
 
-		QString accountName = index.data(MediaflyMenuModel::nameRole).toString();
+		QString accountName = index.data(mf::MenuModel::nameRole).toString();
 		m_channelLabel = accountName + tr("'s Mediafly");
 
 		// If selected user not default already, make him default...
 
-		if (index.data(MediaflyMenuModel::isDefaultRole).toBool() == false)
+		if (index.data(mf::MenuModel::isDefaultRole).toBool() == false)
 		{
 			// m_setUserAsDefaultData (ready()) signal's callback (showChannelMenu())
 			// sets m_state to ChannelMenu and renders the menu when we sucessfully
@@ -253,13 +253,13 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 
 		break;
 	}
-	case MediaflyMenuModel::MENU_PERSONALIZE:
+	case mf::MenuModel::MENU_PERSONALIZE:
 		emit showPersonalize();
 		break;
-	case MediaflyMenuModel::MENU_ADD_PERSON:
+	case mf::MenuModel::MENU_ADD_PERSON:
 		emit showLoginPerson();
 		break;
-	case MediaflyMenuModel::MENU_REMOVE_PERSON:
+	case mf::MenuModel::MENU_REMOVE_PERSON:
 	{
 		Mediafly::getMediafly()->Authentication_UnbindMFUser(&m_checkResponseOk, m_menuModel.getDefaultAccountName());
 

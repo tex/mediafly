@@ -44,8 +44,8 @@ HEADERS += MediaflyEpisodeQuery.h
 HEADERS += MediaflyEpisodeModelData.h
 SOURCES += MediaflyEpisodeModelData.cpp
 
-HEADERS += MediaflyMenuModel.h
-SOURCES += MediaflyMenuModel.cpp
+HEADERS += MenuModel.h
+SOURCES += MenuModel.cpp
 
 HEADERS += MediaflyConsumerBinary.h
 

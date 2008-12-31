@@ -24,7 +24,7 @@ private:
 	QVBoxLayout    *m_layout;
 	QStackedWidget *m_view;
 
-	MediaflyMenuModel    m_menuModel;
+	MenuModel            m_menuModel;
 	MediaflyChannelModel m_channelModel;
 	MediaflyEpisodeModel m_episodeModel;
 
