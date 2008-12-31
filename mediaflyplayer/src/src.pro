@@ -69,7 +69,7 @@ FORMS += ../forms/MediaflyPlayAudio.ui
 HEADERS += PlayAudio.h
 SOURCES += PlayAudio.cpp
 
-HEADERS += MediaflyAuthentication_SetMFUserAsDefaultData.h
+HEADERS += SetMFUserAsDefaultData.h
 
 HEADERS += GetBoundMFUsersData.h
 SOURCES += GetBoundMFUsersData.cpp

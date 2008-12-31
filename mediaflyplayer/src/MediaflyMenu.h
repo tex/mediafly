@@ -58,7 +58,7 @@ private:
 	QModelIndex              m_lastMenuIndex;
 	QModelIndex              m_lastChannelMenuIndex;
 
-	MediaflyAuthentication_SetMFUserAsDefaultData m_setUserAsDefaultData;
+	mf::auth::SetMFUserAsDefaultData              m_setUserAsDefaultData;
 	MediaflyCheckResponseOk                       m_checkResponseOk;
 
 	QString m_channelLabel;

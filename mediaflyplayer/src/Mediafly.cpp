@@ -487,7 +487,7 @@ void Mediafly::Authentication_BindMFUser (mf::auth::BindMFUserData* data, QStrin
  * @param  accountName account name already bound to the device that should be set
  * as default.
  */
-void Mediafly::Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUserAsDefaultData *data,
+void Mediafly::Authentication_SetMFUserAsDefault (mf::auth::SetMFUserAsDefaultData *data,
                                                   QString accountName)
 {
 	QMap<QString, QString> map;

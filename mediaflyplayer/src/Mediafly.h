@@ -7,7 +7,7 @@
 #include "SessionInfo.h"
 #include "MediaflyConsumer.h"
 #include "MediaflyConsumerBinary.h"
-#include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
+#include "SetMFUserAsDefaultData.h"
 #include "GetBoundMFUsersData.h"
 #include "BindMFUserData.h"
 #include "MediaflyCheckResponseOk.h"
@@ -246,7 +246,7 @@ public:
 	 * @param  accountName account name already bound to the device that should be set
 	 * as default.
 	 */
-	void Authentication_SetMFUserAsDefault (MediaflyAuthentication_SetMFUserAsDefaultData *data, QString accountName);
+	void Authentication_SetMFUserAsDefault (mf::auth::SetMFUserAsDefaultData *data, QString accountName);
 
 	/**
 	 * Call this method to remove a user from a device personalization. The user must
