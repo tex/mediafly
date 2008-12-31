@@ -330,7 +330,7 @@ void Mediafly::Authentication_GetToken ()
  * @param  capitalizeChannelNames (optional):  whether channel names will be
  * capitalized (defaults to “true”, excepts values “true” or “false”)
  */
-void Mediafly::Channels_GetChannels (MediaflyChannelModelData *modelData,
+void Mediafly::Channels_GetChannels (mf::ChannelModelData *modelData,
                                      bool capitalizeChannelNames)
 {
 	QMap<QString, QString> map;

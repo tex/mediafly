@@ -1,7 +1,7 @@
 #ifndef MEDIAFLY_H
 #define MEDIAFLY_H
 
-#include "MediaflyChannelModelData.h"
+#include "ChannelModelData.h"
 #include "EpisodeModelData.h"
 #include "MediaflyEpisodeQuery.h"
 #include "SessionInfo.h"
@@ -125,7 +125,7 @@ public:
 	 * @param  capitalizeChannelNames (optional):  whether channel names will be
 	 * capitalized (defaults to “true”, excepts values “true” or “false”)
 	 */
-	void Channels_GetChannels (MediaflyChannelModelData *modelData,
+	void Channels_GetChannels (mf::ChannelModelData *modelData,
 	                           bool capitalizeChannelNames);
 
 	/**

@@ -1,10 +1,12 @@
-#ifndef MediaflyChannelModelData_H
-#define MediaflyChannelModelData_H
+#ifndef mfChannelModelData_H
+#define mfChannelModelData_H
 
 #include "MediaflyConsumer.h"
 #include "MediaflyChannelEntry.h"
 
-class MediaflyChannelModelData : public MediaflyConsumer
+namespace mf {
+
+class ChannelModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
@@ -14,6 +16,8 @@ signals:
 	void entryRead(const MediaflyChannelEntry& entry);
 	void entryReadFinished();
 };
+
+}
 
 #endif
 

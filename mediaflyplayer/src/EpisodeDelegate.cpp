@@ -1,5 +1,5 @@
 #include "EpisodeDelegate.h"
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 
 using namespace mf;
 
@@ -16,9 +16,9 @@ void EpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewItem& optio
 	} else
 		painter->setPen(option.palette.text().color());
 
-	QPixmap icon(index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
-	QString episodeTitle(index.data(MediaflyEpisodeModel::titleRole).toString());
-	QString showTitle(index.data(MediaflyEpisodeModel::showTitleRole).toString());
+	QPixmap icon(index.data(mf::EpisodeModel::imageRole).value<QPixmap>());
+	QString episodeTitle(index.data(mf::EpisodeModel::titleRole).toString());
+	QString showTitle(index.data(mf::EpisodeModel::showTitleRole).toString());
 
 	QRect r = option.rect.adjusted(2, 2, -2, -2);
 	int hText = option.fontMetrics.height();

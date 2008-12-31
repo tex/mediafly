@@ -1,5 +1,5 @@
 #include "PlayVideo.h"
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 
 using namespace mf;
 
@@ -13,8 +13,8 @@ void PlayVideo::show(const QModelIndex& index)
 {
 	m_index = index;
 
-	m_episodeNameLabel->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
-	m_showTitleLabel->setText(m_index.data(MediaflyEpisodeModel::showTitleRole).toString());
+	m_episodeNameLabel->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
+	m_showTitleLabel->setText(m_index.data(mf::EpisodeModel::showTitleRole).toString());
 	
 	// TODO PLAY
 }

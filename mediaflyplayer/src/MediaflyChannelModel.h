@@ -2,7 +2,7 @@
 #define MediaflyChannelModel_H
 
 #include "Mediafly.h"
-#include "MediaflyChannelModelData.h"
+#include "ChannelModelData.h"
 #include <QAbstractListModel>
 #include <QList>
 
@@ -30,7 +30,7 @@ signals:
 
 private:
 	Mediafly                   *m_mediafly;
-	MediaflyChannelModelData    m_modelData;
+	mf::ChannelModelData        m_modelData;
 	QList<MediaflyChannelEntry> m_data;
 	int                         m_id;
 

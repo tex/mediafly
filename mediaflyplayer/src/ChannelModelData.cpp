@@ -1,7 +1,7 @@
-#include "MediaflyChannelModelData.h"
+#include "ChannelModelData.h"
 #include <QDebug>
 
-void MediaflyChannelModelData::read(const QDomDocument& doc)
+void mf::ChannelModelData::read(const QDomDocument& doc)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 

@@ -38,8 +38,9 @@ FORMS += ../forms/MediaflyMenu.ui
 SOURCES += MediaflyMenu.cpp
 HEADERS += MediaflyMenu.h
 
-SOURCES += MediaflyChannelModelData.cpp
-HEADERS += MediaflyChannelModelData.h
+SOURCES += ChannelModelData.cpp
+HEADERS += ChannelModelData.h
+
 HEADERS += MediaflyChannelEntry.h
 
 HEADERS += EpisodeEntry.h
