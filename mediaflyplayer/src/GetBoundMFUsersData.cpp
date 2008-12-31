@@ -1,7 +1,9 @@
-#include "MediaflyAuthentication_GetBoundMFUsersData.h"
+#include "GetBoundMFUsersData.h"
 #include <QDebug>
 
-void MediaflyAuthentication_GetBoundMFUsersData::read(const QDomDocument& doc)
+using namespace mf::auth;
+
+void GetBoundMFUsersData::read(const QDomDocument& doc)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 

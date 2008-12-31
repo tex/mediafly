@@ -71,8 +71,8 @@ SOURCES += PlayAudio.cpp
 
 HEADERS += MediaflyAuthentication_SetMFUserAsDefaultData.h
 
-HEADERS += MediaflyAuthentication_GetBoundMFUsersData.h
-SOURCES += MediaflyAuthentication_GetBoundMFUsersData.cpp
+HEADERS += GetBoundMFUsersData.h
+SOURCES += GetBoundMFUsersData.cpp
 
 HEADERS += User.h
 

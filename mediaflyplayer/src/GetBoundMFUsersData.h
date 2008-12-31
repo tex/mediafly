@@ -1,10 +1,12 @@
-#ifndef MediaflyAuthentication_GetBoundMFUsers_H
-#define MediaflyAuthentication_GetBoundMFUsers_H
+#ifndef mfauthGetBoundMFUsers_H
+#define mfauthGetBoundMFUsers_H
 
 #include "MediaflyConsumer.h"
 #include "User.h"
 
-class MediaflyAuthentication_GetBoundMFUsersData : public MediaflyConsumer
+namespace mf { namespace auth {
+
+class GetBoundMFUsersData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
@@ -14,6 +16,8 @@ signals:
 	void userRead(const mf::User& entry);
 	void userReadFinished();
 };
+
+} }
 
 #endif
  

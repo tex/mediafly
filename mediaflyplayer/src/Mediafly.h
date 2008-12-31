@@ -8,7 +8,7 @@
 #include "MediaflyConsumer.h"
 #include "MediaflyConsumerBinary.h"
 #include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
-#include "MediaflyAuthentication_GetBoundMFUsersData.h"
+#include "GetBoundMFUsersData.h"
 #include "BindMFUserData.h"
 #include "MediaflyCheckResponseOk.h"
 #include <QObject>
@@ -198,7 +198,7 @@ public:
 	 *   <mfusers />
 	 * </response>
 	 */
-	void Authentication_GetBoundMFUsers (MediaflyAuthentication_GetBoundMFUsersData *data);
+	void Authentication_GetBoundMFUsers (mf::auth::GetBoundMFUsersData *data);
 
 	/**
 	 * Call this method to add an account to a list of users that can have a

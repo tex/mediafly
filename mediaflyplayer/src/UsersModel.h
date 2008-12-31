@@ -4,7 +4,7 @@
 #include "User.h"
 #include "UsersModel.h"
 #include "Mediafly.h"
-#include "MediaflyAuthentication_GetBoundMFUsersData.h"
+#include "GetBoundMFUsersData.h"
 #include <QAbstractListModel>
 #include <QList>
 
@@ -40,7 +40,7 @@ public slots:
 
 private:
 	Mediafly                                  *m_mediafly;
-	MediaflyAuthentication_GetBoundMFUsersData m_modelData;
+	auth::GetBoundMFUsersData                  m_modelData;
 	QList<User>                                m_data;
 	int                                        m_id;
 

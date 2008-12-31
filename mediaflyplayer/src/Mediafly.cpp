@@ -428,7 +428,7 @@ QDomDocument Mediafly::Authentication_GetUserAssociationCode (const Mediafly::Se
  *   <mfusers />
  * </response>
  */
-void Mediafly::Authentication_GetBoundMFUsers (MediaflyAuthentication_GetBoundMFUsersData* data)
+void Mediafly::Authentication_GetBoundMFUsers (mf::auth::GetBoundMFUsersData* data)
 {
 	QMap<QString, QString> map;
 	Query(data, "Authentication.GetBoundMFUsers", map, m_sessionInfo);
