@@ -1,7 +1,7 @@
-#include "MediaflyEpisodeModelData.h"
+#include "EpisodeModelData.h"
 #include <QDebug>
 
-void MediaflyEpisodeModelData::read(const QDomDocument& doc)
+void mf::EpisodeModelData::read(const QDomDocument& doc)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 

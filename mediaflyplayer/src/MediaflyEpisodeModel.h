@@ -64,7 +64,7 @@ signals:
 
 private:
 	Mediafly                       *m_mediafly;
-	MediaflyEpisodeModelData        m_modelData;
+	mf::EpisodeModelData            m_modelData;
 	MediaflyConsumerBinary          m_binaryData;
 	QMap<int, mf::EpisodeEntry>     m_data;
 	bool                            m_refreshFinished;

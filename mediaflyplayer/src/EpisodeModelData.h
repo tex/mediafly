@@ -1,12 +1,18 @@
+#ifndef mfEpisodeModelData_H
+#define mfEpisodeModelData_H
+
 #include "MediaflyConsumer.h"
 #include "EpisodeEntry.h"
 #include <QDebug>
 
-class MediaflyEpisodeModelData : public MediaflyConsumer
+namespace mf {
+
+class EpisodeModelData : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeModelData() : m_totalEpisodes(-1) { }
+	EpisodeModelData() : m_totalEpisodes(-1) { }
+
 	void read(const QDomDocument& doc);
 
 	/**
@@ -25,4 +31,8 @@ signals:
 private:
 	int m_totalEpisodes;
 };
+
+}
+
+#endif
 

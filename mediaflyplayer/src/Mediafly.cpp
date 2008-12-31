@@ -366,7 +366,7 @@ void Mediafly::Channels_GetChannels (MediaflyChannelModelData *modelData,
  * @param  mediaType (optional):  include or exclude content based on its type
  * (“audio”, “video”, default: “audio,video”)
  */
-void Mediafly::Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData* modelData,
+void Mediafly::Playlists_GetPlaylistForChannel (mf::EpisodeModelData* modelData,
                                                 const MediaflyEpisodeQuery& query)
 {
 	QMap<QString, QString> map;

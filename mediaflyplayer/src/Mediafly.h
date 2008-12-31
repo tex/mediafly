@@ -2,7 +2,7 @@
 #define MEDIAFLY_H
 
 #include "MediaflyChannelModelData.h"
-#include "MediaflyEpisodeModelData.h"
+#include "EpisodeModelData.h"
 #include "MediaflyEpisodeQuery.h"
 #include "SessionInfo.h"
 #include "MediaflyConsumer.h"
@@ -156,7 +156,7 @@ public:
 	 * @param  mediaType (optional):  include or exclude content based on its type
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
-	void Playlists_GetPlaylistForChannel (MediaflyEpisodeModelData *modelData,
+	void Playlists_GetPlaylistForChannel (mf::EpisodeModelData *modelData,
 	                                      const MediaflyEpisodeQuery& query);
 
 #if 0
