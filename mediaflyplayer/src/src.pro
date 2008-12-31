@@ -28,8 +28,8 @@ SOURCES += Mediafly.cpp MediaflyChannelModel.cpp MediaflyEpisodeModel.cpp
 SOURCES += MediaflyList.cpp
 HEADERS += MediaflyList.h
 
-SOURCES += MediaflyEpisodeDelegate.cpp
-HEADERS += MediaflyEpisodeDelegate.h
+SOURCES += EpisodeDelegate.cpp
+HEADERS += EpisodeDelegate.h
 
 FORMS += ../forms/MediaflyMenu.ui
 SOURCES += MediaflyMenu.cpp

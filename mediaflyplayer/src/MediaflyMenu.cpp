@@ -48,7 +48,7 @@ MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
 	// Remember the default item delegate that m_listView uses.
 	// 
 	m_itemDelegateDefault = m_listView->itemDelegate();
-	m_itemDelegateEpisode = new MediaflyEpisodeDelegate(m_listView);
+	m_itemDelegateEpisode = new mf::EpisodeDelegate(m_listView);
 
 	m_lastMenuIndex = m_menuModel.index(0, 0);
 	m_lastChannelMenuIndex = QModelIndex();

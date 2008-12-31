@@ -4,7 +4,7 @@
 #include "Play.h"
 #include "ui_MediaflyPlayqueue.h"
 #include "MediaflyEpisodeModel.h"
-#include "MediaflyEpisodeDelegate.h"
+#include "EpisodeDelegate.h"
 #include "MediaflyCheckResponseOk.h"
 #include <QWidget>
 
@@ -22,7 +22,7 @@ signals:
 private:
 	MediaflyEpisodeModel     &m_episodeModel;
 	mf::Play                 *m_mediaflyPlay;
-	MediaflyEpisodeDelegate  *m_itemDelegate;
+	EpisodeDelegate          *m_itemDelegate;
 	MediaflyCheckResponseOk   m_checkResponseOk;
 
 	static const int itemsReadAtOnce = 10;

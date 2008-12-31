@@ -1,5 +1,4 @@
 #include "Playqueue.h"
-#include "MediaflyEpisodeDelegate.h"
 
 using namespace mf;
 
@@ -10,7 +9,7 @@ Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, mf::Play *mediaflyPlay,
 {
 	setupUi(this);
 
-	m_itemDelegate = new MediaflyEpisodeDelegate(m_listView);
+	m_itemDelegate = new EpisodeDelegate(m_listView);
 
 	m_listView->setModel(&m_episodeModel);
 	m_listView->setItemDelegate(m_itemDelegate);

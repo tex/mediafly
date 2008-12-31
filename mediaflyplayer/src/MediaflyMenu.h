@@ -1,7 +1,7 @@
 #include "MenuModel.h"
 #include "MediaflyChannelModel.h"
 #include "MediaflyEpisodeModel.h"
-#include "MediaflyEpisodeDelegate.h"
+#include "EpisodeDelegate.h"
 #include "MediaflyCheckResponseOk.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
@@ -53,7 +53,7 @@ private:
 	void render(const QModelIndex& index);
 
 	QAbstractItemDelegate   *m_itemDelegateDefault;
-	MediaflyEpisodeDelegate *m_itemDelegateEpisode;
+	mf::EpisodeDelegate     *m_itemDelegateEpisode;
 
 	QModelIndex              m_lastMenuIndex;
 	QModelIndex              m_lastChannelMenuIndex;

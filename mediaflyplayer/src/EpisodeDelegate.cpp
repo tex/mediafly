@@ -1,12 +1,14 @@
-#include "MediaflyEpisodeDelegate.h"
+#include "EpisodeDelegate.h"
 #include "MediaflyEpisodeModel.h"
 
-int   MediaflyEpisodeDelegate::vMargin = 5;
-int   MediaflyEpisodeDelegate::hMargin = 5;
-int   MediaflyEpisodeDelegate::showLines = 3;
-QSize MediaflyEpisodeDelegate::iconSize = QSize(50, 50);
+using namespace mf;
 
-void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+int   EpisodeDelegate::vMargin = 5;
+int   EpisodeDelegate::hMargin = 5;
+int   EpisodeDelegate::showLines = 3;
+QSize EpisodeDelegate::iconSize = QSize(50, 50);
+
+void EpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	if (option.state & QStyle::State_Selected) {
 		painter->fillRect(option.rect, option.palette.highlight());
@@ -35,7 +37,7 @@ void MediaflyEpisodeDelegate::paint(QPainter *painter, const QStyleOptionViewIte
 	painter->drawText(t2, Qt::AlignBottom|Qt::AlignLeft|Qt::TextWordWrap, showTitle);
 }
 
-QSize MediaflyEpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
+QSize EpisodeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& /*index*/) const
 {
 	// Return size big enought to hold a 'showLines' lines of text plus
 	// some spacing on top and bottom.
