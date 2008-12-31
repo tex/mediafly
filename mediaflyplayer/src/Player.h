@@ -26,7 +26,7 @@ private:
 
 	MenuModel            m_menuModel;
 	MediaflyChannelModel m_channelModel;
-	MediaflyEpisodeModel m_episodeModel;
+	EpisodeModel         m_episodeModel;
 
 	EpisodeDetails         *m_episodeDetails;
 	MediaflyMenu           *m_menu;

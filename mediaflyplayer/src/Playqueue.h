@@ -3,7 +3,7 @@
 
 #include "Play.h"
 #include "ui_MediaflyPlayqueue.h"
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
 #include "MediaflyCheckResponseOk.h"
 #include <QWidget>
@@ -14,13 +14,13 @@ class Playqueue : public QWidget, private Ui::MediaflyPlayqueue
 {
 	Q_OBJECT
 public:
-	Playqueue(MediaflyEpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent = 0);
+	Playqueue(EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent = 0);
 
 signals:
 	void back();
 
 private:
-	MediaflyEpisodeModel     &m_episodeModel;
+	EpisodeModel             &m_episodeModel;
 	mf::Play                 *m_mediaflyPlay;
 	EpisodeDelegate          *m_itemDelegate;
 	MediaflyCheckResponseOk   m_checkResponseOk;

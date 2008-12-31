@@ -1,5 +1,5 @@
-#ifndef MediaflyEpisodeModel_H
-#define MediaflyEpisodeModel_H
+#ifndef mfEpisodeModel_H
+#define mfEpisodeModel_H
 
 #include "Mediafly.h"
 #include "EpisodeEntry.h"
@@ -11,7 +11,9 @@
 #include <QByteArray>
 #include <QPixmap>
 
-class MediaflyEpisodeModel : public QAbstractListModel
+namespace mf {
+
+class EpisodeModel : public QAbstractListModel
 {
 	Q_OBJECT
 public:
@@ -31,8 +33,8 @@ public:
 		channelRole,
 	};
 
-	MediaflyEpisodeModel(QObject *parent = 0); 
-	MediaflyEpisodeModel(const MediaflyEpisodeModel &obj);
+	EpisodeModel(QObject *parent = 0); 
+	EpisodeModel(const EpisodeModel &obj);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
@@ -49,7 +51,7 @@ public:
 	static bool advanceToNextEpisode(QModelIndex& index)
 	{
 		if (index.row() + 15 > index.model()->rowCount())
-			dynamic_cast<MediaflyEpisodeModel *>(
+			dynamic_cast<EpisodeModel *>(
 				const_cast<QAbstractItemModel *>(index.model())
 			)->refresh();
 		if (index.row() + 1 < index.model()->rowCount()) {
@@ -75,6 +77,8 @@ private slots:
 	void handleEntryReadFinished();
 	void handleBinaryRead(const QString& path, const QByteArray& array);
 };
+
+}
 
 #endif
 

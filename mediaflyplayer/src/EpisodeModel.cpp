@@ -1,8 +1,10 @@
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 #include <QDebug>
 #include <QPixmapCache>
 
-MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
+using namespace mf;
+
+EpisodeModel::EpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	m_mediafly = Mediafly::getMediafly();
@@ -17,7 +19,7 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	        this, SLOT(handleBinaryRead(const QString&, const QByteArray&)));
 }
 
-MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
+EpisodeModel::EpisodeModel(const EpisodeModel& obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
 	m_mediafly = Mediafly::getMediafly();
@@ -25,14 +27,14 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(const MediaflyEpisodeModel& obj) :
 	m_refreshFinished = obj.m_refreshFinished;
 }
 
-void MediaflyEpisodeModel::clear()
+void EpisodeModel::clear()
 {
 	m_data.clear();
 	m_modelData.clear();
 	m_refreshFinished = true;
 }
 
-void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
+void EpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 {
 	if (!m_refreshFinished)
 		return;
@@ -46,25 +48,25 @@ void MediaflyEpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 	}
 }
 
-void MediaflyEpisodeModel::refresh()
+void EpisodeModel::refresh()
 {
 	MediaflyEpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
 	refresh(query);
 }
 
-void MediaflyEpisodeModel::refreshFull()
+void EpisodeModel::refreshFull()
 {
 	clear();
 	MediaflyEpisodeQuery query(m_query.channelSlug(), 0, m_query.offset() + m_query.limit(), m_query.mediaType());
 	refresh(query);
 }
 
-void MediaflyEpisodeModel::cancel()
+void EpisodeModel::cancel()
 {
 	m_mediafly->abort();
 }
 
-void MediaflyEpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
+void EpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << entry.title();
 
@@ -72,12 +74,12 @@ void MediaflyEpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
 	emit refreshed();
 }
 
-void MediaflyEpisodeModel::handleEntryReadFinished()
+void EpisodeModel::handleEntryReadFinished()
 {
 	m_refreshFinished = true;
 }
 
-void MediaflyEpisodeModel::handleBinaryRead(const QString& path, const QByteArray& array)
+void EpisodeModel::handleBinaryRead(const QString& path, const QByteArray& array)
 {
 	QPixmap image; image.loadFromData(array);
 	QPixmapCache::insert(path, image.scaled(80, 80));
@@ -85,12 +87,12 @@ void MediaflyEpisodeModel::handleBinaryRead(const QString& path, const QByteArra
 	emit refreshed();
 }
 
-int MediaflyEpisodeModel::rowCount(const QModelIndex &/*parent*/) const
+int EpisodeModel::rowCount(const QModelIndex &/*parent*/) const
 {
 	return m_data.size();
 }
 
-QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
+QVariant EpisodeModel::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
 		return QVariant();
@@ -125,7 +127,7 @@ QVariant MediaflyEpisodeModel::data(const QModelIndex &index, int role) const
 	}
 }
 
-int MediaflyEpisodeModel::totalRowCount() const
+int EpisodeModel::totalRowCount() const
 {
 	return m_modelData.totalEpisodes();
 }

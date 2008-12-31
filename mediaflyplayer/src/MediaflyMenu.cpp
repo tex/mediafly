@@ -6,7 +6,7 @@
 
 MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
                            MediaflyChannelModel& channelModel,
-                           MediaflyEpisodeModel& episodeModel,
+                           mf::EpisodeModel&     episodeModel,
                            QWidget *parent) :
 	QWidget(parent),
 	m_state(Menu),

@@ -1,5 +1,5 @@
 #include "EpisodeDetails.h"
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 #include <QDebug>
 
 using namespace mf;
@@ -22,23 +22,23 @@ void EpisodeDetails::show(const QModelIndex& index)
 void EpisodeDetails::updateImage()
 {
 	if (m_icon->pixmap()->isNull()) {
-		m_icon->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
+		m_icon->setPixmap(m_index.data(mf::EpisodeModel::imageRole).value<QPixmap>());
 	}
 }
 
 void EpisodeDetails::update()
 {
 	m_header->setText(tr("Episode Details"));
-	m_label->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
+	m_label->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
 	m_length->setText("???");
-	m_icon->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
+	m_icon->setPixmap(m_index.data(mf::EpisodeModel::imageRole).value<QPixmap>());
 	m_details->setHtml("<b>" + tr("Item details") + "</b><br><b>Link:</b><br>" +
-	                  m_index.data(MediaflyEpisodeModel::urlRole).toString() +
+	                  m_index.data(mf::EpisodeModel::urlRole).toString() +
 	                  "<br><b>" + tr("Publication date:") + "</b><br>" +
-	                  m_index.data(MediaflyEpisodeModel::publishedRole).toString() +
+	                  m_index.data(mf::EpisodeModel::publishedRole).toString() +
 	                  "<br><b>" + tr("Enclosure:") + "</b><br>" +
-	                  m_index.data(MediaflyEpisodeModel::urlOriginalRole).toString());
-	m_info->setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
+	                  m_index.data(mf::EpisodeModel::urlOriginalRole).toString());
+	m_info->setHtml(m_index.data(mf::EpisodeModel::descriptionRole).toString());
 }
 
 void EpisodeDetails::keyPressEvent(QKeyEvent *event)
@@ -60,7 +60,7 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 	}
 	case Qt::Key_Right:
 	{
-		if (MediaflyEpisodeModel::advanceToNextEpisode(m_index)) {
+		if (mf::EpisodeModel::advanceToNextEpisode(m_index)) {
 			update();
 		}
 		break;

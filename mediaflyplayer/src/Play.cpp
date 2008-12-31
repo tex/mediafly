@@ -1,5 +1,5 @@
 #include "Play.h"
-#include "MediaflyEpisodeModel.h"
+#include "EpisodeModel.h"
 
 using namespace mf;
 
@@ -25,7 +25,7 @@ void Play::handleChannelsButtonClicked()
 
 void Play::handleNextEpisodeButtonClicked()
 {
-	if (MediaflyEpisodeModel::advanceToNextEpisode(m_index))
+	if (mf::EpisodeModel::advanceToNextEpisode(m_index))
 	{
 		update();
 	}
@@ -57,7 +57,7 @@ void Play::updateStateIndicator(enum State state)
 
 void Play::update()
 {
-	QString format = m_index.data(MediaflyEpisodeModel::formatRole).toString();
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
 	{
 		m_video->show(m_index);

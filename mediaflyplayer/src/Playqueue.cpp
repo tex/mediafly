@@ -2,7 +2,7 @@
 
 using namespace mf;
 
-Playqueue::Playqueue(MediaflyEpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent) :
+Playqueue::Playqueue(mf::EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWidget *parent) :
 	QWidget(parent),
 	m_episodeModel(episodeModel),
 	m_mediaflyPlay(mediaflyPlay)
@@ -39,7 +39,7 @@ void Playqueue::handleStateChange()
 
 	m_mediaflyPlay->getState(index, songPosition, songLength);
 
-	m_songName->setText(index.data(MediaflyEpisodeModel::titleRole).toString());
+	m_songName->setText(index.data(mf::EpisodeModel::titleRole).toString());
 	m_songLength->setText(songLength);
 	m_songPosition->setText(songPosition);
 }
@@ -76,7 +76,7 @@ void Playqueue::handleRemoveButtonClicked()
 	QModelIndex current = m_listView->currentIndex();
 	if (current.isValid())
 	{
-		QString slug = current.data(MediaflyEpisodeModel::slugRole).toString();
+		QString slug = current.data(mf::EpisodeModel::slugRole).toString();
 		Mediafly::getMediafly()->Playlists_RemoveEpisodeFromPlaylist(&m_checkResponseOk, slug);
 	}
 }
