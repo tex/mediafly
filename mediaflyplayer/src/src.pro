@@ -39,7 +39,8 @@ SOURCES += MediaflyChannelModelData.cpp
 HEADERS += MediaflyChannelModelData.h
 HEADERS += MediaflyChannelEntry.h
 
-HEADERS += MediaflyEpisodeEntry.h
+HEADERS += EpisodeEntry.h
+
 HEADERS += MediaflyEpisodeQuery.h
 HEADERS += MediaflyEpisodeModelData.h
 SOURCES += MediaflyEpisodeModelData.cpp

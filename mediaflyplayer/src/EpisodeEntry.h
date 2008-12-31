@@ -1,17 +1,19 @@
-#ifndef MediaflyEpisodeEntry_H
-#define MediaflyEpisodeEntry_H
+#ifndef mfEpisodeEntry_H
+#define mfEpisodeEntry_H
 
 #include <QString>
 #include <QMetaType>
 
-class MediaflyEpisodeEntry
+namespace mf {
+
+class EpisodeEntry
 {
 public:
-	MediaflyEpisodeEntry()
+	EpisodeEntry()
 	{
-		qRegisterMetaType<MediaflyEpisodeEntry>("MediaflyEpisodeEntry");
+		qRegisterMetaType<EpisodeEntry>("mf::EpisodeEntry");
 	}
-	MediaflyEpisodeEntry(const MediaflyEpisodeEntry& obj) :
+	EpisodeEntry(const EpisodeEntry& obj) :
 		m_title (obj.m_title),
 		m_slug (obj.m_slug),
 		m_description (obj.m_description),
@@ -24,12 +26,12 @@ public:
 		m_imageUrl (obj.m_imageUrl),
 		m_channel (obj.m_channel)
 	{
-		qRegisterMetaType<MediaflyEpisodeEntry>("MediaflyEpisodeEntry");
+		qRegisterMetaType<EpisodeEntry>("mf::EpisodeEntry");
 	}
 
-	MediaflyEpisodeEntry(QString title, QString slug, QString description, QString format,
-	                     QString url, QString urlOriginal, QString published, QString showSlug,
-	                     QString showTitle, QString imageUrl, QString channel) :
+	EpisodeEntry(QString title, QString slug, QString description, QString format,
+	             QString url, QString urlOriginal, QString published, QString showSlug,
+	             QString showTitle, QString imageUrl, QString channel) :
 		m_title (title),
 		m_slug (slug),
 		m_description (description),
@@ -42,7 +44,7 @@ public:
 		m_imageUrl (imageUrl),
 		m_channel (channel)
 	{
-		qRegisterMetaType<MediaflyEpisodeEntry>("MediaflyEpisodeEntry");
+		qRegisterMetaType<EpisodeEntry>("mf::EpisodeEntry");
 	}
 
 	const QString& title() const { return m_title; }
@@ -71,7 +73,9 @@ private:
 	QString m_channel;
 };
 
-Q_DECLARE_METATYPE(MediaflyEpisodeEntry);
+}
+
+Q_DECLARE_METATYPE(mf::EpisodeEntry);
 
 #endif
 

@@ -13,10 +13,10 @@ void MediaflyEpisodeModelData::read(const QDomDocument& doc)
 	while (!it.isNull()) {
 		QDomElement el = it.toElement();
 		if (!el.isNull()) {
-			MediaflyEpisodeEntry entry(el.attribute("title"), el.attribute("slug"), el.attribute("description"),
-			                           el.attribute("format"), el.attribute("url"), el.attribute("urlOriginal"),
-			                           el.attribute("published"), el.attribute("showSlug"), el.attribute("showTitle"),
-			                           el.attribute("imageUrl"), el.attribute("channel"));
+			mf::EpisodeEntry entry(el.attribute("title"), el.attribute("slug"), el.attribute("description"),
+			                       el.attribute("format"), el.attribute("url"), el.attribute("urlOriginal"),
+			                       el.attribute("published"), el.attribute("showSlug"), el.attribute("showTitle"),
+			                       el.attribute("imageUrl"), el.attribute("channel"));
 			emit entryRead(entry);
 		}
 		it = it.nextSibling();

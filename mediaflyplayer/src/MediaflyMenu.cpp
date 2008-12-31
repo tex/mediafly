@@ -1,5 +1,4 @@
 #include "MediaflyMenu.h"
-#include "MediaflyEpisodeDetails.h"
 #include <QMessageBox>
 #include <QtDebug>
 #include <QKeyEvent>

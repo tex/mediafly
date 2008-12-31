@@ -1,5 +1,5 @@
 #include "MediaflyConsumer.h"
-#include "MediaflyEpisodeEntry.h"
+#include "EpisodeEntry.h"
 #include <QDebug>
 
 class MediaflyEpisodeModelData : public MediaflyConsumer
@@ -19,7 +19,7 @@ public:
 	void clear() { m_totalEpisodes = -1; }
 
 signals:
-	void entryRead(const MediaflyEpisodeEntry& entry);
+	void entryRead(const mf::EpisodeEntry& entry);
 	void entryReadFinished();
 
 private:

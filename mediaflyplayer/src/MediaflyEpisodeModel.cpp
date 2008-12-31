@@ -8,8 +8,8 @@ MediaflyEpisodeModel::MediaflyEpisodeModel(QObject *parent) :
 	m_mediafly = Mediafly::getMediafly();
 	m_refreshFinished = true;
 
-	connect(&m_modelData, SIGNAL(entryRead(const MediaflyEpisodeEntry&)),
-	        this, SLOT(handleEntryRead(const MediaflyEpisodeEntry&)));
+	connect(&m_modelData, SIGNAL(entryRead(const mf::EpisodeEntry&)),
+	        this, SLOT(handleEntryRead(const mf::EpisodeEntry&)));
 	connect(&m_modelData, SIGNAL(entryReadFinished()),
 	        this, SLOT(handleEntryReadFinished()));
 
@@ -64,7 +64,7 @@ void MediaflyEpisodeModel::cancel()
 	m_mediafly->abort();
 }
 
-void MediaflyEpisodeModel::handleEntryRead(const MediaflyEpisodeEntry& entry)
+void MediaflyEpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << entry.title();
 

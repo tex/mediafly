@@ -2,7 +2,7 @@
 #define MediaflyEpisodeModel_H
 
 #include "Mediafly.h"
-#include "MediaflyEpisodeEntry.h"
+#include "EpisodeEntry.h"
 #include "MediaflyEpisodeQuery.h"
 #include "MediaflyConsumerBinary.h"
 #include <QAbstractListModel>
@@ -66,12 +66,12 @@ private:
 	Mediafly                       *m_mediafly;
 	MediaflyEpisodeModelData        m_modelData;
 	MediaflyConsumerBinary          m_binaryData;
-	QMap<int, MediaflyEpisodeEntry> m_data;
+	QMap<int, mf::EpisodeEntry>     m_data;
 	bool                            m_refreshFinished;
 	MediaflyEpisodeQuery            m_query;
 
 private slots:
-	void handleEntryRead(const MediaflyEpisodeEntry& entry);
+	void handleEntryRead(const mf::EpisodeEntry& entry);
 	void handleEntryReadFinished();
 	void handleBinaryRead(const QString& path, const QByteArray& array);
 };
