@@ -88,8 +88,8 @@ SOURCES += Personalize.cpp
 HEADERS += LoginPerson.h
 SOURCES += LoginPerson.cpp
 
-HEADERS += MediaflyAuthentication_BindMFUserData.h
-SOURCES += MediaflyAuthentication_BindMFUserData.cpp
+HEADERS += BindMFUserData.h
+SOURCES += BindMFUserData.cpp
 
 HEADERS += MediaflyMenuDelegate.h
 SOURCES += MediaflyMenuDelegate.cpp

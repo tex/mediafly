@@ -9,7 +9,7 @@
 #include "MediaflyConsumerBinary.h"
 #include "MediaflyAuthentication_SetMFUserAsDefaultData.h"
 #include "MediaflyAuthentication_GetBoundMFUsersData.h"
-#include "MediaflyAuthentication_BindMFUserData.h"
+#include "BindMFUserData.h"
 #include "MediaflyCheckResponseOk.h"
 #include <QObject>
 #include <QMap>
@@ -229,7 +229,7 @@ public:
 	 * account to be used. If there are any other accounts bound to the device their
 	 * default status is turned off.
 	 */
-	void Authentication_BindMFUser (MediaflyAuthentication_BindMFUserData* data, QString accountName, QString password, bool deflt = false);
+	void Authentication_BindMFUser (mf::auth::BindMFUserData* data, QString accountName, QString password, bool deflt = false);
 
 	/**
 	 * This call will mark a specified user as a default user to be used across the API

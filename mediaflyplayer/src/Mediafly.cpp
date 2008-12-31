@@ -463,7 +463,7 @@ void Mediafly::Authentication_GetBoundMFUsers (MediaflyAuthentication_GetBoundMF
  * account to be used. If there are any other accounts bound to the device their
  * default status is turned off.
  */
-void Mediafly::Authentication_BindMFUser (MediaflyAuthentication_BindMFUserData* data, QString accountName, QString password, bool deflt)
+void Mediafly::Authentication_BindMFUser (mf::auth::BindMFUserData* data, QString accountName, QString password, bool deflt)
 {
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;

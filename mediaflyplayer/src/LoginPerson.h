@@ -1,7 +1,7 @@
 #ifndef mfLoginPerson_H
 #define mfLoginPerson_H
 
-#include "MediaflyAuthentication_BindMFUserData.h"
+#include "BindMFUserData.h"
 #include "ui_MediaflyLoginPerson.h"
 
 namespace mf {
@@ -23,7 +23,7 @@ signals:
 	void back();
 
 private:
-	MediaflyAuthentication_BindMFUserData m_data;
+	auth::BindMFUserData m_data;
 
 private slots:
 	void handleAcceptButtonClick();
