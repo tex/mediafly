@@ -1,17 +1,19 @@
+#ifndef mfEpisodeDetails_H
+#define mfEpisodeDetails_H
+
 #include "ui_MediaflyEpisodeDetails.h"
 #include <QWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QTextEdit>
 #include <QModelIndex>
 #include <QKeyEvent>
 
-class MediaflyEpisodeDetails : public QWidget, private Ui::MediaflyEpisodeDetails
+namespace mf {
+
+class EpisodeDetails : public QWidget, private Ui::MediaflyEpisodeDetails
 {
 	Q_OBJECT
 public:
-	MediaflyEpisodeDetails(QWidget *parent = 0);
+	EpisodeDetails(QWidget *parent = 0);
+
 	void show(const QModelIndex& index);
 
 signals:
@@ -27,4 +29,8 @@ private:
 private slots:
 	void updateImage();
 };
+
+}
+
+#endif
 

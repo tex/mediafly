@@ -1,14 +1,16 @@
-#include "MediaflyEpisodeDetails.h"
+#include "EpisodeDetails.h"
 #include "MediaflyEpisodeModel.h"
 #include <QDebug>
 
-MediaflyEpisodeDetails::MediaflyEpisodeDetails(QWidget *parent) :
+using namespace mf;
+
+EpisodeDetails::EpisodeDetails(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
 }
 
-void MediaflyEpisodeDetails::show(const QModelIndex& index)
+void EpisodeDetails::show(const QModelIndex& index)
 {
 	m_index = index;
 	update();
@@ -17,14 +19,14 @@ void MediaflyEpisodeDetails::show(const QModelIndex& index)
 	        this, SLOT(updateImage()));
 }
 
-void MediaflyEpisodeDetails::updateImage()
+void EpisodeDetails::updateImage()
 {
 	if (m_icon->pixmap()->isNull()) {
 		m_icon->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	}
 }
 
-void MediaflyEpisodeDetails::update()
+void EpisodeDetails::update()
 {
 	m_header->setText(tr("Episode Details"));
 	m_label->setText(m_index.data(MediaflyEpisodeModel::titleRole).toString());
@@ -39,7 +41,7 @@ void MediaflyEpisodeDetails::update()
 	m_info->setHtml(m_index.data(MediaflyEpisodeModel::descriptionRole).toString());
 }
 
-void MediaflyEpisodeDetails::keyPressEvent(QKeyEvent *event)
+void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Enter:

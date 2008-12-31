@@ -2,7 +2,7 @@
 #define mfPlayer_H
 
 #include "Play.h"
-#include "MediaflyEpisodeDetails.h"
+#include "EpisodeDetails.h"
 #include "MediaflyMenu.h"
 #include "Personalize.h"
 #include "LoginPerson.h"
@@ -28,7 +28,7 @@ private:
 	MediaflyChannelModel m_channelModel;
 	MediaflyEpisodeModel m_episodeModel;
 
-	MediaflyEpisodeDetails *m_episodeDetails;
+	EpisodeDetails         *m_episodeDetails;
 	MediaflyMenu           *m_menu;
 	Play                   *m_play;
 	Personalize            *m_personalize;
