@@ -1,11 +1,11 @@
-#include "MediaflyMenuDelegate.h"
-#include "MediaflyMenuModel.h"
+#include "MenuDelegate.h"
+#include "MenuModel.h"
 
-void MediaflyMenuDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void mf::MenuDelegate::paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 
 	const QString label = index.data(Qt::DisplayRole).toString();
-	const bool isDefault = index.data(MediaflyMenuModel::isDefaultRole).toBool();
+	const bool isDefault = index.data(mf::MenuModel::isDefaultRole).toBool();
 
 	if (option.state & QStyle::State_Selected) {
 		painter->fillRect(option.rect, option.palette.highlight());

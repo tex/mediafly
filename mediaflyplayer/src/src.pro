@@ -96,8 +96,8 @@ SOURCES += LoginPerson.cpp
 HEADERS += BindMFUserData.h
 SOURCES += BindMFUserData.cpp
 
-HEADERS += MediaflyMenuDelegate.h
-SOURCES += MediaflyMenuDelegate.cpp
+HEADERS += MenuDelegate.h
+SOURCES += MenuDelegate.cpp
 
 HEADERS += MediaflyCheckResponseOk.h
 SOURCES += MediaflyCheckResponseOk.cpp

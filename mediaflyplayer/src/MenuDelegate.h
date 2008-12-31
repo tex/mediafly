@@ -1,18 +1,23 @@
-#ifndef MediaflyMenuDelegate_H
-#define MediaflyMenuDelegate_H
+#ifndef mfMenuDelegate_H
+#define mfMenuDelegate_H
 
 #include <QItemDelegate>
 #include <QPainter>
 #include <QStyleOptionViewItem>
 #include <QModelIndex>
 
-class MediaflyMenuDelegate : public QItemDelegate
+namespace mf {
+
+class MenuDelegate : public QItemDelegate
 {
 public:
-	MediaflyMenuDelegate(QWidget *parent = 0) :
+	MenuDelegate(QWidget *parent = 0) :
 		QItemDelegate(parent) { }
+
 	void paint(QPainter *painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
+
+}
 
 #endif
 
