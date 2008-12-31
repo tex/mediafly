@@ -1,7 +1,9 @@
-#include "MediaflyChannelModel.h"
+#include "ChannelModel.h"
 #include <QDebug>
 
-MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
+using namespace mf;
+
+ChannelModel::ChannelModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
 	m_mediafly = Mediafly::getMediafly();
@@ -13,24 +15,24 @@ MediaflyChannelModel::MediaflyChannelModel(QObject *parent) :
 	        this, SLOT(handleEntryFinished()));
 }
 
-MediaflyChannelModel::MediaflyChannelModel(const MediaflyChannelModel &obj) :
+ChannelModel::ChannelModel(const ChannelModel &obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
 	m_mediafly = Mediafly::getMediafly();
 	m_data = obj.m_data;
 }
 
-void MediaflyChannelModel::cancel()
+void ChannelModel::cancel()
 {
 	// TODO
 }
-void MediaflyChannelModel::refresh()
+void ChannelModel::refresh()
 {
 	m_id = 0;
 	m_mediafly->Channels_GetChannels(&m_modelData, true);
 }
 
-void MediaflyChannelModel::handleEntryRead(const MediaflyChannelEntry& entry)
+void ChannelModel::handleEntryRead(const MediaflyChannelEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << "id:" << m_id << entry.name();
 
@@ -43,19 +45,19 @@ void MediaflyChannelModel::handleEntryRead(const MediaflyChannelEntry& entry)
 	emit refreshed();
 }
 
-void MediaflyChannelModel::handleEntryFinished()
+void ChannelModel::handleEntryFinished()
 {
 	for (int i = m_id; i < m_data.size(); ++i) {
 		m_data.removeAt(i);
 	}
 }
 
-int MediaflyChannelModel::rowCount(const QModelIndex &/*parent*/) const
+int ChannelModel::rowCount(const QModelIndex &/*parent*/) const
 {
 	return m_data.size();
 }
 
-QVariant MediaflyChannelModel::data(const QModelIndex &index, int role) const
+QVariant ChannelModel::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
 		return QVariant();

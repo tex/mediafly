@@ -25,7 +25,7 @@ private:
 	QStackedWidget *m_view;
 
 	MenuModel            m_menuModel;
-	MediaflyChannelModel m_channelModel;
+	ChannelModel         m_channelModel;
 	EpisodeModel         m_episodeModel;
 
 	EpisodeDetails         *m_episodeDetails;

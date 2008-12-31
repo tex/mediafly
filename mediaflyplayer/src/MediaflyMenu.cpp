@@ -5,7 +5,7 @@
 #include <QIcon>
 
 MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
-                           MediaflyChannelModel& channelModel,
+                           mf::ChannelModel&     channelModel,
                            mf::EpisodeModel&     episodeModel,
                            QWidget *parent) :
 	QWidget(parent),
@@ -170,8 +170,8 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	m_episodeModel.cancel();
 	m_episodeModel.clear();
 
-	QString slug = index.data(MediaflyChannelModel::slugRole).toString();
-	QString name = index.data(MediaflyChannelModel::nameRole).toString();
+	QString slug = index.data(mf::ChannelModel::slugRole).toString();
+	QString name = index.data(mf::ChannelModel::nameRole).toString();
 
 	m_channelSlug = slug;
 	m_episodeModel.refresh(MediaflyEpisodeQuery(slug, 0, itemsReadAtOnce));

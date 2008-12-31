@@ -1,5 +1,5 @@
 #include "MenuModel.h"
-#include "MediaflyChannelModel.h"
+#include "ChannelModel.h"
 #include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
 #include "MediaflyCheckResponseOk.h"
@@ -14,7 +14,7 @@ class MediaflyMenu : public QWidget, protected Ui::MediaflyMenu
 	Q_OBJECT
 public:
 	MediaflyMenu(mf::MenuModel&         menuModel,
-	             MediaflyChannelModel&  channelModel,
+	             mf::ChannelModel&      channelModel,
 	             mf::EpisodeModel&      episodeModel,
 	             QWidget               *parent = 0); 
 
@@ -41,7 +41,7 @@ private:
 	State	         m_state;
 
 	mf::MenuModel&        m_menuModel;
-	MediaflyChannelModel& m_channelModel;
+	mf::ChannelModel&     m_channelModel;
 	mf::EpisodeModel&     m_episodeModel;
 
 	static const int itemsReadAtOnce = 10;

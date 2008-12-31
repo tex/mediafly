@@ -1,12 +1,14 @@
-#ifndef MediaflyChannelModel_H
-#define MediaflyChannelModel_H
+#ifndef mfChannelModel_H
+#define mfChannelModel_H
 
 #include "Mediafly.h"
 #include "ChannelModelData.h"
 #include <QAbstractListModel>
 #include <QList>
 
-struct MediaflyChannelModel : public QAbstractListModel
+namespace mf {
+
+struct ChannelModel : public QAbstractListModel
 {
 	Q_OBJECT
 public:
@@ -16,8 +18,8 @@ public:
 		slugRole = Qt::UserRole + 1000,
 	};
 
-	MediaflyChannelModel(QObject *parent = 0);
-	MediaflyChannelModel(const MediaflyChannelModel &obj);
+	ChannelModel(QObject *parent = 0);
+	ChannelModel(const ChannelModel &obj);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
@@ -38,6 +40,8 @@ private slots:
 	void handleEntryRead(const MediaflyChannelEntry& entry);
 	void handleEntryFinished();
 };
+
+}
 
 #endif
 

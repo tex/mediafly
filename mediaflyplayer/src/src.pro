@@ -22,8 +22,11 @@ RESOURCES += ../resources/mediafly.qrc
 FORMS += ../forms/MediaflyPlay.ui
 
 # Input
-HEADERS += Mediafly.h MediaflyChannelModel.h
-SOURCES += Mediafly.cpp MediaflyChannelModel.cpp
+HEADERS += Mediafly.h
+SOURCES += Mediafly.cpp
+
+HEADERS += ChannelModel.h
+SOURCES += ChannelModel.cpp
 
 HEADERS += EpisodeModel.h
 SOURCES += EpisodeModel.cpp
