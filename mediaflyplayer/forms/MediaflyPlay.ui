@@ -87,7 +87,10 @@
    </item>
    <item row="0" column="0" colspan="5" >
     <widget class="QStackedWidget" name="m_stackedWidget" >
-     <widget class="MediaflyPlayAudio" name="m_audio" />
+     <property name="currentIndex" >
+      <number>1</number>
+     </property>
+     <widget class="mf::PlayAudio" name="m_audio" />
      <widget class="MediaflyPlayVideo" name="m_video" />
     </widget>
    </item>
@@ -95,9 +98,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MediaflyPlayAudio</class>
+   <class>mf::PlayAudio</class>
    <extends>QWidget</extends>
-   <header>MediaflyPlayAudio.h</header>
+   <header>PlayAudio.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

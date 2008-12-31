@@ -1,14 +1,16 @@
-#ifndef MediaflyPlayAudio_H
-#define MediaflyPlayAudio_H
+#ifndef mfPlayAudio_H
+#define mfPlayAudio_H
 
 #include "ui_MediaflyPlayAudio.h"
 #include <QModelIndex>
 
-class MediaflyPlayAudio : public QWidget, private Ui::MediaflyPlayAudio
+namespace mf {
+
+class PlayAudio : public QWidget, private Ui::MediaflyPlayAudio
 {
 	Q_OBJECT
 public:
-	MediaflyPlayAudio(QWidget *parent = 0);
+	PlayAudio(QWidget *parent = 0);
 	void show(const QModelIndex& index);
 	void hide();
 
@@ -18,6 +20,8 @@ private:
 private slots:
 	void updateImage();
 };
+
+}
 
 #endif
 

@@ -2,7 +2,7 @@
 #define MediaflyPlay_H
 
 #include "ui_MediaflyPlay.h"
-#include "MediaflyPlayAudio.h"
+#include "PlayAudio.h"
 #include "MediaflyPlayVideo.h"
 #include <QModelIndex>
 #include <QKeyEvent>

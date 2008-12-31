@@ -66,8 +66,8 @@ HEADERS += MediaflyPlayVideo.h
 SOURCES += MediaflyPlayVideo.cpp
 
 FORMS += ../forms/MediaflyPlayAudio.ui
-HEADERS += MediaflyPlayAudio.h
-SOURCES += MediaflyPlayAudio.cpp
+HEADERS += PlayAudio.h
+SOURCES += PlayAudio.cpp
 
 HEADERS += MediaflyAuthentication_SetMFUserAsDefaultData.h
 

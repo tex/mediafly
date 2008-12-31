@@ -1,14 +1,16 @@
-#include "MediaflyPlayAudio.h"
+#include "PlayAudio.h"
 #include "MediaflyEpisodeModel.h"
 #include <QPixmap>
 
-MediaflyPlayAudio::MediaflyPlayAudio(QWidget *parent) :
+using namespace mf;
+
+PlayAudio::PlayAudio(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
 }
 
-void MediaflyPlayAudio::show(const QModelIndex& index)
+void PlayAudio::show(const QModelIndex& index)
 {
 	m_index = index;
 
@@ -26,14 +28,14 @@ void MediaflyPlayAudio::show(const QModelIndex& index)
 	m_numberOfEpisodesLabel->setText(episodesText);
 }
 
-void MediaflyPlayAudio::updateImage()
+void PlayAudio::updateImage()
 {
 	if (m_iconLabel->pixmap()->isNull()) {
 		m_iconLabel->setPixmap(m_index.data(MediaflyEpisodeModel::imageRole).value<QPixmap>());
 	}
 }
 
-void MediaflyPlayAudio::hide()
+void PlayAudio::hide()
 {
 }
 
