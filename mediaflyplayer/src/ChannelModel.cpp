@@ -8,8 +8,8 @@ ChannelModel::ChannelModel(QObject *parent) :
 {
 	m_mediafly = Mediafly::getMediafly();
 
-	connect(&m_modelData, SIGNAL(entryRead(const MediaflyChannelEntry&)),
-	        this, SLOT(handleEntryRead(const MediaflyChannelEntry&)));
+	connect(&m_modelData, SIGNAL(entryRead(const mf::ChannelEntry&)),
+	        this, SLOT(handleEntryRead(const mf::ChannelEntry&)));
 
 	connect(&m_modelData, SIGNAL(entryReadFinished()),
 	        this, SLOT(handleEntryFinished()));
@@ -32,7 +32,7 @@ void ChannelModel::refresh()
 	m_mediafly->Channels_GetChannels(&m_modelData, true);
 }
 
-void ChannelModel::handleEntryRead(const MediaflyChannelEntry& entry)
+void ChannelModel::handleEntryRead(const mf::ChannelEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << "id:" << m_id << entry.name();
 

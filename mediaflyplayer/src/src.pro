@@ -44,7 +44,7 @@ HEADERS += MediaflyMenu.h
 SOURCES += ChannelModelData.cpp
 HEADERS += ChannelModelData.h
 
-HEADERS += MediaflyChannelEntry.h
+HEADERS += ChannelEntry.h
 
 HEADERS += EpisodeEntry.h
 

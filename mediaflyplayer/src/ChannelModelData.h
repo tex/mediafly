@@ -2,7 +2,7 @@
 #define mfChannelModelData_H
 
 #include "MediaflyConsumer.h"
-#include "MediaflyChannelEntry.h"
+#include "ChannelEntry.h"
 
 namespace mf {
 
@@ -13,7 +13,7 @@ public:
 	void read(const QDomDocument& doc);
 
 signals:
-	void entryRead(const MediaflyChannelEntry& entry);
+	void entryRead(const mf::ChannelEntry& entry);
 	void entryReadFinished();
 };
 

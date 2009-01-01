@@ -33,11 +33,11 @@ signals:
 private:
 	Mediafly                   *m_mediafly;
 	mf::ChannelModelData        m_modelData;
-	QList<MediaflyChannelEntry> m_data;
+	QList<mf::ChannelEntry>     m_data;
 	int                         m_id;
 
 private slots:
-	void handleEntryRead(const MediaflyChannelEntry& entry);
+	void handleEntryRead(const mf::ChannelEntry& entry);
 	void handleEntryFinished();
 };
 

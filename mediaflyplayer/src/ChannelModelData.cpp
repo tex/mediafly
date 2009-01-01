@@ -9,7 +9,7 @@ void mf::ChannelModelData::read(const QDomDocument& doc)
 	while (!it.isNull()) {
 		QDomElement el = it.toElement();
 		if (!el.isNull()) {
-			MediaflyChannelEntry entry(el.attribute("name"), el.attribute("slug"));
+			mf::ChannelEntry entry(el.attribute("name"), el.attribute("slug"));
 			emit entryRead(entry);
 		}
 		it = it.nextSibling();
