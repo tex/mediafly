@@ -74,7 +74,6 @@ void PlayVideo::show(const QModelIndex& index)
 
 QString PlayVideo::mountUrl(QString url)
 {
-#if 0
 	QString cmd;
 
 	cmd = "mkdir /media/SD-card/httpfs_mp";
@@ -84,8 +83,7 @@ QString PlayVideo::mountUrl(QString url)
 	system(cmd.toAscii());
 
 	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
-#endif
-	QString ret = "/media/SD-card/title2.avi";
+
 	m_episodeNameLabel->setText(ret);
 	m_showTitleLabel->setText("---");
 
@@ -94,12 +92,10 @@ QString PlayVideo::mountUrl(QString url)
 
 void PlayVideo::umountUrl()
 {
-#if 0
 	QString cmd;
 
 	cmd = "fusermount -u /tmp/httpfs";
 	system(cmd.toAscii());
-#endif
 }
 
 void PlayVideo::setUrl(QString url)
