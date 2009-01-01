@@ -91,14 +91,6 @@ void Play::handleStateChange()
 	position /= 1000;
 	length /= 1000;
 
-	if (length == 0)
-	{
-		// Total length of the song is unknown. Set it to
-		// song position + 1 to let the user know that
-		// total length is unknown (it looks good on the screen).
-
-		length = position + 1;
-	}
 	m_progressBar->setRange(0, length);
 	m_progressBar->setValue(position);
 
