@@ -113,3 +113,5 @@ FORMS += ../forms/MediaflyPlayqueue.ui
 HEADERS += Playqueue.h
 SOURCES += Playqueue.cpp
 
+QMAKE_CLEAN += ../../build/* ./build/* ./qrc_*.cpp ./Makefile
+
