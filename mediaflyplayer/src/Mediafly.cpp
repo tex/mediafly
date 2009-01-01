@@ -8,6 +8,8 @@
 
 #include <stdlib.h>
 
+using namespace mf;
+
 extern QString  currentPath;
 
 Mediafly*       Mediafly::m_mediafly = NULL;

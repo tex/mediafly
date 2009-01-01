@@ -1,5 +1,5 @@
-#ifndef MEDIAFLY_H
-#define MEDIAFLY_H
+#ifndef mfMediafly_H
+#define mfMediafly_H
 
 #include "ChannelModelData.h"
 #include "EpisodeModelData.h"
@@ -15,6 +15,8 @@
 #include <QMap>
 #include <QString>
 #include <QHttp>
+
+namespace mf {
 
 class Mediafly : public mf::Consumer
 {
@@ -621,5 +623,7 @@ public:
 	QDomDocument Episodes_GetEpisodeInfo (const mf::SessionInfo& session, QString episodeSlug );
 #endif
 };
+
+}
 
 #endif // MEDIAFLY_H
