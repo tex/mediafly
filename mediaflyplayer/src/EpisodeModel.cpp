@@ -76,7 +76,10 @@ void EpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
 
 void EpisodeModel::handleEntryReadFinished()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	m_refreshFinished = true;
+	emit refreshed();
 }
 
 void EpisodeModel::handleBinaryRead(const QString& path, const QByteArray& array)

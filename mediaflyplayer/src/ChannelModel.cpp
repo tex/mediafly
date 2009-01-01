@@ -47,9 +47,13 @@ void ChannelModel::handleEntryRead(const mf::ChannelEntry& entry)
 
 void ChannelModel::handleEntryFinished()
 {
+	qDebug() << __PRETTY_FUNCTION__;
+
 	for (int i = m_id; i < m_data.size(); ++i) {
 		m_data.removeAt(i);
 	}
+
+	emit refreshed();
 }
 
 int ChannelModel::rowCount(const QModelIndex &/*parent*/) const

@@ -124,6 +124,9 @@ void mf::Menu::updateEpisodeModel()
 	if (model != &m_episodeModel)
 		return;
 
+	if (model->rowCount() == 0)
+		m_listView->setEmpty();
+
 	QModelIndex current = m_listView->currentIndex();
 	if (!current.isValid())
 		current = m_episodeModel.index(0, 0);

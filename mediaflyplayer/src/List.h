@@ -17,6 +17,8 @@ public:
 	List(QWidget *parent = 0);
 	~List();
 
+	void setEmpty() { m_empty = true; }
+
 signals:
 	void almostAtEndOfList();
 	void enterPressed();
@@ -26,6 +28,8 @@ signals:
 private:
 	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
+
+	bool m_empty;
 };
 
 }

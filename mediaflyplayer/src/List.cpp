@@ -6,7 +6,8 @@
 using namespace mf;
 
 List::List(QWidget *parent) :
-	ListParent(parent)
+	ListParent(parent),
+	m_empty(false)
 {
 	setItemDelegate(new mf::MenuDelegate());
 }
@@ -24,6 +25,7 @@ void List::keyPressEvent(QKeyEvent *event)
 		emit rightPressed();
 		break;
 	case Qt::Key_Left:
+		m_empty = false;
 		emit leftPressed();
 		break;
 	case Qt::Key_Down:
@@ -50,7 +52,11 @@ void List::paintEvent(QPaintEvent * e)
 	{
 		QPainter painter(viewport());
 		QRect rect = painter.viewport();
-		QString message = tr("Loading menu, please wait...");
+		QString message;
+		if (m_empty)
+			message = tr("No items in menu");
+		else
+			message = tr("Loading menu, please wait...");
 		int wMessage = painter.fontMetrics().width(message);
 		int hMessage = painter.fontMetrics().height();
 		int leftOffset = (rect.width() - wMessage) / 2;
