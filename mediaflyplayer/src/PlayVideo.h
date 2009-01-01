@@ -23,6 +23,7 @@
 #ifndef mfPlayVideo_H
 #define mfPlayVideo_H
 
+#include "PlayAVInterface.h"
 #include "ui_MediaflyPlayVideo.h"
 #include <QModelIndex>
 #include <QTimer>
@@ -31,7 +32,7 @@
 
 namespace mf {
 
-class PlayVideo : public NBackgroundManagedWidget, private Ui::MediaflyPlayVideo
+class PlayVideo : public NBackgroundManagedWidget, public PlayAVInterface, private Ui::MediaflyPlayVideo
 {
 	Q_OBJECT
 public:

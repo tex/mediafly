@@ -28,7 +28,8 @@ using namespace mf;
 
 Play::Play(QWidget *parent) :
 	NBackgroundManagedWidget(parent),
-	m_state(MP_PAUSE)
+	m_state(MP_PAUSE),
+	m_output(NULL)
 {
 	setupUi(this);
 
@@ -76,15 +77,11 @@ void Play::handleStateChange()
 		return;
 
 	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 
 	// Get current position and length of the episode. getState returns
 	// time values in miliseconds.
 
-	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
-		m_video->getState(position, length);
-	else
-		m_audio->getState(position, length);
+	m_output->getState(position, length);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
 
@@ -135,21 +132,13 @@ void Play::updateStateIndicator(enum State state)
 	case MP_PAUSE:
 	{
 		m_playStateButton->setText("|");
-		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-		if (format.startsWith("Video", Qt::CaseInsensitive) == true)
-			m_video->pause();
-		else
-			m_audio->pause();
+		m_output->pause();
 		break;
 	}
 	case MP_PLAY:
 	{
 		m_playStateButton->setText(">");
-		QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-		if (format.startsWith("Video", Qt::CaseInsensitive) == true)
-			m_video->play();
-		else
-			m_audio->play();
+		m_output->play();
 		break;
 	}
 	default:
@@ -159,8 +148,7 @@ void Play::updateStateIndicator(enum State state)
 
 void Play::update()
 {
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
+	if (m_output == m_video)
 	{
 		qDebug() << "Recognized as video";
 
@@ -187,6 +175,12 @@ void Play::show(const QModelIndex& index)
 {
 	m_index = index;
 
+	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
+	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
+		m_output = m_video;
+	else
+		m_output = m_audio;
+
 	update();
 }
 
@@ -199,20 +193,12 @@ void Play::handleEscape()
 
 void Play::handleMediaPlay()
 {
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
-		m_video->play();
-	else
-		m_audio->play();
+	m_output->play();
 }
 
 void Play::handleMediaStop()
 {
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == 0)
-		m_video->pause();
-	else
-		m_audio->pause();
+	m_output->pause();
 }
 
 void Play::handleMediaNext()
@@ -271,20 +257,10 @@ QString Play::toTime(unsigned int msec) const
 
 void Play::getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength)
 {
-	currentIndex = m_index;
-
 	int position, length;
 
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
-	{
-		m_video->getState(position, length);
-	}
-	else
-	{
-		m_audio->getState(position, length);
-	}
-
+	currentIndex = m_index;
+	m_output->getState(position, length);
 	songPosition = toTime(position);
 	songLength = toTime(length);
 }

@@ -29,6 +29,8 @@
 
 #include <xmmsclient/xmmsclient++.h>
 
+#include "PlayAVInterface.h"
+
 #include "nbackgroundmanagedwidget.h"
 
 #include "ui_MediaflyPlayAudio.h"
@@ -39,7 +41,7 @@
 
 namespace mf {
 
-class PlayAudio : public NBackgroundManagedWidget, private Ui::MediaflyPlayAudio
+class PlayAudio : public NBackgroundManagedWidget, public PlayAVInterface, private Ui::MediaflyPlayAudio
 {
 	Q_OBJECT	
 public:

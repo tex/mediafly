@@ -23,6 +23,7 @@
 #ifndef MediaflyPlay_H
 #define MediaflyPlay_H
 
+#include "PlayAVInterface.h"
 #include "PlayAudio.h"
 #include "PlayVideo.h"
 #include "ui_MediaflyPlay.h"
@@ -61,6 +62,7 @@ private:
 	QModelIndex             m_index;
 	mf::CheckResponseOk     m_checkResponseOk;
 	NMediaKeyClient         m_mediakeyChannel;
+	PlayAVInterface        *m_output;
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();
