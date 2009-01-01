@@ -1,11 +1,11 @@
 #ifndef mfCheckResponseOk_H
 #define mfCheckResponseOk_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 
 namespace mf {
 
-class CheckResponseOk : public MediaflyConsumer
+class CheckResponseOk : public Consumer
 {
 	Q_OBJECT
 public:

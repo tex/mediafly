@@ -1,14 +1,18 @@
-#ifndef MediaflyConsumer_H
-#define MediaflyConsumer_H
+#ifndef mfConsumer_H
+#define mfConsumer_H
 
 #include <QObject>
 #include <QDomDocument>
 
-class MediaflyConsumer : public QObject
+namespace mf {
+
+class Consumer : public QObject
 {
 public:
 	virtual void read(const QDomDocument& doc) = 0;
 };
+
+}
 
 #endif
 

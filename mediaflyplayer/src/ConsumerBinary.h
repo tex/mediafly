@@ -1,12 +1,14 @@
-#ifndef MediaflyConsumerBinary_H
-#define MediaflyConsumerBinary_H
+#ifndef mfConsumerBinary_H
+#define mfConsumerBinary_H
 
 #include <QObject>
 #include <QByteArray>
 #include <QDebug>
 #include <QPixmap>
 
-class MediaflyConsumerBinary : public QObject
+namespace mf {
+
+class ConsumerBinary : public QObject
 {
 	Q_OBJECT
 public:
@@ -20,6 +22,8 @@ public:
 signals:
 	void binaryRead(const QString& path, const QByteArray& array);
 };
+
+}
 
 #endif
 

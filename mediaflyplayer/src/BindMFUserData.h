@@ -1,11 +1,11 @@
 #ifndef mfauthBindMFUserData_H
 #define mfauthBindMFUserData_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 
 namespace mf { namespace auth {
 
-class BindMFUserData : public MediaflyConsumer
+class BindMFUserData : public Consumer
 {
 	Q_OBJECT
 public:

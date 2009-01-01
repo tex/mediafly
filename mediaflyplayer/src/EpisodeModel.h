@@ -4,7 +4,7 @@
 #include "Mediafly.h"
 #include "EpisodeEntry.h"
 #include "MediaflyEpisodeQuery.h"
-#include "MediaflyConsumerBinary.h"
+#include "ConsumerBinary.h"
 #include <QAbstractListModel>
 #include <QMap>
 #include <QString>
@@ -67,7 +67,7 @@ signals:
 private:
 	Mediafly                       *m_mediafly;
 	mf::EpisodeModelData            m_modelData;
-	MediaflyConsumerBinary          m_binaryData;
+	mf::ConsumerBinary              m_binaryData;
 	QMap<int, mf::EpisodeEntry>     m_data;
 	bool                            m_refreshFinished;
 	MediaflyEpisodeQuery            m_query;

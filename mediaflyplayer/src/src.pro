@@ -56,7 +56,8 @@ SOURCES += EpisodeModelData.cpp
 HEADERS += MenuModel.h
 SOURCES += MenuModel.cpp
 
-HEADERS += MediaflyConsumerBinary.h
+HEADERS += Consumer.h
+HEADERS += ConsumerBinary.h
 
 SOURCES += main.cpp
 

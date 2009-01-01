@@ -116,7 +116,7 @@ QVariant EpisodeModel::data(const QModelIndex &index, int role) const
 		QString path = m_data[index.row()].imageUrl();
 		QPixmap image;
 		if (!QPixmapCache::find(path, image)) {
-			m_mediafly->Utility_GetImage(const_cast<MediaflyConsumerBinary *>(&m_binaryData), path);
+			m_mediafly->Utility_GetImage(const_cast<mf::ConsumerBinary *>(&m_binaryData), path);
 		}
 		if (role == imageUrlRole)
 			return path;

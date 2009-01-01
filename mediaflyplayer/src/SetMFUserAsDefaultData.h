@@ -1,11 +1,11 @@
 #ifndef mfauthSetMFUserAsDefaultData_H
 #define mfauthSetMFUserAsDefaultData_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 
 namespace mf { namespace auth {
 
-class SetMFUserAsDefaultData : public MediaflyConsumer
+class SetMFUserAsDefaultData : public Consumer
 {
 	Q_OBJECT
 public:

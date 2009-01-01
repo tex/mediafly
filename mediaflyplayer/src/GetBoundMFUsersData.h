@@ -1,12 +1,12 @@
 #ifndef mfauthGetBoundMFUsers_H
 #define mfauthGetBoundMFUsers_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 #include "User.h"
 
 namespace mf { namespace auth {
 
-class GetBoundMFUsersData : public MediaflyConsumer
+class GetBoundMFUsersData : public Consumer
 {
 	Q_OBJECT
 public:

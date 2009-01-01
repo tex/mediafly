@@ -1,12 +1,12 @@
 #ifndef mfChannelModelData_H
 #define mfChannelModelData_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 #include "ChannelEntry.h"
 
 namespace mf {
 
-class ChannelModelData : public MediaflyConsumer
+class ChannelModelData : public Consumer
 {
 	Q_OBJECT
 public:

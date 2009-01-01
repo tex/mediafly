@@ -1,13 +1,13 @@
 #ifndef mfEpisodeModelData_H
 #define mfEpisodeModelData_H
 
-#include "MediaflyConsumer.h"
+#include "Consumer.h"
 #include "EpisodeEntry.h"
 #include <QDebug>
 
 namespace mf {
 
-class EpisodeModelData : public MediaflyConsumer
+class EpisodeModelData : public Consumer
 {
 	Q_OBJECT
 public:

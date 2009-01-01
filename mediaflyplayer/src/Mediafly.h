@@ -5,8 +5,8 @@
 #include "EpisodeModelData.h"
 #include "MediaflyEpisodeQuery.h"
 #include "SessionInfo.h"
-#include "MediaflyConsumer.h"
-#include "MediaflyConsumerBinary.h"
+#include "Consumer.h"
+#include "ConsumerBinary.h"
 #include "SetMFUserAsDefaultData.h"
 #include "GetBoundMFUsersData.h"
 #include "BindMFUserData.h"
@@ -16,7 +16,7 @@
 #include <QString>
 #include <QHttp>
 
-class Mediafly : public MediaflyConsumer
+class Mediafly : public mf::Consumer
 {
 	Q_OBJECT
 private:
@@ -36,7 +36,7 @@ private:
 
 	struct RequestInfo
 	{
-		MediaflyConsumer       *m_consumer;
+		mf::Consumer           *m_consumer;
 		QString                 m_method;
 		QMap<QString, QString>  m_firstMap;
 		QMap<QString, QString>  m_map;
@@ -45,7 +45,7 @@ private:
 
 	struct RequestInfoBinary
 	{
-		MediaflyConsumerBinary *m_consumer;
+		mf::ConsumerBinary     *m_consumer;
 		QString                 m_path;
 	};
 
@@ -54,15 +54,15 @@ private:
 	QList<RequestInfo>           m_request;
 
 	QString makePath(QString& method, QStringList& parameters);
-	void Query(MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps = false);
+	void Query(mf::Consumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps = false);
 	QString computeHash(QMap<QString, QString>& map, QString token_id);
 	QStringList makeParams(QMap<QString, QString>& map);
-	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map);
-	void Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps = false);
+	void Query(mf::Consumer *consumer, QString function, QMap<QString, QString>& map);
+	void Query(mf::Consumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps = false);
 	bool checkResponse(QDomDocument& doc, QString& data, QString& errorMsg, bool& expiredToken);
 	void Query (RequestInfo& requestInfo);
 	void Query (RequestInfoBinary& requestInfoBinary);
-	void Query (MediaflyConsumerBinary *modelData, const QString& path);
+	void Query (mf::ConsumerBinary *modelData, const QString& path);
 
 	void read(const QDomDocument& doc);
 
@@ -105,7 +105,7 @@ public:
 	/**
 	 * This method retrieves a image (raw data) from specified url.
 	 */
-	void Utility_GetImage(MediaflyConsumerBinary *modelData, const QString& path);
+	void Utility_GetImage(mf::ConsumerBinary *modelData, const QString& path);
 
 	/**
 	 * This method returns a list of channels.

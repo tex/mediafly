@@ -190,7 +190,7 @@ void Mediafly::Query(RequestInfoBinary& requestInfoBinary)
 	m_connectionBinary.insert(id, requestInfoBinary);
 }
 
-void Mediafly::Query (MediaflyConsumerBinary *consumer, const QString& path)
+void Mediafly::Query (mf::ConsumerBinary *consumer, const QString& path)
 {
 	RequestInfoBinary requestInfoBinary;
 	requestInfoBinary.m_consumer = consumer;
@@ -215,7 +215,7 @@ void Mediafly::Query (RequestInfo& requestInfo)
 	m_connection.insert(id, requestInfo);
 }
 
-void Mediafly::Query (MediaflyConsumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps )
+void Mediafly::Query (mf::Consumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps )
 {
 	qDebug() << method;
 
@@ -233,7 +233,7 @@ void Mediafly::Query (MediaflyConsumer *consumer, QString method, QMap<QString, 
 	}
 }
 
-void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map)
+void Mediafly::Query(mf::Consumer *consumer, QString function, QMap<QString, QString>& map)
 {
 	QMap<QString, QString> firstMap;
 	firstMap[QString("app_id")] = m_appId;
@@ -256,7 +256,7 @@ QString Mediafly::computeHash(QMap<QString, QString>& map, QString tokenId)
 	return QString(hash.result().toHex());
 }
 
-void Mediafly::Query(MediaflyConsumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps)
+void Mediafly::Query(mf::Consumer *consumer, QString function, QMap<QString, QString>& map, const mf::SessionInfo& session, bool useHttps)
 {
 	QMap<QString, QString> firstMap;
 	firstMap[QString("app_id")] = m_appId;
@@ -289,7 +289,7 @@ void Mediafly::read(const QDomDocument& doc)
 /**
  * This method retrieves a image (raw data) from specified url.
  */
-void Mediafly::Utility_GetImage(MediaflyConsumerBinary *consumer, const QString& path)
+void Mediafly::Utility_GetImage(mf::ConsumerBinary *consumer, const QString& path)
 {
 	Query(consumer, path);
 }
