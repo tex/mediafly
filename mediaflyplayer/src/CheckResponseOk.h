@@ -1,9 +1,11 @@
-#ifndef MediaflyCheckResponseOk_H
-#define MediaflyCheckResponseOk_H
+#ifndef mfCheckResponseOk_H
+#define mfCheckResponseOk_H
 
 #include "MediaflyConsumer.h"
 
-class MediaflyCheckResponseOk : public MediaflyConsumer
+namespace mf {
+
+class CheckResponseOk : public MediaflyConsumer
 {
 	Q_OBJECT
 public:
@@ -12,6 +14,8 @@ public:
 signals:
 	void done();
 };
+
+}
 
 #endif
  

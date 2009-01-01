@@ -10,7 +10,7 @@
 #include "SetMFUserAsDefaultData.h"
 #include "GetBoundMFUsersData.h"
 #include "BindMFUserData.h"
-#include "MediaflyCheckResponseOk.h"
+#include "CheckResponseOk.h"
 #include <QObject>
 #include <QMap>
 #include <QString>
@@ -260,7 +260,7 @@ public:
 	 * <?xml version="1.0" encoding="utf-8"?>
 	 * <response status="ok" />
 	 */
-	void Authentication_UnbindMFUser (MediaflyCheckResponseOk *data, QString accountName);
+	void Authentication_UnbindMFUser (mf::CheckResponseOk *data, QString accountName);
 #if 0
 	/**
 	 * This method returns the next channel from the user’s playlist, relative to the
@@ -390,7 +390,7 @@ public:
 	 * @param  episodeSlug (required):  the slug of the episode that you want to remove
 	 * from the playlists.
 	 */
-	void Playlists_RemoveEpisodeFromPlaylist (MediaflyCheckResponseOk *data, QString episodeSlug);
+	void Playlists_RemoveEpisodeFromPlaylist (mf::CheckResponseOk *data, QString episodeSlug);
 
 #if 0
 	/**
@@ -499,7 +499,7 @@ public:
 	 * @param  position
 	 * @param  episodeLength
 	 */
-	void Experience_PostExperienceForEpisode (MediaflyCheckResponseOk *data, QString episodeSlug, int position, int episodeLength);
+	void Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, QString episodeSlug, int position, int episodeLength);
 
 #if 0
 	/**

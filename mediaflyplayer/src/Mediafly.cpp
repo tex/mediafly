@@ -507,7 +507,7 @@ void Mediafly::Authentication_SetMFUserAsDefault (mf::auth::SetMFUserAsDefaultDa
  * <?xml version="1.0" encoding="utf-8"?>
  * <response status="ok" />
  */
-void Mediafly::Authentication_UnbindMFUser (MediaflyCheckResponseOk *data, QString accountName)
+void Mediafly::Authentication_UnbindMFUser (mf::CheckResponseOk *data, QString accountName)
 {
 	QMap<QString, QString> map;
 	map["accountName"] = accountName;
@@ -674,7 +674,7 @@ QDomDocument Mediafly::Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafl
  * @param  episodeSlug (required):  the slug of the episode that you want to remove
  * from the playlists.
  */
-void Mediafly::Playlists_RemoveEpisodeFromPlaylist (MediaflyCheckResponseOk *data, QString episodeSlug)
+void Mediafly::Playlists_RemoveEpisodeFromPlaylist (mf::CheckResponseOk *data, QString episodeSlug)
 {
 	QMap<QString, QString> map;
 	map["episodeSlug"] = episodeSlug;
@@ -813,7 +813,7 @@ QDomDocument Mediafly::Shows_GetPrevEpisodeForShow (const Mediafly::SessionInfo&
  * @param  position
  * @param  episodeLength
  */
-void Mediafly::Experience_PostExperienceForEpisode (MediaflyCheckResponseOk *data, QString episodeSlug, int position, int episodeLength)
+void Mediafly::Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, QString episodeSlug, int position, int episodeLength)
 {
 	QMap<QString, QString> map;
 	map["episodeSlug"] = episodeSlug;

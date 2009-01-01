@@ -103,8 +103,8 @@ SOURCES += BindMFUserData.cpp
 HEADERS += MenuDelegate.h
 SOURCES += MenuDelegate.cpp
 
-HEADERS += MediaflyCheckResponseOk.h
-SOURCES += MediaflyCheckResponseOk.cpp
+HEADERS += CheckResponseOk.h
+SOURCES += CheckResponseOk.cpp
 
 FORMS += ../forms/MediaflyPlayqueue.ui
 HEADERS += Playqueue.h

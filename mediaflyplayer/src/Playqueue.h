@@ -5,7 +5,7 @@
 #include "ui_MediaflyPlayqueue.h"
 #include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
-#include "MediaflyCheckResponseOk.h"
+#include "CheckResponseOk.h"
 #include <QWidget>
 
 namespace mf {
@@ -23,7 +23,7 @@ private:
 	EpisodeModel             &m_episodeModel;
 	mf::Play                 *m_mediaflyPlay;
 	EpisodeDelegate          *m_itemDelegate;
-	MediaflyCheckResponseOk   m_checkResponseOk;
+	mf::CheckResponseOk       m_checkResponseOk;
 
 	static const int itemsReadAtOnce = 10;
 

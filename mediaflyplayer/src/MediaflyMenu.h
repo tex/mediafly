@@ -1,8 +1,11 @@
+#ifndef MediaflyMenu_H
+#define MediaflyMenu_H
+
 #include "MenuModel.h"
 #include "ChannelModel.h"
 #include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
-#include "MediaflyCheckResponseOk.h"
+#include "CheckResponseOk.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
 #include <QVBoxLayout>
@@ -59,7 +62,7 @@ private:
 	QModelIndex              m_lastChannelMenuIndex;
 
 	mf::auth::SetMFUserAsDefaultData              m_setUserAsDefaultData;
-	MediaflyCheckResponseOk                       m_checkResponseOk;
+	mf::CheckResponseOk                           m_checkResponseOk;
 
 	QString m_channelLabel;
 
@@ -75,4 +78,6 @@ private slots:
 	void updateEpisodeModel();
 	void errorHandler(const QString& errorMsg);
 };
+
+#endif
 
