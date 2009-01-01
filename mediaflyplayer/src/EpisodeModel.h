@@ -3,7 +3,7 @@
 
 #include "Mediafly.h"
 #include "EpisodeEntry.h"
-#include "MediaflyEpisodeQuery.h"
+#include "EpisodeQuery.h"
 #include "ConsumerBinary.h"
 #include <QAbstractListModel>
 #include <QMap>
@@ -41,7 +41,7 @@ public:
 
 	void clear();
 
-	void refresh(const MediaflyEpisodeQuery& query);
+	void refresh(const mf::EpisodeQuery& query);
 	void refresh();
 	void refreshFull();
 	void cancel();
@@ -70,7 +70,7 @@ private:
 	mf::ConsumerBinary              m_binaryData;
 	QMap<int, mf::EpisodeEntry>     m_data;
 	bool                            m_refreshFinished;
-	MediaflyEpisodeQuery            m_query;
+	mf::EpisodeQuery                m_query;
 
 private slots:
 	void handleEntryRead(const mf::EpisodeEntry& entry);

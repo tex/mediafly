@@ -1,21 +1,23 @@
-#ifndef MediaflyEpisodeQuery_H
-#define MediaflyEpisodeQuery_H
+#ifndef mfEpisodeQuery_H
+#define mfEpisodeQuery_H
 
 #include <QString>
 
-class MediaflyEpisodeQuery
+namespace mf {
+
+class EpisodeQuery
 {
 public:
-	MediaflyEpisodeQuery() { }
+	EpisodeQuery() { }
 
-	MediaflyEpisodeQuery(QString channelSlug, int offset, int limit, QString mediaType = "audio,video") :
+	EpisodeQuery(QString channelSlug, int offset, int limit, QString mediaType = "audio,video") :
 		m_channelSlug(channelSlug),
 		m_offset(offset),
 		m_limit(limit),
 		m_mediaType(mediaType)
 	{ }
 
-	MediaflyEpisodeQuery(const MediaflyEpisodeQuery& obj) :
+	EpisodeQuery(const EpisodeQuery& obj) :
 		m_channelSlug(obj.m_channelSlug),
 		m_offset(obj.m_offset),
 		m_limit(obj.m_limit),
@@ -34,6 +36,8 @@ private:
 	int     m_limit;
 	QString m_mediaType;
 };
+
+}
 
 #endif
 

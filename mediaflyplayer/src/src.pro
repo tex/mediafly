@@ -48,6 +48,8 @@ HEADERS += ChannelEntry.h
 
 HEADERS += EpisodeEntry.h
 
+HEADERS += EpisodeQuery.h
+
 HEADERS += MediaflyEpisodeQuery.h
 
 HEADERS += EpisodeModelData.h

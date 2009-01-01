@@ -174,7 +174,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	QString name = index.data(mf::ChannelModel::nameRole).toString();
 
 	m_channelSlug = slug;
-	m_episodeModel.refresh(MediaflyEpisodeQuery(slug, 0, itemsReadAtOnce));
+	m_episodeModel.refresh(mf::EpisodeQuery(slug, 0, itemsReadAtOnce));
 
 	m_listView->setModel(&m_episodeModel);
 	m_listView->setItemDelegate(m_itemDelegateEpisode);
@@ -350,7 +350,7 @@ void MediaflyMenu::uploadNextPartOfMenu()
 
 	switch (m_state) {
 	case EpisodeMenu:
-		m_episodeModel.refresh(MediaflyEpisodeQuery(m_channelSlug, m_episodeModel.rowCount(), itemsReadAtOnce));
+		m_episodeModel.refresh(mf::EpisodeQuery(m_channelSlug, m_episodeModel.rowCount(), itemsReadAtOnce));
 		return;
 	default:
 		return;

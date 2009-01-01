@@ -367,7 +367,7 @@ void Mediafly::Channels_GetChannels (mf::ChannelModelData *modelData,
  * (“audio”, “video”, default: “audio,video”)
  */
 void Mediafly::Playlists_GetPlaylistForChannel (mf::EpisodeModelData* modelData,
-                                                const MediaflyEpisodeQuery& query)
+                                                const mf::EpisodeQuery& query)
 {
 	QMap<QString, QString> map;
 	map["channelSlug"] = query.channelSlug();

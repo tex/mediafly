@@ -3,7 +3,7 @@
 
 #include "ChannelModelData.h"
 #include "EpisodeModelData.h"
-#include "MediaflyEpisodeQuery.h"
+#include "EpisodeQuery.h"
 #include "SessionInfo.h"
 #include "Consumer.h"
 #include "ConsumerBinary.h"
@@ -157,7 +157,7 @@ public:
 	 * (“audio”, “video”, default: “audio,video”)
 	 */
 	void Playlists_GetPlaylistForChannel (mf::EpisodeModelData *modelData,
-	                                      const MediaflyEpisodeQuery& query);
+	                                      const mf::EpisodeQuery& query);
 
 #if 0
 	/**

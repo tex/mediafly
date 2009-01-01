@@ -34,7 +34,7 @@ void EpisodeModel::clear()
 	m_refreshFinished = true;
 }
 
-void EpisodeModel::refresh(const MediaflyEpisodeQuery& query)
+void EpisodeModel::refresh(const mf::EpisodeQuery& query)
 {
 	if (!m_refreshFinished)
 		return;
@@ -50,14 +50,14 @@ void EpisodeModel::refresh(const MediaflyEpisodeQuery& query)
 
 void EpisodeModel::refresh()
 {
-	MediaflyEpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
+	mf::EpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
 	refresh(query);
 }
 
 void EpisodeModel::refreshFull()
 {
 	clear();
-	MediaflyEpisodeQuery query(m_query.channelSlug(), 0, m_query.offset() + m_query.limit(), m_query.mediaType());
+	mf::EpisodeQuery query(m_query.channelSlug(), 0, m_query.offset() + m_query.limit(), m_query.mediaType());
 	refresh(query);
 }
 
