@@ -33,7 +33,7 @@ PlayVideo::PlayVideo(QWidget *parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(NBackgroundManagedWidget::BackgroundVideoOnly);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	m_nmsControl = new NmsControl();
 	if (!m_nmsControl || !m_nmsControl->Connect())

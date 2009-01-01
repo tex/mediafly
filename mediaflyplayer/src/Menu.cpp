@@ -39,7 +39,7 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundImageOnly);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));

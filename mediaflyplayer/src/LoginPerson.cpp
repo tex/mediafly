@@ -31,7 +31,7 @@ LoginPerson::LoginPerson(QWidget* parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundImageOnly);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	connect(&m_data, SIGNAL(done()),
 	        this, SLOT(handleBindMFUserDone()));

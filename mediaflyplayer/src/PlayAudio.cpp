@@ -36,7 +36,7 @@ PlayAudio::PlayAudio(QWidget *parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundPreferVideo);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	m_xmmsClient = new Xmms::Client("Mediafly");
 	connect();

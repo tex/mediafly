@@ -31,7 +31,7 @@ EpisodeDetails::EpisodeDetails(QWidget *parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundImageOnly);
+	setPreferredBackground(BackgroundVideoOnly);
 }
 
 void EpisodeDetails::show(const QModelIndex& index)

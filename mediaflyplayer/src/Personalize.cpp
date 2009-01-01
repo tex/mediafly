@@ -30,7 +30,7 @@ Personalize::Personalize(QWidget *parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundImageOnly);
+	setPreferredBackground(BackgroundVideoOnly);
 }
 
 void Personalize::clear()

@@ -32,7 +32,7 @@ Playqueue::Playqueue(mf::EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWi
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundPreferVideo);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	m_itemDelegate = new EpisodeDelegate(m_listView);
 	m_listView->setModel(&m_episodeModel);

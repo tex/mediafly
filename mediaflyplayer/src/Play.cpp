@@ -32,7 +32,7 @@ Play::Play(QWidget *parent) :
 {
 	setupUi(this);
 
-	setPreferredBackground(BackgroundPreferVideo);
+	setPreferredBackground(BackgroundVideoOnly);
 
 	regMediaKey();
 
