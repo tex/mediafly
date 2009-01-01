@@ -53,10 +53,6 @@ void PlayVideo::pause()
 {
 }
 
-void PlayVideo::getState(QString& songPosition, QString& songLength)
-{
-}
-
 void PlayVideo::getState(int& songPosition, int& songLength)
 {
 }

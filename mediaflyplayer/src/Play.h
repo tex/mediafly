@@ -61,6 +61,7 @@ private:
 	void keyPressEvent(QKeyEvent *event);
 	void update();
 	void updateStateIndicator(enum State state);
+	QString toTime(unsigned int msec) const;
 
 private slots:
 	void handleChannelsButtonClicked();

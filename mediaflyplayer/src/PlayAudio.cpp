@@ -162,27 +162,6 @@ void PlayAudio::hide()
 	m_xmmsClient->playlist.clear();
 }
 
-/**
- * Converts seconds to nice string.
- * We assume that no playcast will be longer than 24 hours...
- */
-QString PlayAudio::toTime(unsigned int msec) const
-{
-	unsigned int sec = msec / 1000;
-	int h = sec / (60 * 60);
-	int m = (sec / 60) - (h * 60);
-	int s = sec - (h * 60 * 60) - (m * 60);
-
-	QTime time(h, m, s);
-	return time.toString();
-}
-
-void PlayAudio::getState(QString& songPosition, QString& songLength)
-{
-	songPosition = toTime(m_songPosition);
-	songLength = toTime(m_songLength);
-}
-
 void PlayAudio::getState(int& songPosition, int& songLength)
 {
 	songPosition = m_songPosition;
