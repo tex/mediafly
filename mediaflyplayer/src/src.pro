@@ -31,8 +31,8 @@ SOURCES += ChannelModel.cpp
 HEADERS += EpisodeModel.h
 SOURCES += EpisodeModel.cpp
 
-SOURCES += MediaflyList.cpp
-HEADERS += MediaflyList.h
+SOURCES += List.cpp
+HEADERS += List.h
 
 SOURCES += EpisodeDelegate.cpp
 HEADERS += EpisodeDelegate.h

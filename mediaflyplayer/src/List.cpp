@@ -1,21 +1,23 @@
-#include "MediaflyList.h"
+#include "List.h"
 #include "MenuModel.h"
 #include "MenuDelegate.h"
 #include <QPainter>
 
-MediaflyList::MediaflyList(QWidget *parent) :
-	MediaflyListParent(parent)
+using namespace mf;
+
+List::List(QWidget *parent) :
+	ListParent(parent)
 {
 	setItemDelegate(new mf::MenuDelegate());
 }
 
-MediaflyList::~MediaflyList()
+List::~List()
 {
 }
 
-void MediaflyList::keyPressEvent(QKeyEvent *event)
+void List::keyPressEvent(QKeyEvent *event)
 {
-	MediaflyListParent::keyPressEvent(event);
+	ListParent::keyPressEvent(event);
 
 	switch (event->key()) {
 	case Qt::Key_Right:
@@ -42,7 +44,7 @@ void MediaflyList::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-void MediaflyList::paintEvent(QPaintEvent * e)
+void List::paintEvent(QPaintEvent * e)
 {
 	if (!model() || (model() && model()->rowCount(rootIndex()) < 1))
 	{
@@ -56,6 +58,6 @@ void MediaflyList::paintEvent(QPaintEvent * e)
 		painter.drawText(leftOffset, topOffset, message);
 	}
 	else
-		MediaflyListParent::paintEvent(e);
+		ListParent::paintEvent(e);
 }
 

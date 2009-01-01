@@ -1,19 +1,21 @@
-#ifndef MediaflyList_H
-#define MediaflyList_H
+#ifndef mfList_H
+#define mfList_H
 
 #include <QObject>
 #include <QWidget>
 #include <QListView>
 #include <QKeyEvent>
 
-typedef QListView MediaflyListParent;
+namespace mf {
 
-class MediaflyList : public MediaflyListParent
+typedef QListView ListParent;
+
+class List : public ListParent
 {
 	Q_OBJECT
 public:
-	MediaflyList(QWidget *parent = 0);
-	~MediaflyList();
+	List(QWidget *parent = 0);
+	~List();
 
 signals:
 	void almostAtEndOfList();
@@ -25,6 +27,8 @@ private:
 	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
 };
+
+}
 
 #endif
 
