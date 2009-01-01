@@ -1,15 +1,15 @@
-#include "MediaflyMenu.h"
+#include "Menu.h"
 #include <QMessageBox>
 #include <QtDebug>
 #include <QKeyEvent>
 #include <QIcon>
 
-MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
-                           mf::ChannelModel&     channelModel,
-                           mf::EpisodeModel&     episodeModel,
-                           QWidget *parent) :
+mf::Menu::Menu(mf::MenuModel&        menuModel,
+                   mf::ChannelModel&     channelModel,
+                   mf::EpisodeModel&     episodeModel,
+                   QWidget *parent) :
 	QWidget(parent),
-	m_state(Menu),
+	m_state(MainMenu),
 	m_menuModel(menuModel),
 	m_channelModel(channelModel),
 	m_episodeModel(episodeModel),
@@ -57,7 +57,7 @@ MediaflyMenu::MediaflyMenu(mf::MenuModel&        menuModel,
 	render(QModelIndex());
 }
 
-void MediaflyMenu::updateMenuModel()
+void mf::Menu::updateMenuModel()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -88,7 +88,7 @@ void MediaflyMenu::updateMenuModel()
 	m_listView->setCurrentIndex(m_lastMenuIndex);
 }
 
-void MediaflyMenu::updateChannelModel()
+void mf::Menu::updateChannelModel()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -116,7 +116,7 @@ void MediaflyMenu::updateChannelModel()
 	m_listView->setCurrentIndex(m_lastChannelMenuIndex);
 }
 
-void MediaflyMenu::updateEpisodeModel()
+void mf::Menu::updateEpisodeModel()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -135,18 +135,18 @@ void MediaflyMenu::updateEpisodeModel()
 	m_listView->setCurrentIndex(current);
 }
 
-void MediaflyMenu::errorHandler(const QString& errorMsg)
+void mf::Menu::errorHandler(const QString& errorMsg)
 {
 	QMessageBox::critical(this, "Error", errorMsg);
 
 	// In case of an error switch to main menu. It
 	// may be used to leave the application.
 
-	m_state = Menu;
+	m_state = MainMenu;
 	render(QModelIndex());
 }
 
-void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
+void mf::Menu::renderMenu(const QModelIndex& /*index*/)
 {
 	m_header->setText(tr("Mediafly"));
 	m_icon->setVisible(true);
@@ -162,7 +162,7 @@ void MediaflyMenu::renderMenu(const QModelIndex& /*index*/)
 	m_listView->setEnabled(true);
 }
 
-void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
+void mf::Menu::renderEpisodeMenu(const QModelIndex& index)
 {
 	m_header->setText(tr("Media Episodes"));
 	m_icon->setVisible(false);
@@ -180,7 +180,7 @@ void MediaflyMenu::renderEpisodeMenu(const QModelIndex& index)
 	m_listView->setItemDelegate(m_itemDelegateEpisode);
 }
 
-void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
+void mf::Menu::renderChannelMenu(const QModelIndex& /*index*/)
 {
 	m_header->setText(m_channelLabel);
 	m_icon->setVisible(true);
@@ -194,10 +194,10 @@ void MediaflyMenu::renderChannelMenu(const QModelIndex& /*index*/)
 	m_listView->setCurrentIndex(m_lastChannelMenuIndex);
 }
 
-void MediaflyMenu::render(const QModelIndex& index)
+void mf::Menu::render(const QModelIndex& index)
 {
 	switch (m_state) {
-	case Menu:
+	case MainMenu:
 		renderMenu(index);
 		break;
 	case ChannelMenu:
@@ -211,7 +211,7 @@ void MediaflyMenu::render(const QModelIndex& index)
 	}
 }
 
-void MediaflyMenu::selectMenu(QModelIndex& index)
+void mf::Menu::selectMenu(QModelIndex& index)
 {
 	switch (index.data(mf::MenuModel::slugRole).toInt()) {
 	case mf::MenuModel::MENU_SEARCH:
@@ -271,7 +271,7 @@ void MediaflyMenu::selectMenu(QModelIndex& index)
 	}
 }
 
-void MediaflyMenu::handleEnterKey()
+void mf::Menu::handleEnterKey()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -280,7 +280,7 @@ void MediaflyMenu::handleEnterKey()
 		return;
 
 	switch (m_state) {
-	case Menu:
+	case MainMenu:
 		m_lastMenuIndex = index;
 		selectMenu(index);
 		break;
@@ -297,7 +297,7 @@ void MediaflyMenu::handleEnterKey()
 	render(index);
 }
 
-void MediaflyMenu::handleRightKey()
+void mf::Menu::handleRightKey()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -306,7 +306,7 @@ void MediaflyMenu::handleRightKey()
 		return;
 
 	switch (m_state) {
-	case Menu:
+	case MainMenu:
 		m_lastMenuIndex = index;
 		selectMenu(index);
 		break;
@@ -325,7 +325,7 @@ void MediaflyMenu::handleRightKey()
 	render(index);
 }
 
-void MediaflyMenu::handleLeftKey()
+void mf::Menu::handleLeftKey()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -333,7 +333,7 @@ void MediaflyMenu::handleLeftKey()
 
 	switch (m_state) {
 	case ChannelMenu:
-		m_state = Menu;
+		m_state = MainMenu;
 		break;
 	case EpisodeMenu:
 		m_state = ChannelMenu;
@@ -344,7 +344,7 @@ void MediaflyMenu::handleLeftKey()
 	render(index);
 }
 
-void MediaflyMenu::uploadNextPartOfMenu()
+void mf::Menu::uploadNextPartOfMenu()
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -357,7 +357,7 @@ void MediaflyMenu::uploadNextPartOfMenu()
 	}
 }
 
-void MediaflyMenu::showChannelMenu()
+void mf::Menu::showChannelMenu()
 {
 	m_state = ChannelMenu;
 	render(QModelIndex());

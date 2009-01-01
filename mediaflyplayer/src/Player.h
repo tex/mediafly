@@ -3,7 +3,7 @@
 
 #include "Play.h"
 #include "EpisodeDetails.h"
-#include "MediaflyMenu.h"
+#include "Menu.h"
 #include "Personalize.h"
 #include "LoginPerson.h"
 #include "Playqueue.h"
@@ -29,7 +29,7 @@ private:
 	EpisodeModel         m_episodeModel;
 
 	EpisodeDetails         *m_episodeDetails;
-	MediaflyMenu           *m_menu;
+	Menu                   *m_menu;
 	Play                   *m_play;
 	Personalize            *m_personalize;
 	LoginPerson            *m_loginPerson;

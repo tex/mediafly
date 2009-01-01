@@ -1,5 +1,5 @@
-#ifndef MediaflyMenu_H
-#define MediaflyMenu_H
+#ifndef mfMenu_H
+#define mfMenu_H
 
 #include "MenuModel.h"
 #include "ChannelModel.h"
@@ -12,14 +12,16 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-class MediaflyMenu : public QWidget, protected Ui::MediaflyMenu
+namespace mf {
+
+class Menu : public QWidget, protected Ui::MediaflyMenu
 {
 	Q_OBJECT
 public:
-	MediaflyMenu(mf::MenuModel&         menuModel,
-	             mf::ChannelModel&      channelModel,
-	             mf::EpisodeModel&      episodeModel,
-	             QWidget               *parent = 0); 
+	Menu(mf::MenuModel&         menuModel,
+	     mf::ChannelModel&      channelModel,
+	     mf::EpisodeModel&      episodeModel,
+	     QWidget               *parent = 0); 
 
 	void showChannelsMenu();
 
@@ -35,7 +37,7 @@ public slots:
 private:
 	enum State
 	{
-		Menu,
+		MainMenu,
 		ChannelMenu,
 		EpisodeMenu,
 	};
@@ -78,6 +80,8 @@ private slots:
 	void updateEpisodeModel();
 	void errorHandler(const QString& errorMsg);
 };
+
+}
 
 #endif
 
