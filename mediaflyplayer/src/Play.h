@@ -78,7 +78,6 @@ private slots:
 	void handleStateChange();
 
 	void handleEscape();
-	void handleMediaPlay();
 	void handleMediaStop();
 	void handleMediaNext();
 	void handleBack();

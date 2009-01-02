@@ -194,14 +194,16 @@ void Play::handleEscape()
 	emit back();
 }
 
-void Play::handleMediaPlay()
-{
-	m_output->play();
-}
-
 void Play::handleMediaStop()
 {
-	m_output->pause();
+	switch (m_state) {
+	case MP_PLAY:
+		m_state = MP_PAUSE;
+		break;
+	default:
+		return;
+	}
+	updateStateIndicator(m_state);
 }
 
 void Play::handleMediaNext()
@@ -223,7 +225,7 @@ void Play::keyPressEvent(QKeyEvent *event)
 		handleEscape();
 		break;
 	case Qt::Key_MediaPlay:
-		handleMediaPlay();
+		handlePlayStateButtonClicked();
 		break;
 	case Qt::Key_MediaStop:
 		handleMediaStop();
