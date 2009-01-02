@@ -99,6 +99,12 @@
        <pointsize>18</pointsize>
       </font>
      </property>
+     <property name="frameShape" >
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Plain</enum>
+     </property>
      <property name="readOnly" >
       <bool>true</bool>
      </property>
