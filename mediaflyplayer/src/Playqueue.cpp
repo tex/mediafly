@@ -103,7 +103,7 @@ void Playqueue::handleRemoveButtonClicked()
 	if (current.isValid())
 	{
 		if (NMessageBox::warning(0,
-		                     QObject::tr("Do you really want to remove selected episode from play list?"),
+		                     QObject::tr("Remove selected episode from play list?"),
 		                     current.data(mf::EpisodeModel::titleRole).toString(),
 		                     QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes)
 		{

@@ -107,6 +107,7 @@ void Player::onQuit()
 	{
 		widget->close();
 	}
+	m_play->close();
 }
 
 void Player::handleShowMenu(const QModelIndex& index)
