@@ -68,10 +68,7 @@ void Play::unregMediaKey()
 
 void Play::handleStateChange()
 {
-	int position, length;
-
-	// Ignore signal if current status is different that MP_PLAY.
-	// It is spurious signal...
+	// Ignore state change if our state is different that MP_PLAY.
 
 	if (m_state != MP_PLAY)
 		return;
@@ -81,6 +78,7 @@ void Play::handleStateChange()
 	// Get current position and length of the episode. getState returns
 	// time values in miliseconds.
 
+	int position, length;
 	m_output->getState(position, length);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
