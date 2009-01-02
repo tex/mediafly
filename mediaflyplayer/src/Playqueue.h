@@ -44,6 +44,8 @@ signals:
 	void back();
 
 private:
+	void keyPressEvent(QKeyEvent *event);
+
 	EpisodeModel             &m_episodeModel;
 	mf::Play                 *m_mediaflyPlay;
 	EpisodeDelegate          *m_itemDelegate;

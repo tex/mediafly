@@ -23,6 +23,7 @@
 #include "Play.h"
 #include "Playqueue.h"
 #include "nmessagebox.h"
+#include "nhelpbox.h"
 
 using namespace mf;
 
@@ -115,5 +116,19 @@ void Playqueue::handleRemoveButtonClicked()
 void Playqueue::handleCheckResponseOkDone()
 {
 	m_episodeModel.refreshFull();
+}
+
+void Playqueue::keyPressEvent(QKeyEvent *event)
+{
+	switch (event->key()) {
+	case Qt::Key_Help:
+		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Left - Return to previous screen\n") +
+		                      tr("Up/Down - Move up/down in menu\n") +
+		                      tr("Enter - Remove selected episode from playlist"));
+		break;
+	default:
+		break;
+	}
 }
 
