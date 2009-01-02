@@ -22,6 +22,7 @@
 
 #include "Play.h"
 #include "Playqueue.h"
+#include "nmessagebox.h"
 
 using namespace mf;
 
@@ -40,9 +41,9 @@ Playqueue::Playqueue(mf::EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWi
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
-	connect(m_nowPlaying, SIGNAL(clicked()),
+	connect(m_listView, SIGNAL(leftPressed()),
 	        this, SLOT(handleNowPlayingClicked()));
-	connect(m_removeButton, SIGNAL(clicked()),
+	connect(m_listView, SIGNAL(enterPressed()),
 	        this, SLOT(handleRemoveButtonClicked()));
 
 	connect(&m_episodeModel, SIGNAL(refreshed()),
@@ -100,8 +101,14 @@ void Playqueue::handleRemoveButtonClicked()
 	QModelIndex current = m_listView->currentIndex();
 	if (current.isValid())
 	{
-		QString slug = current.data(mf::EpisodeModel::slugRole).toString();
-		Mediafly::getMediafly()->Playlists_RemoveEpisodeFromPlaylist(&m_checkResponseOk, slug);
+		if (NMessageBox::warning(0,
+		                     QObject::tr("Do you really want to remove selected episode from play list?"),
+		                     current.data(mf::EpisodeModel::titleRole).toString(),
+		                     QMessageBox::Ok, QMessageBox::Ok) == QMessageBox::Ok)
+		{
+			QString slug = current.data(mf::EpisodeModel::slugRole).toString();
+			Mediafly::getMediafly()->Playlists_RemoveEpisodeFromPlaylist(&m_checkResponseOk, slug);
+		}
 	}
 }
 
