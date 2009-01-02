@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
+    <width>312</width>
     <height>388</height>
    </rect>
   </property>
@@ -16,70 +16,32 @@
    <string>Mediafly now playing</string>
   </property>
   <layout class="QGridLayout" >
-   <item row="1" column="0" colspan="5" >
+   <item row="1" column="0" colspan="6" >
     <widget class="NTimeBar" name="m_progressBar" />
    </item>
-   <item row="2" column="0" >
-    <widget class="QPushButton" name="m_changeChannelsButton" >
-     <property name="font" >
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Change Channel</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="2" >
-    <widget class="QPushButton" name="m_playStateButton" >
-     <property name="maximumSize" >
+    <spacer>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
       <size>
-       <width>75</width>
-       <height>16777215</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="font" >
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text" >
-      <string>></string>
-     </property>
-    </widget>
+    </spacer>
    </item>
    <item row="2" column="4" >
-    <widget class="QPushButton" name="m_nextEpisodeButton" >
-     <property name="font" >
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Next Episode</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="4" >
-    <widget class="QPushButton" name="m_playqueueButton" >
-     <property name="font" >
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text" >
-      <string>Playqueue</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" >
     <spacer>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType" >
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0" >
       <size>
@@ -89,23 +51,7 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="3" >
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="0" colspan="5" >
+   <item row="0" column="0" colspan="6" >
     <widget class="QStackedWidget" name="m_stackedWidget" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
@@ -118,6 +64,36 @@
      </property>
      <widget class="mf::PlayAudio" name="m_audio" />
      <widget class="mf::PlayVideo" name="m_video" />
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QLabel" name="label" >
+     <property name="font" >
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>?</string>
+     </property>
+     <property name="margin" >
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3" >
+    <widget class="QLabel" name="m_playStateLabel" >
+     <property name="font" >
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>></string>
+     </property>
+     <property name="margin" >
+      <number>3</number>
+     </property>
     </widget>
    </item>
   </layout>

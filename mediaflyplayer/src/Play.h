@@ -74,13 +74,11 @@ private:
 private slots:
 	void handleChannelsButtonClicked();
 	void handleNextEpisodeButtonClicked();
+	void handlePreviousEpisodeButtonClicked();
 	void handlePlayStateButtonClicked();
 	void handleStateChange();
 
 	void handleEscape();
-	void handleMediaStop();
-	void handleMediaNext();
-	void handleBack();
 };
 
 }

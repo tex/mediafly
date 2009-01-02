@@ -23,6 +23,7 @@
 #include "Play.h"
 #include "EpisodeModel.h"
 #include <QTime>
+#include "nhelpbox.h"
 
 using namespace mf;
 
@@ -94,16 +95,17 @@ void Play::handleStateChange()
 	emit stateChange();
 }
 
-void Play::handleChannelsButtonClicked()
-{
-	m_video->hide();
-	m_audio->hide();
-	emit backToChannelsMenu();
-}
-
 void Play::handleNextEpisodeButtonClicked()
 {
 	if (mf::EpisodeModel::advanceToNextEpisode(m_index))
+	{
+		update();
+	}
+}
+
+void Play::handlePreviousEpisodeButtonClicked()
+{
+	if (mf::EpisodeModel::advanceToPreviousEpisode(m_index))
 	{
 		update();
 	}
@@ -129,13 +131,13 @@ void Play::updateStateIndicator(enum State state)
 	switch (state) {
 	case MP_PAUSE:
 	{
-		m_playStateButton->setText("|");
+		m_playStateLabel->setText("|");
 		m_output->pause();
 		break;
 	}
 	case MP_PLAY:
 	{
-		m_playStateButton->setText(">");
+		m_playStateLabel->setText(">");
 		m_output->play();
 		break;
 	}
@@ -185,6 +187,13 @@ void Play::show(const QModelIndex& index)
 	update();
 }
 
+void Play::handleChannelsButtonClicked()
+{
+	m_video->hide();
+	m_audio->hide();
+	emit backToChannelsMenu();
+}
+
 void Play::handleEscape()
 {
 	m_video->hide();
@@ -192,50 +201,37 @@ void Play::handleEscape()
 	emit back();
 }
 
-void Play::handleMediaStop()
-{
-	switch (m_state) {
-	case MP_PLAY:
-		m_state = MP_PAUSE;
-		break;
-	default:
-		return;
-	}
-	updateStateIndicator(m_state);
-}
-
-void Play::handleMediaNext()
-{
-	handleNextEpisodeButtonClicked();
-}
-
-void Play::handleBack()
-{
-	handleChannelsButtonClicked();
-}
-
 void Play::keyPressEvent(QKeyEvent *event)
 {
 	qDebug() << __PRETTY_FUNCTION__ << "event->key() ==" << event->key();
 
 	switch (event->key()) {
-	case Qt::Key_Escape:
+	case Qt::Key_Left:
 		handleEscape();
 		break;
-	case Qt::Key_MediaPlay:
-		handlePlayStateButtonClicked();
-		break;
-	case Qt::Key_MediaStop:
-		handleMediaStop();
-		break;
-	case Qt::Key_MediaNext:
-		handleMediaNext();
+	case Qt::Key_Back:
+		handleChannelsButtonClicked();
 		break;
 	case Qt::Key_Up:
 		emit showPlayqueue();
 		break;
-	case Qt::Key_Back:
-		handleBack();
+	case Qt::Key_MediaPlay:
+		handlePlayStateButtonClicked();
+		break;
+	case Qt::Key_MediaNext:
+		handleNextEpisodeButtonClicked();
+		break;
+	case Qt::Key_MediaPrevious:
+		handlePreviousEpisodeButtonClicked();
+		break;
+	case Qt::Key_Help:
+		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Left - Back to episode list\n") +
+		                      tr("Back - Back to channel list\n") +
+		                      tr("Up - Show play queue\n") +
+		                      tr("Play/Pause - Play/Pause media playback\n") +
+		                      tr("Next - Play next episode\n") +
+		                      tr("Previous - Play previous episode\n"));
 		break;
 	default:
 		event->ignore();
