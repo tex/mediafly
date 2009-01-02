@@ -68,7 +68,8 @@ void PlayVideo::show(const QModelIndex& index)
 
 	m_episodeNameLabel->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
 	m_showTitleLabel->setText(m_index.data(mf::EpisodeModel::showTitleRole).toString());
-	
+	m_statusLabel->setText(tr("Loading..."));
+
 	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
 
 	NSSaverClient::enable(false);
@@ -85,10 +86,6 @@ QString PlayVideo::mountUrl(QString url)
 	system(cmd.toAscii());
 
 	QString ret = m_mountPoint + url.right(url.size() - url.lastIndexOf("/"));
-
-	m_episodeNameLabel->setText(ret);
-	m_showTitleLabel->setText("---");
-
 	return ret;
 }
 
@@ -118,13 +115,13 @@ void PlayVideo::setUrl(QString url)
 	switch (m_nmsControl->Play(url)) {
 	case 0:
 		m_timer->start(500);
-		m_showTitleLabel->setText("OK");
+		m_statusLabel->setText("");
 		break;
 	case 1:
-		m_showTitleLabel->setText("video locked");
+		m_statusLabel->setText("Video Locked!");
 		break;
 	default:
-		m_showTitleLabel->setText("video format not known");
+		m_statusLabel->setText("Video Format Not Known!");
 		break;
 	}
 }
