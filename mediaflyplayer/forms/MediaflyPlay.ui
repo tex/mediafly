@@ -107,6 +107,12 @@
    </item>
    <item row="0" column="0" colspan="5" >
     <widget class="QStackedWidget" name="m_stackedWidget" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="currentIndex" >
       <number>1</number>
      </property>
