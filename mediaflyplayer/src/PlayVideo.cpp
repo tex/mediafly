@@ -28,6 +28,8 @@
 
 using namespace mf;
 
+const QString PlayVideo::m_mountPoint = "/tmp/httpfs_mf";
+
 PlayVideo::PlayVideo(QWidget *parent) :
 	NBackgroundManagedWidget(parent)
 {
@@ -76,13 +78,13 @@ QString PlayVideo::mountUrl(QString url)
 {
 	QString cmd;
 
-	cmd = "mkdir /media/SD-card/httpfs_mp";
+	cmd = "mkdir " + m_mountPoint;
 	system(cmd.toAscii());
 
-	cmd = "/media/SD-card/httpfs " + url + " /media/SD-card/httpfs_mp";
+	cmd = "/media/SD-card/httpfs " + url + " " + m_mountPoint;
 	system(cmd.toAscii());
 
-	QString ret = "/tmp/httpfs" + url.right(url.size() - url.lastIndexOf("/"));
+	QString ret = m_mountPoint + url.right(url.size() - url.lastIndexOf("/"));
 
 	m_episodeNameLabel->setText(ret);
 	m_showTitleLabel->setText("---");
@@ -94,7 +96,7 @@ void PlayVideo::umountUrl()
 {
 	QString cmd;
 
-	cmd = "fusermount -u /tmp/httpfs";
+	cmd = "fusermount -u " + m_mountPoint;
 	system(cmd.toAscii());
 }
 
