@@ -121,7 +121,7 @@ void PlayVideo::setUrl(QString url)
 		m_statusLabel->setText("Video Locked!");
 		break;
 	default:
-		m_statusLabel->setText("Video Format Not Known!");
+		m_statusLabel->setText("Video Format Not Supported!");
 		break;
 	}
 }
