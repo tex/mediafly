@@ -89,6 +89,13 @@ void Play::handleStateChange()
 	position /= 1000;
 	length /= 1000;
 
+	// Set length to maximal possible value to force NTimeBar to draw position
+	// label onto the left most position (the same position as if position would
+	// be zero).
+
+	if (length == 0)
+		length = INT_MAX;
+
 	m_progressBar->setRange(0, length);
 	m_progressBar->setValue(position);
 
