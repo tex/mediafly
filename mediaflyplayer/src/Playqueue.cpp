@@ -105,7 +105,7 @@ void Playqueue::handleRemoveButtonClicked()
 		if (NMessageBox::warning(0,
 		                     QObject::tr("Do you really want to remove selected episode from play list?"),
 		                     current.data(mf::EpisodeModel::titleRole).toString(),
-		                     QMessageBox::Ok, QMessageBox::Ok) == QMessageBox::Ok)
+		                     QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes)
 		{
 			QString slug = current.data(mf::EpisodeModel::slugRole).toString();
 			Mediafly::getMediafly()->Playlists_RemoveEpisodeFromPlaylist(&m_checkResponseOk, slug);
