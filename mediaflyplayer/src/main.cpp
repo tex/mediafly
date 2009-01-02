@@ -66,6 +66,7 @@ int main(int argc, char** argv)
 //		<< "/usr/local/bin/more-apps");
 
 	mf::Player v;
+	v.setAttribute(Qt::WA_DeleteOnClose, true);
 	v.showMaximized();
 
 	return app.exec();

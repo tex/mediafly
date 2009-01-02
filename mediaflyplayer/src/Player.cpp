@@ -46,6 +46,8 @@ Player::Player(QWidget *parent) :
 	m_view = new QStackedWidget(this);
 	m_layout = new QVBoxLayout(this);
 
+	m_play->setAttribute(Qt::WA_DeleteOnClose, true);
+
 	m_view->addWidget(m_menu);
 	m_view->addWidget(m_episodeDetails);
 	m_view->addWidget(m_play);
