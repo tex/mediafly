@@ -175,8 +175,11 @@ void Play::show(const QModelIndex& index)
 {
 	m_index = index;
 
-	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
-	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
+	bool isVideo = m_index.data(mf::EpisodeModel::formatRole)
+	                      .toString()
+	                      .startsWith("Video", Qt::CaseInsensitive);
+
+	if (isVideo)
 		m_output = m_video;
 	else
 		m_output = m_audio;
