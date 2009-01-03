@@ -53,10 +53,18 @@ void Play::handleStateChange()
 	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
 	QString format = m_index.data(mf::EpisodeModel::formatRole).toString();
 
+	// Get current position and length of the episode. getState returns
+	// time values in miliseconds.
+
 	if (format.startsWith("Video", Qt::CaseInsensitive) == true)
 		m_video->getState(position, length);
 	else
 		m_audio->getState(position, length);
+
+	// Experience_PostExperienceForEpisode expects time values in seconds.
+
+	position /= 1000;
+	length /= 1000;
 
 	if (length == 0)
 	{
