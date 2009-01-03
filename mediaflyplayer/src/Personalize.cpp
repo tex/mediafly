@@ -52,6 +52,7 @@ void Personalize::keyPressEvent(QKeyEvent *event)
 			m_stackedWidget->setCurrentIndex(
 				m_stackedWidget->currentIndex() + 1
 			);
+		break;
 	case Qt::Key_Left:
 	case Qt::Key_Escape:
 	case Qt::Key_Back:
@@ -61,6 +62,7 @@ void Personalize::keyPressEvent(QKeyEvent *event)
 			m_stackedWidget->setCurrentIndex(
 				m_stackedWidget->currentIndex() - 1
 			);
+		break;
 	}
 }
 
