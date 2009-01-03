@@ -52,8 +52,7 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 	}
 	case Qt::Key_Left:
 	{
-		if (m_index.row() > 0) {
-			m_index = m_index.model()->index(m_index.row() - 1, 0);
+		if (mf::EpisodeModel::advanceToPreviousEpisode(m_index)) {
 			update();
 		}
 		break;
