@@ -22,6 +22,7 @@
 
 #include "Personalize.h"
 #include <QKeyEvent>
+#include "nhelpbox.h"
 
 using namespace mf;
 
@@ -62,6 +63,20 @@ void Personalize::keyPressEvent(QKeyEvent *event)
 			m_stackedWidget->setCurrentIndex(
 				m_stackedWidget->currentIndex() - 1
 			);
+		break;
+	case Qt::Key_Help:
+		switch (m_stackedWidget->currentIndex()) {
+		case 0:
+			NHelpBox::NHelpBoxNew(tr("Possible keys"),
+			                      tr("Left - Back to main menu\n") +
+			                      tr("Right - To next screen\n"));
+			break;
+		case 1:
+			NHelpBox::NHelpBoxNew(tr("Possible keys"),
+			                      tr("Left - To the previous screen\n") +
+			                      tr("Right - To enter username and password\n"));
+			break;
+		}
 		break;
 	}
 }
