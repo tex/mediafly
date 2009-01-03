@@ -23,6 +23,7 @@
 #include "LoginPerson.h"
 #include "Mediafly.h"
 #include "nmessagebox.h"
+#include "nhelpbox.h"
 
 using namespace mf;
 
@@ -74,6 +75,13 @@ void LoginPerson::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down:
 	case Qt::Key_PageDown:
 		m_password->setFocus();
+		break;
+	case Qt::Key_Help:
+		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Left - Back to main menu\n") +
+		                      tr("Right - Send informations to the Mediafly server\n") +
+		                      tr("Up - Set focus on username edit box\n") +
+		                      tr("Down - Set focus on password edit box\n"));
 		break;
 	default:
 		event->ignore();
