@@ -89,6 +89,7 @@ void Play::handleStateChange()
 	m_output->getState(position, length);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
+	// NTimerBar expect values in seconds.
 
 	position /= 1000;
 	length /= 1000;
@@ -100,10 +101,8 @@ void Play::handleStateChange()
 	if (length == 0)
 		length = INT_MAX;
 
-	// Neux's NTimeBar expects values in seconds.
-
-	m_progressBar->setRange(0, length / 1000);
-	m_progressBar->setValue(position / 1000);
+	m_progressBar->setRange(0, length);
+	m_progressBar->setValue(position);
 
 	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
 
