@@ -75,18 +75,29 @@ void PlayVideo::show(const QModelIndex& index)
 	NSSaverClient::enable(false);
 }
 
-QString PlayVideo::mountUrl(QString url)
+bool PlayVideo::mountUrl(QString& url)
 {
+	int r;
 	QString cmd;
 
 	cmd = "mkdir " + m_mountPoint;
 	system(cmd.toAscii());
 
 	cmd = "/media/SD-card/httpfs " + url + " " + m_mountPoint;
-	system(cmd.toAscii());
+	r = system(cmd.toAscii());
+	if (r == -1)
+	{
+		m_statusLabel->setText(tr("Insuficient recources!"));
+		return false;
+	} else if (WEXITSTATUS(r) != 0)
+	{
+		m_statusLabel->setText(tr("Failed to load video!"));
+		return false;
+	}
 
-	QString ret = m_mountPoint + url.right(url.size() - url.lastIndexOf("/"));
-	return ret;
+	url = m_mountPoint + url.right(url.size() - url.lastIndexOf("/"));
+
+	return true;
 }
 
 void PlayVideo::umountUrl()
@@ -101,7 +112,8 @@ void PlayVideo::setUrl(QString url)
 {
 	// Mount httpfs filesystem with given url.
 
-	url = mountUrl(url);
+	if (mountUrl(url) == false)
+		return;
 
 	// Get video properties...
 

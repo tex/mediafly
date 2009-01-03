@@ -65,9 +65,11 @@ private:
 
 	/**
 	 * Mount given url with httpfs fuse filesystem.
-	 * @return full path to mounted file in local mount point
+	 * QString& url - input - url to mount
+	 *              - output - full path to mounted file in local mount point
+	 * @return true - succes, false - mount failed
 	 */
-	QString mountUrl(QString url);
+	bool mountUrl(QString& url);
 
 	/**
 	 * Unmount httpfs fuse filesystem.
