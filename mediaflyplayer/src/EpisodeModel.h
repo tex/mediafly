@@ -61,6 +61,15 @@ public:
 		return false;
 	}
 
+	static bool advanceToPreviousEpisode(QModelIndex& index)
+	{
+		if (index.row() > 0) {
+			index = index.model()->index(index.row() - 1, 0);
+			return true;
+		}
+		return false;
+	}
+
 signals:
 	void refreshed();
 
