@@ -82,6 +82,10 @@ void Play::handleStateChange()
 	// time values in miliseconds.
 
 	int position, length;
+
+	// Get current position and length of the episode. Both are
+	// in miliseconds.
+
 	m_output->getState(position, length);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
@@ -96,8 +100,10 @@ void Play::handleStateChange()
 	if (length == 0)
 		length = INT_MAX;
 
-	m_progressBar->setRange(0, length);
-	m_progressBar->setValue(position);
+	// Neux's NTimeBar expects values in seconds.
+
+	m_progressBar->setRange(0, length / 1000);
+	m_progressBar->setValue(position / 1000);
 
 	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
 
