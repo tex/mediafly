@@ -23,6 +23,7 @@
 #include "EpisodeDetails.h"
 #include "EpisodeModel.h"
 #include <QDebug>
+#include "nhelpbox.h"
 
 using namespace mf;
 
@@ -70,29 +71,29 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 	switch (event->key()) {
 	case Qt::Key_Enter:
 	case Qt::Key_Return:
-	{
 		emit showPlayMenu(m_index);
 		break;
-	}
 	case Qt::Key_Left:
-	{
 		if (mf::EpisodeModel::advanceToPreviousEpisode(m_index)) {
 			update();
 		}
 		break;
-	}
 	case Qt::Key_Right:
-	{
 		if (mf::EpisodeModel::advanceToNextEpisode(m_index)) {
 			update();
 		}
 		break;
-	}
+	case Qt::Key_Back:
 	case Qt::Key_Escape:
-	{
 		emit back();
 		break;
-	}
+	case Qt::Key_Help:
+		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Enter - Play current episode\n") +
+		                      tr("Left - Show previous episode\n") +
+		                      tr("Right - Show next episode\n") +
+		                      tr("Back - Back to episode menu\n"));
+		break;
 	default:
 		event->ignore();
 		break;
