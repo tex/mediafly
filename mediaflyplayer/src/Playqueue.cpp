@@ -127,8 +127,6 @@ void Playqueue::keyPressEvent(QKeyEvent *event)
 		                      tr("Up/Down - Move up/down in menu\n") +
 		                      tr("Enter - Remove selected episode from playlist"));
 		break;
-	default:
-		break;
 	}
 }
 
