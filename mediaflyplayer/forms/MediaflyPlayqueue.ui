@@ -60,6 +60,12 @@
        <pointsize>18</pointsize>
       </font>
      </property>
+     <property name="frameShape" >
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Plain</enum>
+     </property>
     </widget>
    </item>
    <item row="2" column="0" colspan="4" >
