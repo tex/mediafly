@@ -33,7 +33,6 @@ Player::Player(QWidget *parent) :
 {
 	setPreferredBackground(BackgroundVideoOnly);
 
-	QApplication::setQuitOnLastWindowClosed(true);
 	connect(&stdinman, SIGNAL(quit()), this, SLOT(onQuit()));
 
 	m_episodeDetails = new mf::EpisodeDetails(this);
@@ -45,8 +44,6 @@ Player::Player(QWidget *parent) :
 
 	m_view = new QStackedWidget(this);
 	m_layout = new QVBoxLayout(this);
-
-	m_play->setAttribute(Qt::WA_DeleteOnClose, true);
 
 	m_view->addWidget(m_menu);
 	m_view->addWidget(m_episodeDetails);
@@ -91,14 +88,14 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(handleSearchTerm(QString)));
 }
 
+Player::~Player()
+{
+}
+
 void Player::handleNewPerson()
 {
 	m_menuModel.refresh();
 	showMenu();
-}
-
-Player::~Player()
-{
 }
 
 void Player::onQuit()
@@ -107,7 +104,6 @@ void Player::onQuit()
 	{
 		widget->close();
 	}
-	m_play->close();
 }
 
 void Player::handleShowMenu(const QModelIndex& index)

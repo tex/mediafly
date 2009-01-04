@@ -33,8 +33,6 @@ Play::Play(QWidget *parent) :
 	m_output(NULL)
 {
 	setupUi(this);
-	m_audio->setAttribute(Qt::WA_DeleteOnClose, true);
-	m_video->setAttribute(Qt::WA_DeleteOnClose, true);
 
 	setPreferredBackground(BackgroundVideoOnly);
 

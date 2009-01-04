@@ -34,6 +34,7 @@
 #include <QObject>
 #include <QStackedWidget>
 #include <QVBoxLayout>
+#include <QCloseEvent>
 
 namespace mf {
 
