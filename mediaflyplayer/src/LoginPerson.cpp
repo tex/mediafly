@@ -31,6 +31,8 @@ LoginPerson::LoginPerson(QWidget* parent) :
 	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+	m_password->setToolTip(tr("Enter password"));
+	m_username->setToolTip(tr("Enter username"));
 
 	setPreferredBackground(BackgroundVideoOnly);
 
@@ -42,7 +44,6 @@ void LoginPerson::clear()
 {
 	m_password->clear();
 	m_username->clear();
-	m_username->setFocus();
 }
 
 void LoginPerson::handleBindMFUserDone()
@@ -62,6 +63,7 @@ void LoginPerson::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Enter:
 	case Qt::Key_Return:
 		Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
+		m_status->setText(tr("Request send, please wait..."));
 		break;
 	case Qt::Key_Left:
 	case Qt::Key_Escape:
