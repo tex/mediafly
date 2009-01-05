@@ -71,8 +71,8 @@ Player::Player(QWidget *parent) :
 
 	connect(m_play, SIGNAL(back()),
 	        this, SLOT(showMenu()));
-	connect(m_play, SIGNAL(backToChannelsMenu()),
-	        this, SLOT(showChannelsMenu()));
+	connect(m_play, SIGNAL(backToChannelMenu()),
+	        this, SLOT(showChannelMenu()));
 	connect(m_play, SIGNAL(showPlayqueue()),
 	        this, SLOT(showPlayqueue()));
 
@@ -88,22 +88,20 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(handleSearchTerm(QString)));
 }
 
-Player::~Player()
+void Player::onQuit()
 {
+	m_play->quit();
+
+	foreach (QWidget *widget, QApplication::topLevelWidgets())
+	{
+		widget->close();
+	}
 }
 
 void Player::handleNewPerson()
 {
 	m_menuModel.refresh();
 	showMenu();
-}
-
-void Player::onQuit()
-{
-	foreach (QWidget *widget, QApplication::topLevelWidgets())
-	{
-		widget->close();
-	}
 }
 
 void Player::handleShowMenu(const QModelIndex& index)
@@ -155,7 +153,7 @@ void Player::showMainMenu()
 	m_view->setCurrentWidget(m_menu);
 }
 
-void Player::showChannelsMenu()
+void Player::showChannelMenu()
 {
 	m_menu->showChannelMenu();
 	m_view->setCurrentWidget(m_menu);

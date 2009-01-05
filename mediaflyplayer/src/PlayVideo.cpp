@@ -50,7 +50,7 @@ PlayVideo::PlayVideo(QWidget *parent) :
 	        this, SLOT(handleTimeout()));
 }
 
-PlayVideo::~PlayVideo()
+void PlayVideo::quit()
 {
 	hide();
 
@@ -73,6 +73,18 @@ void PlayVideo::show(const QModelIndex& index)
 	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
 
 	NSSaverClient::enable(false);
+}
+
+void PlayVideo::hide()
+{
+	qDebug() << __PRETTY_FUNCTION__;
+
+	m_nmsControl->StopPlay();
+	m_timer->stop();
+
+	umountUrl();
+
+	NSSaverClient::enable(true);
 }
 
 bool PlayVideo::mountUrl(QString& url)
@@ -150,18 +162,6 @@ void PlayVideo::pause()
 	qDebug() << __PRETTY_FUNCTION__;
 
 	m_nmsControl->PauseUnpause();
-}
-
-void PlayVideo::hide()
-{
-	qDebug() << __PRETTY_FUNCTION__;
-
-	umountUrl();
-
-	m_timer->stop();
-	m_nmsControl->StopPlay();
-
-	NSSaverClient::enable(true);
 }
 
 void PlayVideo::handleTimeout()

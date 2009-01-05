@@ -46,10 +46,10 @@ class PlayAudio : public NBackgroundManagedWidget, public PlayAVInterface, priva
 	Q_OBJECT	
 public:
 	PlayAudio(QWidget *parent = 0);
-	~PlayAudio();
 
 	void show(const QModelIndex& index);
 	void hide();
+	void quit();
 	void play();
 	void pause();
 

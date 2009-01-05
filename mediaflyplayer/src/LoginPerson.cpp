@@ -38,12 +38,34 @@ LoginPerson::LoginPerson(QWidget* parent) :
 
 	connect(&m_data, SIGNAL(done()),
 	        this, SLOT(handleBindMFUserDone()));
+
+	connect(m_password, SIGNAL(returnPressed()),
+		this, SLOT(handleReturnOnPassword()));
+	connect(m_username, SIGNAL(returnPressed()),
+		this, SLOT(handleReturnOnUsername()));
 }
 
 void LoginPerson::clear()
 {
 	m_password->clear();
+	m_password->clearFocus();
+
 	m_username->clear();
+	m_username->clearFocus();
+
+	m_status->clear();
+}
+
+void LoginPerson::handleReturnOnPassword()
+{
+	m_password->clearFocus();
+	this->setFocus();
+}
+
+void LoginPerson::handleReturnOnUsername()
+{
+	m_username->clearFocus();
+	this->setFocus();
 }
 
 void LoginPerson::handleBindMFUserDone()
@@ -56,37 +78,30 @@ void LoginPerson::handleBindMFUserDone()
 
 void LoginPerson::keyPressEvent(QKeyEvent *event)
 {
-	QWidget::keyPressEvent(event);
-
 	switch(event->key()) {
 	case Qt::Key_Right:
-	case Qt::Key_Enter:
-	case Qt::Key_Return:
-		Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
-		m_status->setText(tr("Request send, please wait..."));
+		if (!m_username->text().isEmpty() && !m_password->text().isEmpty())
+		{
+			Mediafly::getMediafly()->Authentication_BindMFUser(&m_data, m_username->text(), m_password->text());
+			m_status->setText(tr("Request send, please wait..."));
+		}
 		break;
 	case Qt::Key_Left:
 	case Qt::Key_Escape:
-	case Qt::Key_Back:
 		emit back();
 		break;
 	case Qt::Key_Up:
-	case Qt::Key_PageUp:
 		m_username->setFocus();
 		break;
 	case Qt::Key_Down:
-	case Qt::Key_PageDown:
 		m_password->setFocus();
 		break;
 	case Qt::Key_Help:
 		NHelpBox::NHelpBoxNew(tr("Possible keys"),
 		                      tr("Left - Back to main menu\n") +
 		                      tr("Right - Send informations to the Mediafly server\n") +
-		                      tr("Up - Set focus on username edit box\n") +
-		                      tr("Down - Set focus on password edit box\n"));
-		break;
-	default:
-		event->ignore();
+		                      tr("Up - Enter username\n") +
+		                      tr("Down - Enter password\n"));
 		break;
 	}
 }

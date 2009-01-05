@@ -37,10 +37,10 @@ class PlayVideo : public NBackgroundManagedWidget, public PlayAVInterface, priva
 	Q_OBJECT
 public:
 	PlayVideo(QWidget *parent = 0);
-	~PlayVideo();
 
 	void show(const QModelIndex& index);
 	void hide();
+	void quit();
 	void play();
 	void pause();
 

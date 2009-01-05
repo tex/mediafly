@@ -36,7 +36,7 @@ Play::Play(QWidget *parent) :
 
 	setPreferredBackground(BackgroundVideoOnly);
 
-	regMediaKey();
+//	regMediaKey();
 
 	connect(m_audio, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));
@@ -44,9 +44,11 @@ Play::Play(QWidget *parent) :
 	        this, SLOT(handleStateChange()));
 }
 
-Play::~Play()
+void Play::quit()
 {
-	unregMediaKey();
+	m_video->quit();
+	m_audio->quit();
+//	unregMediaKey();
 }
 
 void Play::regMediaKey()
@@ -55,7 +57,6 @@ void Play::regMediaKey()
         m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaStop);
         m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaNext);
         m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaPrevious);
-        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_Back);
 }
 
 void Play::unregMediaKey()
@@ -64,7 +65,6 @@ void Play::unregMediaKey()
         m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaStop);
         m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaNext);
         m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaPrevious);
-        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_Back);
 }
 
 void Play::handleStateChange()
@@ -79,7 +79,8 @@ void Play::handleStateChange()
 	// Get current position and length of the episode. getState returns
 	// time values in miliseconds.
 
-	int position, length;
+	int position;
+	int length;
 
 	// Get current position and length of the episode. Both are
 	// in miliseconds.
@@ -92,17 +93,17 @@ void Play::handleStateChange()
 	position /= 1000;
 	length /= 1000;
 
-	// Set length to maximal possible value to force NTimeBar to draw position
-	// label onto the left most position (the same position as if position would
-	// be zero).
+	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
+
+	// If lenght of the episode is unknown, set the 'default' to
+	// 99 hours, 99 minutes and 99 seconds.
 
 	if (length == 0)
-		length = INT_MAX;
+		length = 99 * 60 * 60 + 99 * 60 + 99;
 
-	m_progressBar->setRange(0, length);
+	m_progressBar->setMaximum(length);
 	m_progressBar->setValue(position);
-
-	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
+	m_progressBar->update();
 
 	emit stateChange();
 }
@@ -199,30 +200,18 @@ void Play::show(const QModelIndex& index)
 	update();
 }
 
-void Play::handleChannelsButtonClicked()
-{
-	m_video->hide();
-	m_audio->hide();
-	emit backToChannelsMenu();
-}
-
-void Play::handleEscape()
-{
-	m_video->hide();
-	m_audio->hide();
-	emit back();
-}
-
 void Play::keyPressEvent(QKeyEvent *event)
 {
-	qDebug() << __PRETTY_FUNCTION__ << "event->key() ==" << event->key();
-
 	switch (event->key()) {
 	case Qt::Key_Left:
-		handleEscape();
+		m_video->hide();
+		m_audio->hide();
+		emit back();
 		break;
-	case Qt::Key_Back:
-		handleChannelsButtonClicked();
+	case Qt::Key_Escape:
+		m_video->hide();
+		m_audio->hide();
+		emit backToChannelMenu();
 		break;
 	case Qt::Key_Up:
 		emit showPlayqueue();
@@ -244,9 +233,6 @@ void Play::keyPressEvent(QKeyEvent *event)
 		                      tr("Play/Pause - Play/Pause media playback\n") +
 		                      tr("Next - Play next episode\n") +
 		                      tr("Previous - Play previous episode\n"));
-		break;
-	default:
-		event->ignore();
 		break;
 	}
 }

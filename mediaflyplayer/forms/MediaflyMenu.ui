@@ -59,6 +59,9 @@
        <pointsize>24</pointsize>
       </font>
      </property>
+     <property name="focusPolicy" >
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>

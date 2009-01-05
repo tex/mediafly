@@ -27,6 +27,7 @@
 #include <QNetworkInterface>
 #include <QUrl>
 #include <QFile>
+#include "nmessagebox.h"
 
 #include <stdlib.h>
 
@@ -154,8 +155,6 @@ Mediafly::Mediafly()
 		if ((m_thirdPartyUserId = networkInterface.hardwareAddress()) != "00:00:00:00:00:00")
 			break;
 
-	qDebug() << "m_appId:" << m_appId << ", m_sharedSecret:" << m_sharedSecret << ", m_thirdPartyUserId:" << m_thirdPartyUserId;
-
 	connect(&m_http, SIGNAL(requestFinished(int, bool)),
 	        this, SLOT(handleRequestFinished(int, bool)));
 
@@ -192,7 +191,6 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 		if (i + 1 != parameters.size())
 			path += "&";
 	}
-	qDebug() << path;
 	return path;
 }
 

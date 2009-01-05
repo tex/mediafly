@@ -56,7 +56,6 @@ void Personalize::keyPressEvent(QKeyEvent *event)
 		break;
 	case Qt::Key_Left:
 	case Qt::Key_Escape:
-	case Qt::Key_Back:
 		if (m_stackedWidget->currentIndex() == 0)
 			emit hide();
 		else

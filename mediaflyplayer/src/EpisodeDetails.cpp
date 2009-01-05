@@ -83,7 +83,6 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 			update();
 		}
 		break;
-	case Qt::Key_Back:
 	case Qt::Key_Escape:
 		emit back();
 		break;

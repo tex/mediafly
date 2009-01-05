@@ -9,6 +9,9 @@
     <height>299</height>
    </rect>
   </property>
+  <property name="focusPolicy" >
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
@@ -135,9 +138,6 @@
      <property name="focusPolicy" >
       <enum>Qt::NoFocus</enum>
      </property>
-     <property name="frame" >
-      <bool>false</bool>
-     </property>
     </widget>
    </item>
    <item row="4" column="3" >
@@ -156,9 +156,6 @@
     <widget class="NLineEdit" name="m_password" >
      <property name="focusPolicy" >
       <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="frame" >
-      <bool>false</bool>
      </property>
     </widget>
    </item>

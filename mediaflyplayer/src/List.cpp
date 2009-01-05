@@ -73,7 +73,6 @@ void List::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Enter:
 		emit enterPressed();
 		break;
-	case Qt::Key_Back:
 	case Qt::Key_Escape:
 		emit exitPressed();
 		break;

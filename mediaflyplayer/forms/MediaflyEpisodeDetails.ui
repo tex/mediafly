@@ -98,6 +98,9 @@
        <pointsize>18</pointsize>
       </font>
      </property>
+     <property name="focusPolicy" >
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -115,6 +118,9 @@
       <font>
        <pointsize>18</pointsize>
       </font>
+     </property>
+     <property name="focusPolicy" >
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>

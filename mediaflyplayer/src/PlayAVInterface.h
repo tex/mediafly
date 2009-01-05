@@ -11,17 +11,19 @@ namespace mf {
 class PlayAVInterface
 {
 public:
-	/** Get resources needed to playback the given stream
-	 *  and start playback.
+	/** Start playback.
 	 *
 	 *  const QModelIndex& index
 	 */
 	virtual void show(const QModelIndex& index) = 0;
 
-	/** Stop the stream and release any resources taken to
-	 *  provide playback of the stream.
+	/** Stop the stream.
 	 */
 	virtual void hide() = 0;
+
+	/** Release all resources.
+	 */
+	virtual void quit() = 0;
 
 	/** Play (from the previous position) the stream.
 	 */

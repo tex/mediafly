@@ -23,6 +23,7 @@
 #include "PlayAudio.h"
 #include "EpisodeModel.h"
 #include "nxmmsmainloop.h"
+
 #include <QTime>
 #include <QPixmap>
 #include <QVariant>
@@ -42,37 +43,20 @@ PlayAudio::PlayAudio(QWidget *parent) :
 	connect();
 }
 
-PlayAudio::~PlayAudio()
+void PlayAudio::quit()
 {
-	hide();
 	disconnect();
-}
 
-void PlayAudio::disconnect()
-{
-	qDebug() << __PRETTY_FUNCTION__;
-
-	if (m_xmmsClient)
+	try
 	{
-		delete m_xmmsClient;
-		m_xmmsClient = NULL;
+		Xmms::Client client("mediafly-quit");
+		client.connect(XMMS2_CONNECTION_PATH);
+		client.playback.stop();
 	}
-}
-
-bool PlayAudio::handlePlaytime(const unsigned int &playtime)
-{
-	if (playtime - m_songPosition > 500)
+	catch (...)
 	{
-		m_songPosition = playtime;
-		emit stateChange();
+		qDebug()<< "Stoped server error!";
 	}
-	return true;
-}
-
-bool PlayAudio::handleStatusChanged(const Xmms::Playback::Status& status)
-{
-	emit stateChange();
-	return true;
 }
 
 bool PlayAudio::connect()
@@ -96,6 +80,31 @@ bool PlayAudio::connect()
 		}
 	}
 	return false;
+}
+
+void PlayAudio::disconnect()
+{
+	if (m_xmmsClient)
+	{
+		delete m_xmmsClient;
+		m_xmmsClient = NULL;
+	}
+}
+
+bool PlayAudio::handlePlaytime(const unsigned int &playtime)
+{
+	if (playtime - m_songPosition > 500)
+	{
+		m_songPosition = playtime;
+		emit stateChange();
+	}
+	return true;
+}
+
+bool PlayAudio::handleStatusChanged(const Xmms::Playback::Status& status)
+{
+	emit stateChange();
+	return true;
 }
 
 void PlayAudio::show(const QModelIndex& index)

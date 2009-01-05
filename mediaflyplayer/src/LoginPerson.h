@@ -53,6 +53,8 @@ private:
 
 private slots:
 	void handleBindMFUserDone();
+	void handleReturnOnPassword();
+	void handleReturnOnUsername();
 };
 
 }

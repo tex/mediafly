@@ -403,7 +403,8 @@ void mf::Menu::handleExitKey()
 		QCoreApplication::exit(0);
 		break;
 	default:
-		return;
+		handleLeftKey();
+		break;
 	}
 }
 

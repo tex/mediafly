@@ -40,14 +40,14 @@ class Play : public NBackgroundManagedWidget, protected Ui::MediaflyPlay
 	Q_OBJECT
 public:
 	Play(QWidget *parent = 0);
-	~Play();
 
 	void show(const QModelIndex& index);
+	void quit();
 	void getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength);
 
 signals:
 	void back();
-	void backToChannelsMenu();
+	void backToChannelMenu();
 	void showPlayqueue();
 	void stateChange();
 
@@ -72,13 +72,10 @@ private:
 	void unregMediaKey();
 
 private slots:
-	void handleChannelsButtonClicked();
 	void handleNextEpisodeButtonClicked();
 	void handlePreviousEpisodeButtonClicked();
 	void handlePlayStateButtonClicked();
 	void handleStateChange();
-
-	void handleEscape();
 };
 
 }
