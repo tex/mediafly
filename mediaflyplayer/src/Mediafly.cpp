@@ -27,6 +27,8 @@
 #include <QNetworkInterface>
 #include <QUrl>
 #include <QFile>
+#include <QList>
+
 #include "nmessagebox.h"
 
 #include <stdlib.h>
@@ -85,6 +87,16 @@ bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg
 	}
 	return true;
 }
+
+#ifndef QT_NO_OPENSSL
+void Mediafly::handleSslErrors(const QList<QSslError>& errors)
+{
+	for (int i = 0; i < errors.count(); ++i)
+	{
+		NMessageBox::critical(0, "Ssl error", errors.at(i).errorString());
+	}
+}
+#endif
 
 void Mediafly::handleRequestFinished(int id, bool error)
 {
@@ -157,7 +169,10 @@ Mediafly::Mediafly()
 
 	connect(&m_http, SIGNAL(requestFinished(int, bool)),
 	        this, SLOT(handleRequestFinished(int, bool)));
-
+#ifndef QT_NO_OPENSSL
+	connect(&m_http, SIGNAL(sslErrors(const QList<QSslError>& errors)),
+	        this, SLOT(handleSslErrors(const QList<QSslError>& errors)));
+#endif
 	// Get token as soon as possible. It will be neccessary
 	// anyway...
 
@@ -233,6 +248,10 @@ void Mediafly::Query (RequestInfo& requestInfo)
 	QUrl proxy(getenv("http_proxy"));
 	m_http.setProxy(proxy.host(), proxy.port());
 #endif
+
+#ifdef QT_NO_OPENSSL
+	requestInfo.m_useHttps = false;
+#endif
 	m_http.setHost(m_server, requestInfo.m_useHttps ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp);
 
 	QStringList ls = makeParams(requestInfo.m_firstMap) + makeParams(requestInfo.m_map);
@@ -243,8 +262,6 @@ void Mediafly::Query (RequestInfo& requestInfo)
 
 void Mediafly::Query (mf::Consumer *consumer, QString method, QMap<QString, QString>& firstMap, QMap<QString, QString>& map, bool useHttps )
 {
-	qDebug() << method;
-
 	RequestInfo requestInfo;
 	requestInfo.m_consumer = consumer;
 	requestInfo.m_method = method;

@@ -40,6 +40,7 @@
 #include <QMap>
 #include <QString>
 #include <QHttp>
+#include <QSslError>
 
 namespace mf {
 
@@ -115,6 +116,9 @@ private:
 
 private slots:
 	void handleRequestFinished(int id, bool error);
+#ifndef QT_NO_OPENSSL
+	void handleSslErrors(const QList<QSslError>& errors);
+#endif
 
 public:
 
