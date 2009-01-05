@@ -48,7 +48,7 @@
 #define VERSION "2.06.08.26"
 
 static char* argv0;
-static char* argv1;
+static char argv1[4096];
 static char* argv2;
 static long long int file_size;
 static int protocol;
@@ -370,10 +370,15 @@ int getSize() {
     }
 #endif
 
-printf("%s\n", buf);
-
     (void) sscanf(buf, "HTTP/1.1 %d ", &status);
     if (status != 200) {
+        /* Check possible redirection. */
+        char *location;
+        if ((status >= 300) && (status < 400) &&
+	    ((location = strstr(buf, "Location:")))) {
+           (void) sscanf(location, "Location: %s", argv1); 
+           return -2;
+        }
 	fprintf(stderr, "%s: HEAD (read) failed with Status %d\n", argv0, status);
 	return -1;
     }
@@ -902,9 +907,9 @@ int main(int argc, char *argv[]) {
 	(void) fprintf(stderr, ">>> Version: %s <<<\n", VERSION);
 	return 1;
     }
-    argv1 = argv[1];
+    strcpy(argv1, argv[1]);
     argv2 = argv[2];
-    
+parseUrlAgain:    
     protocol = parseURL(argv1, host, &file_name, &port);
     if (protocol == -1) 
 	return 1;
@@ -913,7 +918,10 @@ int main(int argc, char *argv[]) {
     if (sockfd < 0)
 	return 1;
 
-    if (getSize() != 0) 
+    int r = getSize();
+    if (r == -2) {
+        goto parseUrlAgain;
+    } else if (r != 0)
 	return 1;
 
     sr = stat(argv2, &mpstat);
