@@ -78,7 +78,7 @@ void LoginPerson::handleBindMFUserDone()
 
 void LoginPerson::keyPressEvent(QKeyEvent *event)
 {
-	switch(event->key()) {
+	switch (event->key()) {
 	case Qt::Key_Right:
 		if (!m_username->text().isEmpty() && !m_password->text().isEmpty())
 		{
