@@ -97,13 +97,14 @@ bool PlayVideo::mountUrl(QString& url)
 	cmd = "mkdir " + m_mountPoint;
 	system(cmd.toAscii());
 
-	cmd = currentPath + "/httpfs " + url + " " + m_mountPoint;
+	cmd = currentPath + "/httpfs \"" + url + "\" " + m_mountPoint;
 	r = system(cmd.toAscii());
 	if (r == -1)
 	{
 		m_statusLabel->setText(tr("Insuficient recources!"));
 		return false;
-	} else if (WEXITSTATUS(r) != 0)
+	}
+	else if (WEXITSTATUS(r) != 0)
 	{
 		m_statusLabel->setText(tr("Failed to load video!"));
 		return false;
