@@ -36,8 +36,6 @@ Play::Play(QWidget *parent) :
 
 	setPreferredBackground(BackgroundVideoOnly);
 
-//	regMediaKey();
-
 	connect(m_audio, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));
 	connect(m_video, SIGNAL(stateChange()),
@@ -48,23 +46,6 @@ void Play::quit()
 {
 	m_video->quit();
 	m_audio->quit();
-//	unregMediaKey();
-}
-
-void Play::regMediaKey()
-{
-        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaPlay);
-        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaStop);
-        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaNext);
-        m_mediakeyChannel.regExclusiveMediakey(this, Qt::Key_MediaPrevious);
-}
-
-void Play::unregMediaKey()
-{
-        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaPlay);
-        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaStop);
-        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaNext);
-        m_mediakeyChannel.unregExclusiveMediakey(this, Qt::Key_MediaPrevious);
 }
 
 void Play::handleStateChange()

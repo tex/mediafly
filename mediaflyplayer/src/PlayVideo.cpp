@@ -28,6 +28,8 @@
 
 using namespace mf;
 
+extern QString currentPath;
+
 const QString PlayVideo::m_mountPoint = "/tmp/httpfs_mf";
 
 PlayVideo::PlayVideo(QWidget *parent) :
@@ -95,7 +97,7 @@ bool PlayVideo::mountUrl(QString& url)
 	cmd = "mkdir " + m_mountPoint;
 	system(cmd.toAscii());
 
-	cmd = "/media/SD-card/httpfs " + url + " " + m_mountPoint;
+	cmd = currentPath + "/httpfs " + url + " " + m_mountPoint;
 	r = system(cmd.toAscii());
 	if (r == -1)
 	{

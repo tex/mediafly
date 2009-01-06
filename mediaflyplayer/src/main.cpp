@@ -39,10 +39,6 @@ int main(int argc, char** argv)
 	QFileInfo info(argv[0]);
 	currentPath = info.path();
 
-	// Use hard path during test phase...
-	//
-	currentPath = "/media/SD-card/";
-
 	QCoreApplication::setOrganizationName("Neuros");
 	QCoreApplication::setOrganizationDomain("neurostechnology.com");
 	QCoreApplication::setApplicationName("mediafly");
@@ -59,11 +55,9 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
-// Temporary disable this feature during developement.
-//
-//	NAppChannel::sendCloseOtherApps(QStringList()
-//		<< "/media/SD-card/mediafly"
-//		<< "/usr/local/bin/more-apps");
+	NAppChannel::sendCloseOtherApps(QStringList()
+		<< currentPath + "/mediafly"
+		<< "/usr/local/bin/more-apps");
 
 	mf::Player v;
 	v.showMaximized();
