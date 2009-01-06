@@ -33,6 +33,10 @@ public:
 	 */
 	virtual void pause() = 0;
 
+	/** Relative seek in seconds.
+	 */
+	virtual void seek(int sec)= 0;
+
 	/** Get state of the stream.
 	 *
 	 *  int songPosition

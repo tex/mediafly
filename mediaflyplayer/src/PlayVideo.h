@@ -43,6 +43,7 @@ public:
 	void quit();
 	void play();
 	void pause();
+	void seek(int sec);
 
 	void getState(int& songPosition, int& songLength);
 

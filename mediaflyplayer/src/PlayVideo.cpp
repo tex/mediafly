@@ -179,3 +179,12 @@ void PlayVideo::getState(int& songPosition, int& songLength)
 	songLength = m_songLength;
 }
 
+void PlayVideo::seek(int sec)
+{
+	int seekTo = m_songPosition + sec * 1000;
+	if (seekTo < 0)
+		seekTo = 0;
+
+	m_nmsControl->Seek(seekTo);
+}
+

@@ -225,6 +225,12 @@ void Play::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_MediaPrevious:
 		handlePreviousEpisodeButtonClicked();
 		break;
+	case Qt::Key_Back:
+		m_output->seek(-10);
+		break;
+	case Qt::Key_Forward:
+		m_output->seek(+10);
+		break;
 	case Qt::Key_Help:
 		NHelpBox::NHelpBoxNew(tr("Possible keys"),
 		                      tr("Left - Back to episode list\n") +

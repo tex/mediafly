@@ -237,3 +237,9 @@ bool PlayAudio::playqueueGetMediaInfo(const Xmms::PropDict &info)
 	return true;
 }
 
+void PlayAudio::seek(int sec)
+{
+	if (m_xmmsClient)
+		m_xmmsClient->playback.seekMsRel(sec * 1000);
+}
+
