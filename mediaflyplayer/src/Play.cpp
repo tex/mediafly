@@ -30,7 +30,7 @@ using namespace mf;
 Play::Play(QWidget *parent) :
 	NBackgroundManagedWidget(parent),
 	m_state(MP_PAUSE),
-	m_output(NULL)
+	m_output(m_audio)
 {
 	setupUi(this);
 
