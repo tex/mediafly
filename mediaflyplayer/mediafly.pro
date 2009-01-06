@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS  = src
+SUBDIRS  = src httpfs
 
 
 QMAKE_CLEAN = ./Makefile
