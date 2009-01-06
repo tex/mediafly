@@ -159,11 +159,22 @@ void Play::updateStateIndicator(enum State state)
 	}
 }
 
+void Play::show(const QModelIndex& index)
+{
+	m_index = index;
+
+	update();
+}
+
 void Play::update()
 {
-	if (m_output == m_video)
+	bool isVideo = m_index.data(mf::EpisodeModel::formatRole)
+	                      .toString()
+	                      .startsWith("Video", Qt::CaseInsensitive);
+
+	if (isVideo)
 	{
-		qDebug() << "Recognized as video";
+		m_output = m_video;
 
 		m_audio->hide();
 		m_video->show(m_index);
@@ -171,7 +182,7 @@ void Play::update()
 	}
 	else
 	{
-		qDebug() << "Recognized as audio";
+		m_output = m_audio;
 
 		m_audio->show(m_index);
 		m_video->hide();
@@ -182,22 +193,6 @@ void Play::update()
 	updateStateIndicator(m_state);
 
 	emit stateChange();
-}
-
-void Play::show(const QModelIndex& index)
-{
-	m_index = index;
-
-	bool isVideo = m_index.data(mf::EpisodeModel::formatRole)
-	                      .toString()
-	                      .startsWith("Video", Qt::CaseInsensitive);
-
-	if (isVideo)
-		m_output = m_video;
-	else
-		m_output = m_audio;
-
-	update();
 }
 
 void Play::keyPressEvent(QKeyEvent *event)
