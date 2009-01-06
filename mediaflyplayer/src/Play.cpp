@@ -214,7 +214,8 @@ void Play::keyPressEvent(QKeyEvent *event)
 		                      tr("Up - Show play queue\n") +
 		                      tr("Play/Pause - Play/Pause media playback\n") +
 		                      tr("Next - Play next episode\n") +
-		                      tr("Previous - Play previous episode\n"));
+		                      tr("Previous - Play previous episode\n") +
+		                      tr("Back/Forward - Seek 10 seconds back/forward\n"));
 		break;
 	}
 }
