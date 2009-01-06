@@ -240,6 +240,11 @@ bool PlayAudio::playqueueGetMediaInfo(const Xmms::PropDict &info)
 void PlayAudio::seek(int sec)
 {
 	if (m_xmmsClient)
-		m_xmmsClient->playback.seekMsRel(sec * 1000);
+	{
+		int seekTo = m_songPosition + sec * 1000;
+		if (seekTo < 0)
+			seekTo = 0;
+		m_xmmsClient->playback.seekMs(seekTo);
+	}
 }
 
