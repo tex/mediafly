@@ -56,11 +56,13 @@ void PlayVideo::quit()
 {
 	hide();
 
-	m_timer->stop();
 	delete m_timer;
 
-	m_nmsControl->SetMonitorEnable(true);
-	m_nmsControl->Disconnect();
+	if (m_nmsControl->Connect())
+	{
+		m_nmsControl->SetMonitorEnable(true);
+		m_nmsControl->Disconnect();
+	}
 	delete m_nmsControl;
 }
 
@@ -125,6 +127,10 @@ void PlayVideo::umountUrl()
 
 void PlayVideo::setUrl(QString url)
 {
+	// Try to unmount our mount point for a case it was mounted...
+
+	umountUrl();
+
 	// Mount httpfs filesystem with given url.
 
 	if (mountUrl(url) == false)
