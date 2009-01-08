@@ -1,7 +1,8 @@
 #ifndef mfPlayAVInterface_H
 #define mfPlayAVInterface_H
 
-class QModelIndex;
+#include <QString>
+#include <QModelIndex>
 
 namespace mf {
 
@@ -15,7 +16,7 @@ public:
 	 *
 	 *  const QModelIndex& index
 	 */
-	virtual void show(const QModelIndex& index) = 0;
+	virtual bool show(const QModelIndex& index, QString& err) = 0;
 
 	/** Stop the stream.
 	 */
@@ -43,6 +44,22 @@ public:
 	 *  int songLength
 	 */
 	virtual void getState(int& songPosition, int& songLength) = 0;
+
+protected:
+	/**
+	 * Mount given url with httpfs fuse filesystem.
+	 * QString& url - input - url to mount
+	 *              - output - full path to mounted file in local mount point
+	 * @return true - succes, false - mount failed
+	 */
+	bool mountUrl(QString& url, QString& err);
+
+	/**
+	 * Unmount httpfs fuse filesystem.
+	 */
+	void umountUrl();
+
+	static const QString m_mountPoint;
 };
 
 }

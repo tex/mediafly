@@ -28,10 +28,6 @@
 
 using namespace mf;
 
-extern QString currentPath;
-
-const QString PlayVideo::m_mountPoint = "/tmp/httpfs_mf";
-
 PlayVideo::PlayVideo(QWidget *parent) :
 	NBackgroundManagedWidget(parent)
 {
@@ -43,6 +39,7 @@ PlayVideo::PlayVideo(QWidget *parent) :
 	if (!m_nmsControl || !m_nmsControl->Connect())
 	{
 		NMessageBox::warning(NULL, "Failed to connect to NMS!", "Internal error, video playback unavailable.", QMessageBox::Ok, QMessageBox::Ok, 20 * 1000);
+		return;
 	}
 	m_nmsControl->SetMonitorEnable(false);
 
@@ -66,97 +63,60 @@ void PlayVideo::quit()
 	delete m_nmsControl;
 }
 
-void PlayVideo::show(const QModelIndex& index)
+bool PlayVideo::show(const QModelIndex& index, QString& err)
 {
 	m_index = index;
 
 	m_episodeNameLabel->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
 	m_showTitleLabel->setText(m_index.data(mf::EpisodeModel::showTitleRole).toString());
-	m_statusLabel->setText(tr("Loading..."));
 
-	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
+	QString url = m_index.data(mf::EpisodeModel::urlRole).toString();
 
-	NSSaverClient::enable(false);
-}
+	// Unmount mount point and stop playing for a case we already
+	// play any video currently.
 
-void PlayVideo::hide()
-{
-	qDebug() << __PRETTY_FUNCTION__;
-
-	m_nmsControl->StopPlay();
-	m_timer->stop();
-
-	umountUrl();
-
-	NSSaverClient::enable(true);
-}
-
-bool PlayVideo::mountUrl(QString& url)
-{
-	int r;
-	QString cmd;
-
-	cmd = "mkdir " + m_mountPoint;
-	system(cmd.toAscii());
-
-	cmd = currentPath + "/httpfs \"" + url + "\" " + m_mountPoint;
-	r = system(cmd.toAscii());
-	if (r == -1)
-	{
-		m_statusLabel->setText(tr("Insuficient recources!"));
-		return false;
-	}
-	else if (WEXITSTATUS(r) != 0)
-	{
-		m_statusLabel->setText(tr("Failed to load video!"));
-		return false;
-	}
-
-	url = m_mountPoint + url.right(url.size() - url.lastIndexOf("/"));
-
-	return true;
-}
-
-void PlayVideo::umountUrl()
-{
-	QString cmd;
-
-	cmd = "fusermount -u " + m_mountPoint;
-	system(cmd.toAscii());
-}
-
-void PlayVideo::setUrl(QString url)
-{
-	// Try to unmount our mount point for a case it was mounted...
-
-	umountUrl();
+	hide();
 
 	// Mount httpfs filesystem with given url.
 
-	if (mountUrl(url) == false)
-		return;
+	if (mountUrl(url, err) == false)
+		return false;
 
 	// Get video properties...
 
 	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
+	m_songPosition = 0;
 	m_songLength = m_mediaInfo.GetDuration();
-
-	qDebug() << __PRETTY_FUNCTION__ << "url:" << url << ", song length:" << m_songLength;
 
 	// Play video...
 
 	switch (m_nmsControl->Play(url)) {
 	case 0:
 		m_timer->start(500);
-		m_statusLabel->setText("");
 		break;
 	case 1:
-		m_statusLabel->setText("Video Locked!");
+		err = "Video Locked!";
+		return false;
 		break;
 	default:
-		m_statusLabel->setText("Video Format Not Supported!");
+		err = "Video Format Not Supported!";
+		return false;
 		break;
 	}
+
+	NSSaverClient::enable(false);
+
+	return true;
+}
+
+void PlayVideo::hide()
+{
+	m_nmsControl->StopPlay();
+	m_timer->stop();
+
+	umountUrl();
+
+	NSSaverClient::enable(true);
 }
 
 void PlayVideo::play()

@@ -23,6 +23,7 @@
 #include "PlayAudio.h"
 #include "EpisodeModel.h"
 #include "nxmmsmainloop.h"
+#include "nmessagebox.h"
 
 #include <QTime>
 #include <QPixmap>
@@ -107,7 +108,7 @@ bool PlayAudio::handleStatusChanged(const Xmms::Playback::Status& status)
 	return true;
 }
 
-void PlayAudio::show(const QModelIndex& index)
+bool PlayAudio::show(const QModelIndex& index, QString& err)
 {
 	qDebug() << __PRETTY_FUNCTION__;
 
@@ -128,20 +129,27 @@ void PlayAudio::show(const QModelIndex& index)
 
 	// Start playing a new song.
 
-	setUrl(m_index.data(mf::EpisodeModel::urlRole).toString());
-}
-
-void PlayAudio::setUrl(QString url)
-{
-	qDebug() << __PRETTY_FUNCTION__ << "Url to play:" << url;
+	QString url = m_index.data(mf::EpisodeModel::urlRole).toString();
 
 	m_songPosition = 0;
 	m_songLength = 0;
 
-	m_xmmsClient->playback.stop();
-	m_xmmsClient->playlist.clear();
+	// Unmount mount point and stop playing for a case we already
+	// play any audio currently.
+
+	hide();
+
+	// Mount httpfs filesystem with given url.
+
+	if (mountUrl(url, err) == false)
+	{
+		return false;
+	}
+
 	m_xmmsClient->playlist.addUrl(url.toAscii().data());
 	m_xmmsClient->playlist.listEntries()(Xmms::bind(&PlayAudio::handlePlaylist, this));
+
+	return true;
 }
 
 void PlayAudio::play()
@@ -171,6 +179,8 @@ void PlayAudio::hide()
 {
 	m_xmmsClient->playback.stop();
 	m_xmmsClient->playlist.clear();
+
+	umountUrl();
 }
 
 void PlayAudio::getState(int& songPosition, int& songLength)

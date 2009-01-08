@@ -153,27 +153,41 @@ void Play::update()
 	                      .toString()
 	                      .startsWith("Video", Qt::CaseInsensitive);
 
+	m_statusLabel->setText(tr("Loading..."));
+
+	QString err;
+	bool ret;
+
 	if (isVideo)
 	{
 		m_output = m_video;
 
 		m_audio->hide();
-		m_video->show(m_index);
+		ret = m_video->show(m_index, err);
 		m_stackedWidget->setCurrentWidget(m_video);
 	}
 	else
 	{
 		m_output = m_audio;
 
-		m_audio->show(m_index);
+		ret = m_audio->show(m_index, err);
 		m_video->hide();
 		m_stackedWidget->setCurrentWidget(m_audio);
 	}
 
-	m_state = MP_PLAY;
-	updateStateIndicator(m_state);
+	if (ret == true)
+	{
+		m_statusLabel->clear();
 
-	emit stateChange();
+		m_state = MP_PLAY;
+		updateStateIndicator(m_state);
+
+		emit stateChange();
+	}
+	else
+		// Failed to play episode. Let user know about problem...
+		//
+		m_statusLabel->setText(err);
 }
 
 void Play::keyPressEvent(QKeyEvent *event)
@@ -202,10 +216,10 @@ void Play::keyPressEvent(QKeyEvent *event)
 		handlePreviousEpisodeButtonClicked();
 		break;
 	case Qt::Key_Back:
-		m_output->seek(-10);
+		m_output->seek(-30);
 		break;
 	case Qt::Key_Forward:
-		m_output->seek(+10);
+		m_output->seek(+30);
 		break;
 	case Qt::Key_Help:
 		NHelpBox::NHelpBoxNew(tr("Possible keys"),
@@ -215,7 +229,7 @@ void Play::keyPressEvent(QKeyEvent *event)
 		                      tr("Play/Pause - Play/Pause media playback\n") +
 		                      tr("Next - Play next episode\n") +
 		                      tr("Previous - Play previous episode\n") +
-		                      tr("Back/Forward - Seek 10 seconds back/forward\n"));
+		                      tr("Back/Forward - Seek 30 seconds back/forward\n"));
 		break;
 	}
 }

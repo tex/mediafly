@@ -23,7 +23,6 @@
 #ifndef MediaflyPlay_H
 #define MediaflyPlay_H
 
-#include "PlayAVInterface.h"
 #include "PlayAudio.h"
 #include "PlayVideo.h"
 #include "ui_MediaflyPlay.h"
@@ -68,8 +67,6 @@ private:
 	void update();
 	void updateStateIndicator(enum State state);
 	QString toTime(unsigned int msec) const;
-	void regMediaKey();
-	void unregMediaKey();
 
 private slots:
 	void handleNextEpisodeButtonClicked();

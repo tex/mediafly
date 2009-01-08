@@ -38,7 +38,7 @@ class PlayVideo : public NBackgroundManagedWidget, public PlayAVInterface, priva
 public:
 	PlayVideo(QWidget *parent = 0);
 
-	void show(const QModelIndex& index);
+	bool show(const QModelIndex& index, QString& err);
 	void hide();
 	void quit();
 	void play();
@@ -59,23 +59,7 @@ private:
 	NmsControl *m_nmsControl;
 	QTimer     *m_timer;
 
-	void setUrl(QString url);
 	QString toTime(unsigned int msec) const;
-
-	static const QString m_mountPoint;
-
-	/**
-	 * Mount given url with httpfs fuse filesystem.
-	 * QString& url - input - url to mount
-	 *              - output - full path to mounted file in local mount point
-	 * @return true - succes, false - mount failed
-	 */
-	bool mountUrl(QString& url);
-
-	/**
-	 * Unmount httpfs fuse filesystem.
-	 */
-	void umountUrl();
 
 private slots:
 	void handleTimeout();

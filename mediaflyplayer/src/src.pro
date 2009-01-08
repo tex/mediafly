@@ -76,6 +76,9 @@ SOURCES += Play.cpp
 HEADERS += SearchQueryData.h
 SOURCES += SearchQueryData.cpp
 
+HEADERS += PlayAVInterface.h
+SOURCES += PlayAVInterface.cpp
+
 FORMS += ../forms/MediaflyPlayVideo.ui
 HEADERS += PlayVideo.h
 SOURCES += PlayVideo.cpp

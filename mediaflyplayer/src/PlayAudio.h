@@ -47,7 +47,7 @@ class PlayAudio : public NBackgroundManagedWidget, public PlayAVInterface, priva
 public:
 	PlayAudio(QWidget *parent = 0);
 
-	void show(const QModelIndex& index);
+	bool show(const QModelIndex& index, QString& err);
 	void hide();
 	void quit();
 	void play();
@@ -65,7 +65,6 @@ private:
 	typedef QHash<QString, QVariant> MusicInfo;
 
 	QString toTime(unsigned int msec) const;
-	void setUrl(QString url);
 	void disconnect();
 	bool connect();
 	bool handlePlaytime(const unsigned int& playtime);
