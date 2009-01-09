@@ -12,6 +12,9 @@ namespace mf {
 class PlayAVInterface
 {
 public:
+	PlayAVInterface();
+	virtual ~PlayAVInterface();
+
 	/** Start playback.
 	 *
 	 *  const QModelIndex& index
