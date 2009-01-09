@@ -331,9 +331,9 @@ int getSize() {
     }
 #endif
 
-    /* Build request buffer, starting with the HEAD. */
+    /* Build request buffer, starting with the GET. HEAD used originaly, but not all servers put Content-Lenght. */
 
-    bytes = snprintf(buf, sizeof(buf), "HEAD %s HTTP/1.1\r\nHost: %s\r\n", file_name, host);
+    bytes = snprintf(buf, sizeof(buf), "GET %s HTTP/1.1\r\nHost: %s\r\n", file_name, host);
 #ifdef USE_AUTH
     if ( *auth_buf != '\0' )
 	bytes += snprintf(&buf[bytes], sizeof(buf) - bytes, "Authorization: Basic %s\r\n", auth_buf);
@@ -900,7 +900,7 @@ int main(int argc, char *argv[]) {
     int sr;
     char* ri;
     char* fusev[4];
-	
+
     argv0 = argv[0];
     if (argc != 3) {
 	(void) fprintf(stderr, "usage:  %s url mount-point\n", argv0);
@@ -909,35 +909,36 @@ int main(int argc, char *argv[]) {
     }
     strcpy(argv1, argv[1]);
     argv2 = argv[2];
+
 parseUrlAgain:    
     protocol = parseURL(argv1, host, &file_name, &port);
     if (protocol == -1) 
-	return 1;
+	return 2;
 
     sockfd = open_client_socket(host, port);
     if (sockfd < 0)
-	return 1;
+	return 3;
 
     int r = getSize();
     if (r == -2) {
         goto parseUrlAgain;
     } else if (r != 0)
-	return 1;
+	return 4;
 
     sr = stat(argv2, &mpstat);
     if (sr < 0) {
 	(void) fprintf(stderr, "%s: bad mount-point %s\n", argv0, argv2);
-	return 1;
+	return 5;
     }
 
     if ((mpstat.st_mode & S_IFDIR) == 0) {
 	(void) fprintf(stderr, "%s: %s is not a directory\n", argv0, argv2);
-	return 1;
+	return 6;
     }
-    
+
     if ((targetFd = open(argv2, 0)) == -1) {
 	(void) fprintf(stderr, "%s: open %s failed\n", argv0, argv2);
-	return 1;
+	return 7;
     }
     
     ri = rindex(file_name, '/');
