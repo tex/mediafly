@@ -157,9 +157,7 @@ void PlayAudio::play()
 	qDebug() << __PRETTY_FUNCTION__;
 
 	if (m_xmmsClient)
-	{
 		m_xmmsClient->playback.start();
-	}
 }
 
 void PlayAudio::pause()
