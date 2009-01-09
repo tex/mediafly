@@ -79,7 +79,7 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 
 	// Mount httpfs filesystem with given url.
 
-	if (mountUrl(url, err) == false)
+	if (mountUrl(url, err, 650) == false)
 		return false;
 
 	// Get video properties...

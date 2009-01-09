@@ -49,13 +49,16 @@ public:
 	virtual void getState(int& songPosition, int& songLength) = 0;
 
 protected:
+	void mkdir(QString& url) const;
+	bool mount(QString& cmd, QString& err);
+
 	/**
 	 * Mount given url with httpfs fuse filesystem.
 	 * QString& url - input - url to mount
 	 *              - output - full path to mounted file in local mount point
 	 * @return true - succes, false - mount failed
 	 */
-	bool mountUrl(QString& url, QString& err);
+	bool mountUrl(QString& url, QString& err, int cacheSize);
 
 	/**
 	 * Unmount httpfs fuse filesystem.
@@ -63,6 +66,8 @@ protected:
 	void umountUrl();
 
 	static const QString m_mountPoint;
+	static const QString m_httpfs;
+	static const QString m_preloadfs;
 };
 
 }

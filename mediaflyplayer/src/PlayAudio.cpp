@@ -141,7 +141,7 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 
 	// Mount httpfs filesystem with given url.
 
-	if (mountUrl(url, err) == false)
+	if (mountUrl(url, err, 130) == false)
 	{
 		return false;
 	}
