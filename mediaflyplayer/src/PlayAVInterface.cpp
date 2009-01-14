@@ -1,3 +1,4 @@
+#include <QDir>
 #include "PlayAVInterface.h"
 #include "nmessagebox.h"
 #include <stdlib.h>
@@ -76,22 +77,41 @@ bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 	return true;
 }
 
+QString mf::PlayAVInterface::findName(const QString& path)
+{
+	QDir dir(path);
+	QFileInfoList list = dir.entryInfoList();
+
+	for (int i = 0; i < list.size(); ++i)
+	{
+		QFileInfo fileInfo = list.at(i);
+		if (fileInfo.isFile())
+			return fileInfo.absoluteFilePath();
+	}
+}
+
 bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 {
 	QString cmd;
 
 	cmd = currentPath + "/" + m_httpfs + " \"" + url + "\" " + m_mountPoint + m_httpfs;
 	if (mount(cmd, err) == false)
+	{
+		err += " [1]";
 		return false;
-	url = m_mountPoint + m_httpfs + url.right(url.size() - url.lastIndexOf("/"));
+	}
+	url = findName(m_mountPoint + m_httpfs);
+	NMessageBox::information(0, "", url);
 
-	cmd = currentPath + "/" + m_preloadfs + " \"" + url + "\" " + m_mountPoint + m_httpfs + " " + currentPath + " " + QString::number(cacheSize);
+	cmd = currentPath + "/" + m_preloadfs + " \"" + url + "\" " + m_mountPoint + m_preloadfs + " " + currentPath + " " + QString::number(cacheSize);
 	if (mount(cmd, err) == false)
 	{
 		umountUrl();
+		err += " [2]";
 		return false;
 	}
-	url = m_mountPoint + m_preloadfs + url.right(url.size() - url.lastIndexOf("/"));
+	url = findName(m_mountPoint + m_preloadfs);
+	NMessageBox::information(0, "", url);
 	return true;
 }
 

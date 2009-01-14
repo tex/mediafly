@@ -50,7 +50,16 @@ public:
 
 protected:
 	void mkdir(QString& url) const;
-	bool mount(QString& cmd, QString& err);
+	virtual bool mount(QString& cmd, QString& err);
+
+	/**
+	 * Find first regular file in a given directory.
+	 *
+	 * (We use httpfs and preloadfs that mount just one
+	 *  file.)
+	 *
+	 */
+	QString findName(const QString& path);
 
 	/**
 	 * Mount given url with httpfs fuse filesystem.
