@@ -53,6 +53,8 @@ void PlayVideo::quit()
 {
 	hide();
 
+	umountUrl();
+
 	delete m_timer;
 
 	if (m_nmsControl->Connect())
@@ -72,10 +74,12 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 
 	QString url = m_index.data(mf::EpisodeModel::urlRole).toString();
 
-	// Unmount mount point and stop playing for a case we already
-	// play any video currently.
+	// Stop playing for a case we already play any video currently
+	// and then unmount.
 
 	hide();
+
+	umountUrl();
 
 	// Mount httpfs filesystem with given url.
 
@@ -104,7 +108,7 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 		break;
 	}
 
-	NSSaverClient::enable(false);
+//	NSSaverClient::enable(false);
 
 	return true;
 }
@@ -114,30 +118,22 @@ void PlayVideo::hide()
 	m_nmsControl->StopPlay();
 	m_timer->stop();
 
-	umountUrl();
-
-	NSSaverClient::enable(true);
+//	NSSaverClient::enable(true);
 }
 
 void PlayVideo::play()
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::pause()
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	m_nmsControl->PauseUnpause();
 }
 
 void PlayVideo::handleTimeout()
 {
 	m_songPosition = m_nmsControl->GetPlayTime();
-
-	qDebug() << __PRETTY_FUNCTION__ << "song position:" << m_songPosition;
 
 	emit stateChange();
 }

@@ -110,7 +110,7 @@ bool PlayAudio::handleStatusChanged(const Xmms::Playback::Status& status)
 
 bool PlayAudio::show(const QModelIndex& index, QString& err)
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	hide();
 
 	m_index = index;
 
@@ -137,25 +137,34 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 	// Unmount mount point and stop playing for a case we already
 	// play any audio currently.
 
-	hide();
+	umountUrl();
 
 	// Mount httpfs filesystem with given url.
 
 	if (mountUrl(url, err, 130) == false)
 	{
-		return false;
+		// Mount failed. Well, most probably because server
+		// doesn't advertise Conten-Length: in GET reply so it
+		// most probably doesn't support Range: either.
+		//
+		// Use normal way,let xmms2 to manage it completly ->
+		// no seek available...
+
+		url = m_index.data(mf::EpisodeModel::urlRole).toString();
 	}
+	else
+		url = "file://" + url;
 
-	m_xmmsClient->playlist.addUrl(url.toAscii().data());
-	m_xmmsClient->playlist.listEntries()(Xmms::bind(&PlayAudio::handlePlaylist, this));
-
+	if (m_xmmsClient)
+	{
+		m_xmmsClient->playlist.addUrl(url.toAscii().data());
+		m_xmmsClient->playlist.listEntries()(Xmms::bind(&PlayAudio::handlePlaylist, this));
+	}
 	return true;
 }
 
 void PlayAudio::play()
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	if (m_xmmsClient)
 		m_xmmsClient->playback.start();
 }
@@ -175,10 +184,11 @@ void PlayAudio::updateImage()
 
 void PlayAudio::hide()
 {
-	m_xmmsClient->playback.stop();
-	m_xmmsClient->playlist.clear();
-
-	umountUrl();
+	if (m_xmmsClient)
+	{
+		m_xmmsClient->playback.stop();
+		m_xmmsClient->playlist.clear();
+	}
 }
 
 void PlayAudio::getState(int& songPosition, int& songLength)

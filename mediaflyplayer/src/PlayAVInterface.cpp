@@ -71,7 +71,13 @@ bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 	}
 	else if ((r = WEXITSTATUS(r)) != 0)
 	{
-		err = "[SYS " + QString::number(r) + "] " + QObject::tr("Program error!");
+		if (r == 4)
+		{
+			err = QObject::tr("Server doesn't support required feature.");
+		}
+		else
+			err = "[SYS " + QString::number(r) + "] " + QObject::tr("Program error!");
+
 		return false;
 	}
 	return true;
@@ -88,6 +94,7 @@ QString mf::PlayAVInterface::findName(const QString& path)
 		if (fileInfo.isFile())
 			return fileInfo.absoluteFilePath();
 	}
+	return QString();
 }
 
 bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
@@ -101,7 +108,11 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 		return false;
 	}
 	url = findName(m_mountPoint + m_httpfs);
-	NMessageBox::information(0, "", url);
+	if (url.isEmpty())
+	{
+		err += QObject::tr("Program error!") + " [3]";
+		return false;
+	}
 
 	cmd = currentPath + "/" + m_preloadfs + " \"" + url + "\" " + m_mountPoint + m_preloadfs + " " + currentPath + " " + QString::number(cacheSize);
 	if (mount(cmd, err) == false)
@@ -111,8 +122,28 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 		return false;
 	}
 	url = findName(m_mountPoint + m_preloadfs);
-	NMessageBox::information(0, "", url);
+	if (url.isEmpty())
+	{
+		err += QObject::tr("Program error!") + " [4]";
+		return false;
+	}
+
 	return true;
+}
+
+bool mf::PlayAVInterface::umount(QString& cmd)
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		int r = system(cmd.toAscii());
+		if ((r == -1) || (WEXITSTATUS(r) != 0))
+		{
+			usleep(500);
+		}
+		else
+			return true;
+	}
+	return false;
 }
 
 void mf::PlayAVInterface::umountUrl()
@@ -120,9 +151,9 @@ void mf::PlayAVInterface::umountUrl()
 	QString cmd;
 
 	cmd = "fusermount -u " + m_mountPoint + m_preloadfs;
-	system(cmd.toAscii());
+	umount(cmd);
 
 	cmd = "fusermount -u " + m_mountPoint + m_httpfs;
-	system(cmd.toAscii());
+	umount(cmd);
 }
 

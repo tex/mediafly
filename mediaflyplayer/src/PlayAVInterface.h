@@ -49,9 +49,6 @@ public:
 	virtual void getState(int& songPosition, int& songLength) = 0;
 
 protected:
-	void mkdir(QString& url) const;
-	virtual bool mount(QString& cmd, QString& err);
-
 	/**
 	 * Find first regular file in a given directory.
 	 *
@@ -73,6 +70,11 @@ protected:
 	 * Unmount httpfs fuse filesystem.
 	 */
 	void umountUrl();
+
+private:
+	void mkdir(QString& url) const;
+	virtual bool mount(QString& cmd, QString& err);
+	bool umount(QString& cmd);
 
 	static const QString m_mountPoint;
 	static const QString m_httpfs;
