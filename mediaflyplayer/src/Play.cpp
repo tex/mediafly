@@ -162,17 +162,17 @@ void Play::update()
 	{
 		m_output = m_video;
 
+		m_stackedWidget->setCurrentWidget(m_video);
 		m_audio->hide();
 		ret = m_video->show(m_index, err);
-		m_stackedWidget->setCurrentWidget(m_video);
 	}
 	else
 	{
 		m_output = m_audio;
 
+		m_stackedWidget->setCurrentWidget(m_audio);
 		ret = m_audio->show(m_index, err);
 		m_video->hide();
-		m_stackedWidget->setCurrentWidget(m_audio);
 	}
 
 	if (ret == true)
