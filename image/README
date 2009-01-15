@@ -1,0 +1,15 @@
+This is binary image for Neuros' OSD1 device.
+
+Intalation:
+
+1. Create directory 'newpackage' in SD card root directory.
+2. Create empty file in 'newpackage' directory named 'disable_upk_version_check'.
+3. Copy image 'dev.upk' to 'newpackage' directory and rename 'dev.upk' to 'r3.upk'.
+4. Power-off OSD1 device.
+5. Insert SD-card to OSD1 device.
+6. Power-on OSD1 device.
+7. You can see progress bar indicating upgrade process.
+8. Remove SD-card from OSD1 device after upgrade process finishes.
+9. Reboot OSD1 device.
+10. Enjoy Mediafly application!
+
