@@ -898,6 +898,7 @@ static struct fuse_operations httpfs_oper = {
 int main(int argc, char *argv[]) {
     struct stat mpstat;
     int sr;
+    int rc = 0;
     char* ri;
     char* fusev[4];
 
@@ -921,6 +922,8 @@ parseUrlAgain:
 
     int r = getSize();
     if (r == -2) {
+        if (++rc > 10)
+            return 8;
         goto parseUrlAgain;
     } else if (r != 0)
 	return 4;

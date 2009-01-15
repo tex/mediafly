@@ -75,6 +75,10 @@ bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 		{
 			err = QObject::tr("Server doesn't support required feature.");
 		}
+		else if (r == 8)
+		{
+			err = QObject::tr("Too many redirections.");
+		}
 		else
 			err = "[SYS " + QString::number(r) + "] " + QObject::tr("Program error!");
 
