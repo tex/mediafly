@@ -102,45 +102,55 @@ void Mediafly::handleRequestFinished(int id, bool error)
 {
 	qDebug() << __PRETTY_FUNCTION__ << id << error << m_http.errorString();
 
-	if (error)
-	{
-		if (m_http.error() != QHttp::Aborted)
-			emit readError(m_http.errorString());
-		return;
-	}
-
 	if (m_connection.contains(id))
 	{
 		RequestInfo requestInfo = m_connection.value(id);
 
-		QString data = QString::fromUtf8(m_http.readAll());
-		QString errorMsg;
-		QDomDocument doc;
-
-		qDebug() << data;
-
-		bool expiredToken;
-		if (!checkResponse(doc, data, errorMsg, expiredToken))
+		if (error)
 		{
-			if (expiredToken)
+			if (m_http.error() == QHttp::UnexpectedClose)
 			{
-				// Acquire new session info and restart
-				// the operation.
+				// This error is very common and repeated
+				// request always succeeds, so we hide it
+				// from end user and repeat it automaticaly.
 
-				Authentication_GetToken();
-				m_request << requestInfo;
+				m_request.prepend(requestInfo);
+			}
+			else if (m_http().error() != QHttp::Aborted)
+			{
+				emit readError(m_http.errorString());
+			}
+		}
+		else {
+			QString data = QString::fromUtf8(m_http.readAll());
+			QString errorMsg;
+			QDomDocument doc;
+
+			qDebug() << data;
+
+			bool expiredToken;
+			if (!checkResponse(doc, data, errorMsg, expiredToken))
+			{
+				if (expiredToken)
+				{
+					// Acquire new session info and restart
+					// the operation.
+
+					Authentication_GetToken();
+					m_request << requestInfo;
+				}
+				else
+					emit readError(errorMsg);
 			}
 			else
-				emit readError(errorMsg);
-		}
-		else
-			requestInfo.m_consumer->read(doc);
+				requestInfo.m_consumer->read(doc);
 
-		m_connection.remove(id);
+			m_connection.remove(id);
 
-		if (m_request.size() > 0) {
-			RequestInfo requestInfo = m_request.takeFirst();
-			Query(requestInfo);
+			if (m_request.size() > 0) {
+				RequestInfo requestInfo = m_request.takeFirst();
+				Query(requestInfo);
+			}
 		}
 	}
 	if (m_connectionBinary.contains(id))
