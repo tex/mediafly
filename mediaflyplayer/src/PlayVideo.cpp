@@ -96,7 +96,7 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 
 	switch (m_nmsControl->Play(url)) {
 	case 0:
-		m_timer->start(500);
+		m_nmsControl->PauseUnpause();
 		break;
 	case 1:
 		err = "Video Locked!";
@@ -116,7 +116,6 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 void PlayVideo::hide()
 {
 	m_nmsControl->StopPlay();
-	m_timer->stop();
 
 //	NSSaverClient::enable(true);
 }
@@ -124,10 +123,12 @@ void PlayVideo::hide()
 void PlayVideo::play()
 {
 	m_nmsControl->PauseUnpause();
+	m_timer->start(500);
 }
 
 void PlayVideo::pause()
 {
+	m_timer->stop();
 	m_nmsControl->PauseUnpause();
 }
 
