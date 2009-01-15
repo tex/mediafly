@@ -71,7 +71,11 @@ bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 	}
 	else if ((r = WEXITSTATUS(r)) != 0)
 	{
-		if (r == 4)
+		if (r == 3)
+		{
+			err = QObject::tr("Server not found.");
+		}
+		else if (r == 4)
 		{
 			err = QObject::tr("Server doesn't support required feature.");
 		}
