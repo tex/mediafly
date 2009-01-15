@@ -88,9 +88,9 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 
 	// Get video properties...
 
-	m_mediaInfo = m_nmsControl->GetMediaInfo(url);
+	NMediaInfo mediaInfo = m_nmsControl->GetMediaInfo(url);
 	m_songPosition = 0;
-	m_songLength = m_mediaInfo.GetDuration();
+	m_songLength = mediaInfo.GetDuration();
 
 	// Play video...
 

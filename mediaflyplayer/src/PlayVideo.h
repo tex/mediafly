@@ -54,7 +54,6 @@ private:
 	QModelIndex m_index;
 	long        m_songPosition;
 	long        m_songLength;
-	NMediaInfo  m_mediaInfo;
 
 	NmsControl *m_nmsControl;
 	QTimer     *m_timer;
