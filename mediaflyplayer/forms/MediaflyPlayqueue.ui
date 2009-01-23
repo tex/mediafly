@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>712</width>
+    <width>635</width>
     <height>493</height>
    </rect>
   </property>
@@ -13,7 +13,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
-   <item row="0" column="0" colspan="4" >
+   <item row="0" column="0" colspan="6" >
     <layout class="QHBoxLayout" name="horizontalLayout_3" >
      <item>
       <widget class="QLabel" name="label" >
@@ -35,7 +35,7 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="4" >
+   <item row="1" column="0" colspan="6" >
     <widget class="mf::List" name="m_listView" >
      <property name="font" >
       <font>
@@ -53,7 +53,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="4" >
+   <item row="2" column="0" colspan="6" >
     <layout class="QHBoxLayout" name="horizontalLayout_2" >
      <item>
       <widget class="QLabel" name="label_3" >
@@ -108,7 +108,7 @@
      </item>
     </layout>
    </item>
-   <item row="3" column="0" colspan="4" >
+   <item row="3" column="0" colspan="6" >
     <layout class="QHBoxLayout" name="horizontalLayout" >
      <item>
       <spacer name="horizontalSpacer" >
@@ -167,7 +167,7 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="2" >
+   <item row="5" column="4" >
     <spacer name="horizontalSpacer_2" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
@@ -181,6 +181,18 @@
     </spacer>
    </item>
    <item row="5" column="1" >
+    <widget class="QLabel" name="label_4" >
+     <property name="font" >
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>&lt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="5" >
     <widget class="QLabel" name="label_2" >
      <property name="font" >
       <font>
@@ -192,6 +204,18 @@
      </property>
      <property name="margin" >
       <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3" >
+    <widget class="QLabel" name="label_5" >
+     <property name="font" >
+      <font>
+       <pointsize>22</pointsize>
+      </font>
+     </property>
+     <property name="text" >
+      <string>Now Playing</string>
      </property>
     </widget>
    </item>
