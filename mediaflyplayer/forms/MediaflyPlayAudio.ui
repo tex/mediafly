@@ -54,6 +54,9 @@
      <property name="text" >
       <string/>
      </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="2" column="0" colspan="3" >
@@ -71,6 +74,9 @@
      </property>
      <property name="text" >
       <string/>
+     </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>

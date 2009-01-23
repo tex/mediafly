@@ -56,6 +56,7 @@ public:
 
 	void getState(int& songPosition, int& songLength);
 
+	void keyPressEvent(QKeyEvent* event);
 signals:
 	void stateChange();
 

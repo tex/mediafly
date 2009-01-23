@@ -15,6 +15,9 @@
   <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
     <widget class="QLabel" name="m_episodeNameLabel" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
      <property name="font" >
       <font>
        <pointsize>20</pointsize>
@@ -25,6 +28,9 @@
      </property>
      <property name="alignment" >
       <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -40,6 +46,9 @@
      </property>
      <property name="alignment" >
       <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>

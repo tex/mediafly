@@ -195,6 +195,11 @@ void Play::update()
 void Play::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
+	case Qt::Key_PageUp:
+	case Qt::Key_PageDown:
+		if (m_output == m_audio)
+			m_audio->keyPressEvent(event);
+		break;
 	case Qt::Key_Left:
 		m_video->hide();
 		m_audio->hide();

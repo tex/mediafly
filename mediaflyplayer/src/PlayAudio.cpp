@@ -266,3 +266,23 @@ void PlayAudio::seek(int sec)
 	}
 }
 
+void PlayAudio::keyPressEvent(QKeyEvent *event)
+{
+	switch (event->key()) {
+	case Qt::Key_PageUp:
+	{
+		QScrollBar* bar = m_showDetailsLabel->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepSub);
+		break;
+	}
+	case Qt::Key_PageDown:
+	{
+		QScrollBar* bar = m_showDetailsLabel->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepAdd);
+		break;
+	}
+	}
+}
+

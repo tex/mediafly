@@ -53,9 +53,7 @@ void EpisodeDetails::updateImage()
 
 void EpisodeDetails::update()
 {
-	m_header->setText(tr("Episode Details"));
 	m_label->setText(m_index.data(mf::EpisodeModel::titleRole).toString());
-	m_length->setText("???");
 	m_icon->setPixmap(m_index.data(mf::EpisodeModel::imageRole).value<QPixmap>());
 	m_details->setHtml("<b>" + tr("Item details") + "</b><br><b>Link:</b><br>" +
 	                  m_index.data(mf::EpisodeModel::urlRole).toString() +
@@ -91,8 +89,38 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 		                      tr("Enter - Play current episode\n") +
 		                      tr("Left - Show previous episode\n") +
 		                      tr("Right - Show next episode\n") +
-		                      tr("Back - Back to episode menu\n"));
+		                      tr("Back - Back to episode menu\n") +
+		                      tr("Page Up/Down - Scroll with details information\n") +
+		                      tr("Up/Down - Scroll with episode information\n"));
 		break;
+	case Qt::Key_PageUp:
+	{
+		QScrollBar* bar = m_details->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepSub);
+		break;
+	}
+	case Qt::Key_PageDown:
+	{
+		QScrollBar* bar = m_details->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepAdd);
+		break;
+	}
+	case Qt::Key_Up:
+	{
+		QScrollBar* bar = m_info->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepSub);
+		break;
+	}
+	case Qt::Key_Down:
+	{
+		QScrollBar* bar = m_info->verticalScrollBar();
+		if (bar)
+			bar->triggerAction(QAbstractSlider::SliderPageStepAdd);
+		break;
+	}
 	default:
 		event->ignore();
 		break;
