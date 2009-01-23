@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>312</width>
-    <height>440</height>
+    <width>590</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="focusPolicy" >
@@ -27,7 +27,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex" >
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="mf::PlayAudio" name="m_audio" />
        <widget class="mf::PlayVideo" name="m_video" />
@@ -47,9 +47,9 @@
       <widget class="NTimeBar" name="m_progressBar" />
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" >
-       <item>
-        <widget class="QLabel" name="label" >
+      <layout class="QGridLayout" name="gridLayout_2" >
+       <item row="4" column="2" >
+        <widget class="QLabel" name="label_1" >
          <property name="font" >
           <font>
            <pointsize>22</pointsize>
@@ -58,28 +58,54 @@
          <property name="text" >
           <string>?</string>
          </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
          <property name="margin" >
           <number>3</number>
          </property>
         </widget>
        </item>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
+       <item row="2" column="1" >
+        <widget class="QLabel" name="label_3" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeType" >
-          <enum>QSizePolicy::Expanding</enum>
+         <property name="font" >
+          <font>
+           <pointsize>22</pointsize>
+          </font>
          </property>
-         <property name="sizeHint" stdset="0" >
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="text" >
+          <string>Change Cannel</string>
          </property>
-        </spacer>
+        </widget>
        </item>
-       <item>
+       <item row="2" column="4" >
+        <widget class="QLabel" name="label_2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font" >
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Next episode</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" >
         <widget class="QLabel" name="m_playStateLabel" >
          <property name="font" >
           <font>
@@ -89,26 +115,76 @@
          <property name="text" >
           <string>></string>
          </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
          <property name="margin" >
           <number>3</number>
          </property>
         </widget>
        </item>
-       <item>
-        <spacer>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
+       <item row="4" column="4" >
+        <widget class="QLabel" name="label_4" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeType" >
-          <enum>QSizePolicy::Expanding</enum>
+         <property name="font" >
+          <font>
+           <pointsize>22</pointsize>
+          </font>
          </property>
-         <property name="sizeHint" stdset="0" >
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="text" >
+          <string>Playqueue</string>
          </property>
-        </spacer>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" >
+        <widget class="QLabel" name="label_5" >
+         <property name="font" >
+          <font>
+           <pointsize>21</pointsize>
+          </font>
+         </property>
+         <property name="text" >
+          <string>&lt;</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5" >
+        <widget class="QLabel" name="label_6" >
+         <property name="font" >
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="text" >
+          <string>></string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="5" >
+        <widget class="QLabel" name="label_7" >
+         <property name="font" >
+          <font>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="text" >
+          <string>^</string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
