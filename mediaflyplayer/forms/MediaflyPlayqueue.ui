@@ -9,6 +9,9 @@
     <height>493</height>
    </rect>
   </property>
+  <property name="focusPolicy" >
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle" >
    <string>Form</string>
   </property>
@@ -43,7 +46,7 @@
       </font>
      </property>
      <property name="focusPolicy" >
-      <enum>Qt::StrongFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="frameShape" >
       <enum>QFrame::NoFrame</enum>

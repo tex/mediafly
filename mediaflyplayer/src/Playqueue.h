@@ -45,6 +45,7 @@ signals:
 
 private:
 	void keyPressEvent(QKeyEvent *event);
+	void removeEpisodeFromPlaylist();
 
 	EpisodeModel             &m_episodeModel;
 	mf::Play                 *m_mediaflyPlay;
@@ -56,8 +57,6 @@ private:
 private slots:
 	void uploadNextPartOfMenu();
 	void updateEpisodeModel();
-	void handleNowPlayingClicked();
-	void handleRemoveButtonClicked();
 	void handleCheckResponseOkDone();
 	void handleStateChange();
 };

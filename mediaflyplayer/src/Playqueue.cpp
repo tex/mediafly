@@ -42,10 +42,6 @@ Playqueue::Playqueue(mf::EpisodeModel& episodeModel, mf::Play *mediaflyPlay, QWi
 
 	connect(m_listView, SIGNAL(almostAtEndOfList()),
 	        this, SLOT(uploadNextPartOfMenu()));
-	connect(m_listView, SIGNAL(leftPressed()),
-	        this, SLOT(handleNowPlayingClicked()));
-	connect(m_listView, SIGNAL(enterPressed()),
-	        this, SLOT(handleRemoveButtonClicked()));
 
 	connect(&m_episodeModel, SIGNAL(refreshed()),
 	        this, SLOT(updateEpisodeModel()));
@@ -72,15 +68,11 @@ void Playqueue::handleStateChange()
 
 void Playqueue::uploadNextPartOfMenu()
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	m_episodeModel.refresh();
 }
 
 void Playqueue::updateEpisodeModel()
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
 	QModelIndex current = m_listView->currentIndex();
 	if (!current.isValid())
 		current = m_episodeModel.index(0, 0);
@@ -92,12 +84,7 @@ void Playqueue::updateEpisodeModel()
 	m_listView->setCurrentIndex(current);
 }
 
-void Playqueue::handleNowPlayingClicked()
-{
-	emit back();
-}
-
-void Playqueue::handleRemoveButtonClicked()
+void Playqueue::removeEpisodeFromPlaylist()
 {
 	QModelIndex current = m_listView->currentIndex();
 	if (current.isValid())
@@ -120,12 +107,27 @@ void Playqueue::handleCheckResponseOkDone()
 
 void Playqueue::keyPressEvent(QKeyEvent *event)
 {
+	// Strong focus is set by designer on Playqueue widget, no focus on
+	// anything else on this widget. So, if we detect key event suitable for m_listView
+	// we route it to it.
+
 	switch (event->key()) {
 	case Qt::Key_Help:
 		NHelpBox::NHelpBoxNew(tr("Possible keys"),
 		                      tr("Left - Return to previous screen\n") +
 		                      tr("Up/Down - Move up/down in menu\n") +
 		                      tr("Enter - Remove selected episode from playlist"));
+		break;
+	case Qt::Key_Up:
+	case Qt::Key_Down:
+		m_listView->keyPressEvent(event);
+		break;
+	case Qt::Key_Left:
+		emit back();
+		break;
+	case Qt::Key_Enter:
+	case Qt::Key_Return:
+		removeEpisodeFromPlaylist();
 		break;
 	}
 }

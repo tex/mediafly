@@ -42,6 +42,7 @@ public:
 
 	void setEmpty() { m_empty = true; }
 	void setItemDelegate(QAbstractItemDelegate *newDelegate);
+	void keyPressEvent(QKeyEvent *event);
 
 signals:
 	void almostAtEndOfList();
@@ -51,7 +52,6 @@ signals:
 	void exitPressed();
 
 private:
-	void keyPressEvent(QKeyEvent *event);
 	void paintEvent(QPaintEvent * e);
 
 	bool m_empty;
