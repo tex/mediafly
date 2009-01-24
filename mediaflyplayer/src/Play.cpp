@@ -55,8 +55,6 @@ void Play::handleStateChange()
 	if (m_state != MP_PLAY)
 		return;
 
-	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
-
 	// Get current position and length of the episode. getState returns
 	// time values in miliseconds.
 
@@ -69,12 +67,16 @@ void Play::handleStateChange()
 	m_output->getState(position, length);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
-	// NTimerBar expect values in seconds.
+	// NTimerBar expect time values in seconds.
 
 	position /= 1000;
 	length /= 1000;
 
-	Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
+	QString slug = m_index.data(mf::EpisodeModel::slugRole).toString();
+	if (!slug.isEmpty())
+	{
+		Mediafly::getMediafly()->Experience_PostExperienceForEpisode(&m_checkResponseOk, slug, position, length);
+	}
 
 	// If lenght of the episode is unknown, set the 'default' to
 	// 99 hours, 99 minutes and 99 seconds.
