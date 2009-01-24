@@ -95,29 +95,25 @@ void EpisodeDetails::keyPressEvent(QKeyEvent *event)
 		break;
 	case Qt::Key_PageUp:
 	{
-		QScrollBar* bar = m_details->verticalScrollBar();
-		if (bar)
+		if (QScrollBar* bar = m_details->verticalScrollBar())
 			bar->triggerAction(QAbstractSlider::SliderPageStepSub);
 		break;
 	}
 	case Qt::Key_PageDown:
 	{
-		QScrollBar* bar = m_details->verticalScrollBar();
-		if (bar)
+		if (QScrollBar* bar = m_details->verticalScrollBar())
 			bar->triggerAction(QAbstractSlider::SliderPageStepAdd);
 		break;
 	}
 	case Qt::Key_Up:
 	{
-		QScrollBar* bar = m_info->verticalScrollBar();
-		if (bar)
+		if (QScrollBar* bar = m_info->verticalScrollBar())
 			bar->triggerAction(QAbstractSlider::SliderPageStepSub);
 		break;
 	}
 	case Qt::Key_Down:
 	{
-		QScrollBar* bar = m_info->verticalScrollBar();
-		if (bar)
+		if (QScrollBar* bar = m_info->verticalScrollBar())
 			bar->triggerAction(QAbstractSlider::SliderPageStepAdd);
 		break;
 	}
