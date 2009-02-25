@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>590</width>
+    <width>609</width>
     <height>560</height>
    </rect>
   </property>
@@ -29,8 +29,22 @@
        <property name="currentIndex" >
         <number>0</number>
        </property>
-       <widget class="mf::PlayAudio" name="m_audio" />
-       <widget class="mf::PlayVideo" name="m_video" />
+       <widget class="mf::PlayAudio" name="m_audio" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="mf::PlayVideo" name="m_video" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </widget>
      </item>
      <item>
