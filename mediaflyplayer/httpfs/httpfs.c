@@ -332,8 +332,9 @@ int getSize() {
 #endif
 
     /* Build request buffer, starting with the GET. HEAD used originaly, but not all servers put Content-Lenght. */
+    /* Also 'steal' user agent label from wget :-) Needed to make same servers work. */
 
-    bytes = snprintf(buf, sizeof(buf), "GET %s HTTP/1.1\r\nHost: %s\r\n", file_name, host);
+    bytes = snprintf(buf, sizeof(buf), "GET %s HTTP/1.0\r\nUser-Agent: Wget/1.11.1\r\nHost: %s\r\n", file_name, host);
 #ifdef USE_AUTH
     if ( *auth_buf != '\0' )
 	bytes += snprintf(&buf[bytes], sizeof(buf) - bytes, "Authorization: Basic %s\r\n", auth_buf);
@@ -369,14 +370,13 @@ int getSize() {
 	SSL_CTX_free(ssl_ctx);
     }
 #endif
-
-    (void) sscanf(buf, "HTTP/1.1 %d ", &status);
+    (void) sscanf(buf, "HTTP/1.%*d %d ", &status);
     if (status != 200) {
         /* Check possible redirection. */
         char *location;
         if ((status >= 300) && (status < 400) &&
 	    ((location = strstr(buf, "Location:")))) {
-           (void) sscanf(location, "Location: %s", argv1); 
+           (void) sscanf(location, "Location: %s", argv1);
            return -2;
         }
 	fprintf(stderr, "%s: HEAD (read) failed with Status %d\n", argv0, status);
