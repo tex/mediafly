@@ -383,6 +383,8 @@ int getSize() {
 	return -1;
     }
     b = strstr(buf,"Content-Length:");
+    if (b == NULL)
+        b = strstr(buf,"Content-length:");
     if (b == NULL) {
 	fprintf(stderr, "%s: HEAD-Reply didn't contain Content-Length\n", argv0);
 	return -1;
@@ -465,6 +467,8 @@ int HttpGet(off_t start, size_t size, char * destination) {
 	return -1;
     }
     b = strstr(buf,"Content-Length:");
+    if (b == NULL)
+        b = strstr(buf,"Content-length:");
     if (b == NULL) {
 	fprintf(stderr, "%s: GET-Reply didn't contain Content-Length\n", argv0);
 	return -1;
