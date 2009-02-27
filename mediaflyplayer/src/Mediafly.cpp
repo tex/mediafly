@@ -426,7 +426,11 @@ void Mediafly::Playlists_GetPlaylistForChannel (mf::EpisodeModelData* modelData,
 	map["channelSlug"] = query.channelSlug();
 	map["offset"] = QString::number(query.offset());
 	map["limit"] = QString::number(query.limit());
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
 	map["mediaType"] = query.mediaType();
+#endif
 	Query(modelData, QString("Playlists.GetPlaylistForChannel"), map, m_sessionInfo);
 }
 
@@ -671,7 +675,11 @@ QDomDocument Mediafly::Playlists_GetNextEpisodeForChannelPlaylist (const Mediafl
 	QMap<QString, QString> map;
 	map["channelSlug"] = channelSlug;
 	map["episodeSlug"] = episodeSlug;
-	map["mediaType"] = mediaType;
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
+	map["mediaType"] = query.mediaType();
+#endif
 	QDomDocument doc = Query("Playlists.GetNextEpisodeForChannelPlaylist", map, session);
 	checkResponse(doc);
 	return doc;
@@ -712,7 +720,11 @@ QDomDocument Mediafly::Playlists_GetPrevEpisodeForChannelPlaylist (const Mediafl
 	QMap<QString, QString> map;
 	map["channelSlug"] = channelSlug;
 	map["episodeSlug"] = episodeSlug;
-	map["mediaType"] = mediaType;
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
+	map["mediaType"] = query.mediaType();
+#endif
 	QDomDocument doc = Query("Playlists.GetPrevEpisodeForChannelPlaylist", map, session);
 	checkResponse(doc);
 	return doc;
@@ -768,7 +780,11 @@ QDomDocument Mediafly::Shows_GetEpisodesForShow (const Mediafly::SessionInfo& se
 	map["showSlug"] = showSlug;
 	map["offset"] = QString::number(offset);
 	map["limit"] = QString::number(limit);
-	map["mediaType"] = mediaType;
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
+	map["mediaType"] = query.mediaType();
+#endif
 	QDomDocument doc = Query("Shows.GetEpisodesForShow", map, session);
 	checkResponse(doc);
 	return doc;
@@ -809,7 +825,11 @@ QDomDocument Mediafly::Shows_GetNextEpisodeForShow (const Mediafly::SessionInfo&
 	QMap<QString, QString> map;
 	map["showSlug"] = showSlug;
 	map["episodeSlug"] = episodeSlug;
-	map["mediaType"] = mediaType;
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
+	map["mediaType"] = query.mediaType();
+#endif
 	QDomDocument doc = Query("Shows.GetNextEpisodeForShow", map, session);
 	checkResponse(doc);
 	return doc;

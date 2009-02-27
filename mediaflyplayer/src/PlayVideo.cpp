@@ -53,8 +53,9 @@ void PlayVideo::quit()
 {
 	hide();
 
+#ifndef NO_FUSE
 	umountUrl();
-
+#endif
 	delete m_timer;
 
 	if (m_nmsControl->Connect())
@@ -79,13 +80,16 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 
 	hide();
 
+#ifdef NO_FUSE
+	return false;
+#else
 	umountUrl();
 
 	// Mount httpfs filesystem with given url.
 
 	if (mountUrl(url, err, 650) == false)
 		return false;
-
+#endif
 	// Get video properties...
 
 	NMediaInfo mediaInfo = m_nmsControl->GetMediaInfo(url);

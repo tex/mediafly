@@ -48,6 +48,8 @@ public:
 	 */
 	virtual void getState(int& songPosition, int& songLength) = 0;
 
+#ifndef NO_FUSE
+
 protected:
 	/**
 	 * Find first regular file in a given directory.
@@ -79,6 +81,7 @@ private:
 	static const QString m_mountPoint;
 	static const QString m_httpfs;
 	static const QString m_preloadfs;
+#endif
 };
 
 }

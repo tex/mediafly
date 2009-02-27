@@ -133,7 +133,7 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 
 	m_songPosition = 0;
 	m_songLength = 0;
-
+#ifndef NO_FUSE
 	// Unmount mount point and stop playing for a case we already
 	// play any audio currently.
 
@@ -149,12 +149,13 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 		//
 		// Use normal way,let xmms2 to manage it completly ->
 		// no seek available...
-
+#endif
 		url = m_index.data(mf::EpisodeModel::urlRole).toString();
+#ifndef NO_FUSE
 	}
 	else
 		url = "file://" + url;
-
+#endif
 	if (m_xmmsClient)
 	{
 		m_xmmsClient->playlist.addUrl(url.toAscii().data());

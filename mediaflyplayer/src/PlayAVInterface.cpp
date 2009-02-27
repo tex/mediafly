@@ -1,5 +1,8 @@
-#include <QDir>
 #include "PlayAVInterface.h"
+
+#ifndef NO_FUSE
+
+#include <QDir>
 #include "nmessagebox.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -39,8 +42,11 @@ void mf::PlayAVInterface::mkdir(QString& path) const
 	::exit(EXIT_FAILURE);
 }
 
+#endif
+
 mf::PlayAVInterface::PlayAVInterface()
 {
+#ifndef NO_FUSE
 	QString path;
 
 	path = m_mountPoint + m_httpfs;
@@ -48,10 +54,12 @@ mf::PlayAVInterface::PlayAVInterface()
 
 	path = m_mountPoint + m_preloadfs;
 	mkdir(path);
+#endif
 }
 
 mf::PlayAVInterface::~PlayAVInterface()
 {
+#ifndef NO_FUSE
 	QString path;
 
 	path = m_mountPoint + m_httpfs;
@@ -59,7 +67,10 @@ mf::PlayAVInterface::~PlayAVInterface()
 
 	path = m_mountPoint + m_preloadfs;
 	rmdir(path.toAscii());
+#endif
 }
+
+#ifndef NO_FUSE
 
 bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 {
@@ -164,4 +175,6 @@ void mf::PlayAVInterface::umountUrl()
 	cmd = "fusermount -u " + m_mountPoint + m_httpfs;
 	umount(cmd);
 }
+
+#endif
 

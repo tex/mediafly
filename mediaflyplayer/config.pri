@@ -13,3 +13,14 @@ rootfs.path = /${ROOTFS}/fs/usr/local/bin
 QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wall
 QT -= sql svg
 QT += xml network
+
+# Enable to compile with only audio support.
+#
+# QMAKE_CXXFLAGS += -DONLY_AUDIO
+
+# Enable to compile without fuse support.
+# That practicaly means only audio and audio
+# uses only xmms2's streaming capatibilities.
+#
+# QMAKE_CXXFLAGS += -DNO_FUSE
+
