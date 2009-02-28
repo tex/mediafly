@@ -74,15 +74,6 @@ public:
 
 protected:
 	/**
-	 * Find first regular file in a given directory.
-	 *
-	 * (We use httpfs and preloadfs that mount just one
-	 *  file.)
-	 *
-	 */
-	QString findName(const QString& path);
-
-	/**
 	 * Mount given url with httpfs fuse filesystem.
 	 *
 	 * QString& url - input - url to mount
@@ -90,6 +81,21 @@ protected:
 	 * @return true - succes, false - mount failed
 	 */
 	bool mountUrl(QString& url, QString& err, int cacheSize);
+
+	/**
+	 * Unmount httpfs fuse filesystem.
+	 */
+	void umountUrl();
+
+private:
+	/**
+	 * Find first regular file in a given directory.
+	 *
+	 * (We use httpfs and preloadfs that mount just one
+	 *  file.)
+	 *
+	 */
+	QString findName(const QString& path);
 
 	/**
 	 * Check whether fileSystem is currently mounted on mountPath.
@@ -100,12 +106,6 @@ protected:
 	 */
 	bool isMounted(QString mountPath, QString fileSystem);
 
-	/**
-	 * Unmount httpfs fuse filesystem.
-	 */
-	void umountUrl();
-
-private:
 	void mkdir(QString& url) const;
 	virtual bool mount(QString& cmd, QString& err);
 	bool umount(QString& cmd);
