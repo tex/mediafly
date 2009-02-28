@@ -45,7 +45,7 @@ public:
 	void pause();
 	void seek(int sec);
 
-	void getState(int& songPosition, int& songLength);
+	void getState(int& songPosition, int& songLength, bool& isFinished);
 
 signals:
 	void stateChange();
@@ -54,6 +54,7 @@ private:
 	QModelIndex m_index;
 	long        m_songPosition;
 	long        m_songLength;
+	bool        m_isFinished;
 
 	NmsControl *m_nmsControl;
 	QTimer     *m_timer;

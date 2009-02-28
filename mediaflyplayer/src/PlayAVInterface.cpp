@@ -132,6 +132,7 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 		err += QObject::tr("Program error!") + " [3]";
 		return false;
 	}
+	qDebug() << __PRETTY_FUNCTION__ << url;
 
 	cmd = currentPath + "/" + m_preloadfs + " \"" + url + "\" " + m_mountPoint + m_preloadfs + " " + currentPath + " " + QString::number(cacheSize);
 	if (mount(cmd, err) == false)
@@ -147,11 +148,14 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 		return false;
 	}
 
+	qDebug() << __PRETTY_FUNCTION__ << url;
 	return true;
 }
 
 bool mf::PlayAVInterface::umount(QString& cmd)
 {
+	qDebug() << __PRETTY_FUNCTION__ << cmd;
+
 	for (int i = 0; i < 5; ++i)
 	{
 		int r = system(cmd.toAscii());

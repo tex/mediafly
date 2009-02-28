@@ -60,11 +60,12 @@ void Play::handleStateChange()
 
 	int position;
 	int length;
+	bool isFinished;
 
 	// Get current position and length of the episode. Both are
 	// in miliseconds.
 
-	m_output->getState(position, length);
+	m_output->getState(position, length, isFinished);
 
 	// Experience_PostExperienceForEpisode expects time values in seconds.
 	// NTimerBar expect time values in seconds.
@@ -87,6 +88,14 @@ void Play::handleStateChange()
 	m_progressBar->setMaximum(length);
 	m_progressBar->setValue(position);
 	m_progressBar->update();
+
+	if (isFinished)
+	{
+		// When one episode finishes advance to
+		// next one.
+
+		handleNextEpisodeButtonClicked();
+	}
 
 	emit stateChange();
 }
@@ -260,10 +269,12 @@ QString Play::toTime(unsigned int msec) const
 
 void Play::getState(QModelIndex &currentIndex, QString &songPosition, QString &songLength)
 {
-	int position, length;
+	int position;
+	int length;
+	bool isFinished;
 
 	currentIndex = m_index;
-	m_output->getState(position, length);
+	m_output->getState(position, length, isFinished);
 	songPosition = toTime(position);
 	songLength = toTime(length);
 }

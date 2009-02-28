@@ -46,7 +46,7 @@ public:
 	 *  int songPosition
 	 *  int songLength
 	 */
-	virtual void getState(int& songPosition, int& songLength) = 0;
+	virtual void getState(int& songPosition, int& songLength, bool& isFinished) = 0;
 
 #ifndef NO_FUSE
 

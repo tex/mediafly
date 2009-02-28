@@ -104,6 +104,13 @@ bool PlayAudio::handlePlaytime(const unsigned int &playtime)
 
 bool PlayAudio::handleStatusChanged(const Xmms::Playback::Status& status)
 {
+	if ((m_songPosition > 0) && (status == Xmms::Playback::STOPPED))
+	{
+		m_isFinished = true;
+	}
+	else
+		m_isFinished = false;
+
 	emit stateChange();
 	return true;
 }
@@ -133,6 +140,8 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 
 	m_songPosition = 0;
 	m_songLength = 0;
+	m_isFinished = false;
+
 #ifndef NO_FUSE
 	// Unmount mount point and stop playing for a case we already
 	// play any audio currently.
@@ -192,10 +201,11 @@ void PlayAudio::hide()
 	}
 }
 
-void PlayAudio::getState(int& songPosition, int& songLength)
+void PlayAudio::getState(int& songPosition, int& songLength, bool& isFinished)
 {
 	songPosition = m_songPosition;
 	songLength = m_songLength;
+	isFinished = m_isFinished;
 }
 
 bool PlayAudio::handlePlaylist(const Xmms::List<unsigned int> &list)

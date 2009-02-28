@@ -95,6 +95,7 @@ bool PlayVideo::show(const QModelIndex& index, QString& err)
 	NMediaInfo mediaInfo = m_nmsControl->GetMediaInfo(url);
 	m_songPosition = 0;
 	m_songLength = mediaInfo.GetDuration();
+	m_isFinished = false;
 
 	// Play video...
 
@@ -139,14 +140,21 @@ void PlayVideo::pause()
 void PlayVideo::handleTimeout()
 {
 	m_songPosition = m_nmsControl->GetPlayTime();
+	if ((m_songPosition > 0) && (!m_nmsControl->NmsIsPlaying()))
+	{
+		m_isFinished = true;
+	}
+	else
+		m_isFinished = false;
 
 	emit stateChange();
 }
 
-void PlayVideo::getState(int& songPosition, int& songLength)
+void PlayVideo::getState(int& songPosition, int& songLength, bool& isFinished)
 {
 	songPosition = m_songPosition;
 	songLength = m_songLength;
+	isFinished = m_isFinished;
 }
 
 void PlayVideo::seek(int sec)

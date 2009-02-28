@@ -54,7 +54,7 @@ public:
 	void pause();
 	void seek(int sec);
 
-	void getState(int& songPosition, int& songLength);
+	void getState(int& songPosition, int& songLength, bool& isFinished);
 
 	void keyPressEvent(QKeyEvent* event);
 signals:
@@ -80,6 +80,7 @@ private:
 	Xmms::Client *m_xmmsClient;
 	unsigned int  m_songPosition;
 	unsigned int  m_songLength;
+	bool          m_isFinished;
 
 private slots:
 	void updateImage();
