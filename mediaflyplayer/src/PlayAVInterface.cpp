@@ -88,7 +88,7 @@ bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 		}
 		else if (r == 4)
 		{
-			err = QObject::tr("Server doesn't support required feature.");
+			err = QObject::tr("Server doesn't support required features.");
 		}
 		else if (r == 8)
 		{
@@ -149,6 +149,7 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 	}
 
 	qDebug() << __PRETTY_FUNCTION__ << url;
+
 	return true;
 }
 
@@ -156,14 +157,37 @@ bool mf::PlayAVInterface::umount(QString& cmd)
 {
 	qDebug() << __PRETTY_FUNCTION__ << cmd;
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		int r = system(cmd.toAscii());
 		if ((r == -1) || (WEXITSTATUS(r) != 0))
 		{
-			usleep(500);
+			qDebug() << __PRETTY_FUNCTION__ << "WAITING...";
+			usleep(1000000);
 		}
 		else
+		{
+			qDebug() << __PRETTY_FUNCTION__ << "SUCCESS";
+			return true;
+		}
+	}
+	return false;
+}
+
+bool mf::PlayAVInterface::isMounted(QString mountPath, QString fileSystem)
+{
+	QString find(fileSystem + " " + mountPath);
+	QFile file("/proc/mounts");
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		qDebug() << __PRETTY_FUNCTION__ << "Filed to open /proc/mounts";
+		return false;
+	}
+	while (!file.atEnd())
+	{
+		QByteArray line = file.readLine();
+		if (line.indexOf(find) != -1)
 			return true;
 	}
 	return false;
@@ -173,11 +197,17 @@ void mf::PlayAVInterface::umountUrl()
 {
 	QString cmd;
 
-	cmd = "fusermount -u " + m_mountPoint + m_preloadfs;
-	umount(cmd);
+	if (isMounted(m_mountPoint, m_preloadfs))
+	{
+		cmd = "fusermount -u " + m_mountPoint + m_preloadfs;
+		umount(cmd);
+	}
 
-	cmd = "fusermount -u " + m_mountPoint + m_httpfs;
-	umount(cmd);
+	if (isMounted(m_mountPoint, m_httpfs))
+	{
+		cmd = "fusermount -u " + m_mountPoint + m_httpfs;
+		umount(cmd);
+	}
 }
 
 #endif

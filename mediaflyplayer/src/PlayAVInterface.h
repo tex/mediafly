@@ -62,11 +62,21 @@ protected:
 
 	/**
 	 * Mount given url with httpfs fuse filesystem.
+	 *
 	 * QString& url - input - url to mount
 	 *              - output - full path to mounted file in local mount point
 	 * @return true - succes, false - mount failed
 	 */
 	bool mountUrl(QString& url, QString& err, int cacheSize);
+
+	/**
+	 * Check whether fileSystem is currently mounted on mountPath.
+	 *
+	 * QString mountPath
+	 * QString fileSystem
+	 * @return true - mounted, false - not mounted
+	 */
+	bool isMounted(QString mountPath, QString fileSystem);
 
 	/**
 	 * Unmount httpfs fuse filesystem.
