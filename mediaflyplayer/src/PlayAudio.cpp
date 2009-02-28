@@ -46,18 +46,8 @@ PlayAudio::PlayAudio(QWidget *parent) :
 
 void PlayAudio::quit()
 {
+	hide();
 	disconnect();
-
-	try
-	{
-		Xmms::Client client("mediafly-quit");
-		client.connect(XMMS2_CONNECTION_PATH);
-		client.playback.stop();
-	}
-	catch (...)
-	{
-		qDebug()<< "Stoped server error!";
-	}
 }
 
 bool PlayAudio::connect()
@@ -194,10 +184,25 @@ void PlayAudio::updateImage()
 
 void PlayAudio::hide()
 {
+/**
+ * This code doesn't work. Why?
+ *
 	if (m_xmmsClient)
 	{
 		m_xmmsClient->playback.stop();
 		m_xmmsClient->playlist.clear();
+	}
+ */
+	try
+	{
+		Xmms::Client client("mediafly-quit");
+		client.connect(XMMS2_CONNECTION_PATH);
+		client.playback.stop();
+		client.playlist.clear();
+	}
+	catch (...)
+	{
+		qDebug() << "Stoped server error!";
 	}
 }
 
