@@ -428,7 +428,7 @@ int HttpGet(off_t start, size_t size, char * destination) {
 
     /* Build request buffer, starting with the GET. */
 
-    bytes = snprintf(buf, sizeof(buf), "GET %s HTTP/1.1\r\nHost: %s\r\n", file_name, host);
+    bytes = snprintf(buf, sizeof(buf), "GET %s HTTP/1.0\r\nHost: %s\r\n", file_name, host);
     bytes += snprintf(&buf[bytes], sizeof(buf) - bytes, "Range: bytes=%llu-%llu\r\n", (unsigned long long) start, (unsigned long long) end);
 #ifdef USE_AUTH
     if ( *auth_buf != '\0' )
@@ -448,7 +448,6 @@ int HttpGet(off_t start, size_t size, char * destination) {
     timeout.tv_usec = 0;
     setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
-
 #ifdef USE_SSL
     if (protocol == PROTO_HTTPS)
 	bytes = SSL_read(ssl, buf, sizeof(buf));
@@ -460,7 +459,7 @@ int HttpGet(off_t start, size_t size, char * destination) {
 	fprintf(stderr, "%s: GET (read) failed with bytes= %d\n", argv0, bytes);
 	return bytes;
     }
-    (void) sscanf(buf, "HTTP/1.1 %d ", &status);
+    (void) sscanf(buf, "HTTP/1.%*d %d ", &status);
     if ((status != 200) && (status != 206)) {
 	fprintf(stderr, "%s: GET (read) failed with Status %d\n", argv0, status);
 	return -1;
