@@ -1,10 +1,13 @@
-This is binary image for Neuros' OSD1 device.
+These are binary images for Neuros' OSD1 device.
+
+dev.upk - only audio using streaming capatibilities of xmms2
+full.upk - audio + video using fuse filesystems httpfs and preloadfs
 
 Intalation:
 
 1. Create directory 'newpackage' in SD card root directory.
 2. Create empty file in 'newpackage' directory named 'disable_upk_version_check'.
-3. Copy image 'dev.upk' to 'newpackage' directory and rename 'dev.upk' to 'r3.upk'.
+3. Copy image 'dev.upk' (or 'full.upk') to 'newpackage' directory and rename it to 'r3.upk'.
 4. Power-off OSD1 device.
 5. Insert SD-card to OSD1 device.
 6. Power-on OSD1 device.
