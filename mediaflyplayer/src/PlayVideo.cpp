@@ -140,7 +140,7 @@ void PlayVideo::pause()
 void PlayVideo::handleTimeout()
 {
 	m_songPosition = m_nmsControl->GetPlayTime();
-	if ((m_songPosition > 0) && (!m_nmsControl->NmsIsPlaying()))
+	if ((m_songPosition > 0) && (!m_nmsControl->IsPlaying()))
 	{
 		m_isFinished = true;
 	}
