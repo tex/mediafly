@@ -27,9 +27,9 @@
 #include <QIcon>
 
 mf::Menu::Menu(mf::MenuModel&        menuModel,
-                   mf::ChannelModel&     channelModel,
-                   mf::EpisodeModel&     episodeModel,
-                   QWidget *parent) :
+               mf::ChannelModel&     channelModel,
+               mf::EpisodeModel&     episodeModel,
+               QWidget *parent) :
 	NBackgroundManagedWidget(parent),
 	m_state(MainMenu),
 	m_menuModel(menuModel),
