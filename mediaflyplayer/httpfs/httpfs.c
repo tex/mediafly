@@ -925,6 +925,7 @@ parseUrlAgain:
 
     int r = getSize();
     if (r == -2) {
+        close(sockfd);
         if (++rc > 10)
             return 8;
         goto parseUrlAgain;
