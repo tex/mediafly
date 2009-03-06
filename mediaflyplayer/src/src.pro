@@ -103,6 +103,13 @@ SOURCES += LoginPerson.cpp
 HEADERS += BindMFUserData.h
 SOURCES += BindMFUserData.cpp
 
+FORMS += ../forms/MediaflyPersonalizeSimple.ui
+HEADERS += GetUserAssociationCodeData.h
+SOURCES += GetUserAssociationCodeData.cpp
+
+HEADERS += PersonalizeSimple.h
+SOURCES += PersonalizeSimple.cpp
+
 HEADERS += MenuDelegate.h
 SOURCES += MenuDelegate.cpp
 

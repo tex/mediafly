@@ -417,7 +417,7 @@ QDomDocument Mediafly::Authentication_GetTokenInfo (const Mediafly::SessionInfo&
 	checkResponse(doc);
 	return doc;
 }
-
+#endif
 /**
  * This method returns a unique, user-friendly code that the user can enter into
  * the Mediafly system to associate this device or application with his Mediafly
@@ -429,13 +429,12 @@ QDomDocument Mediafly::Authentication_GetTokenInfo (const Mediafly::SessionInfo&
  *   <code value="CODE" />
  * </response>
  */
-QDomDocument Mediafly::Authentication_GetUserAssociationCode (const Mediafly::SessionInfo& session) {
+void Mediafly::Authentication_GetUserAssociationCode (mf::auth::GetUserAssociationCodeData* data)
+{
 	QMap<QString, QString> map;
-	QDomDocument doc = Query("Authentication.GetUserAssociationCode", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(data, "Authentication.GetUserAssociationCode", map, m_sessionInfo);
 }
-#endif
+
 /**
  * This method returns a list of account names bound to the calling device.
  * Response:

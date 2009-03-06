@@ -31,8 +31,7 @@ Player::Player(QWidget *parent) :
 	m_episodeDetails = new mf::EpisodeDetails(this);
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
 	m_play = new mf::Play(this);
-	m_loginPerson = new mf::LoginPerson();
-	m_personalize = new Personalize(m_loginPerson);
+	m_personalize = new mf::PersonalizeSimple(this);
 	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
 
 	m_view = new QStackedWidget(this);
@@ -42,7 +41,6 @@ Player::Player(QWidget *parent) :
 	m_view->addWidget(m_episodeDetails);
 	m_view->addWidget(m_play);
 	m_view->addWidget(m_personalize);
-	m_view->addWidget(m_loginPerson);
 	m_view->addWidget(m_playqueue);
 
 	m_layout->addWidget(m_view);
@@ -54,8 +52,6 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(handlePlayMenu(const QModelIndex&)));
 	connect(m_menu, SIGNAL(showPersonalize()),
 	        this, SLOT(handlePersonalize()));
-	connect(m_menu, SIGNAL(showLoginPerson()),
-	        this, SLOT(handleLoginPerson()));
 
 	connect(m_episodeDetails, SIGNAL(showPlayMenu(const QModelIndex&)),
 	        this, SLOT(handlePlayMenu(const QModelIndex&)));
@@ -69,13 +65,8 @@ Player::Player(QWidget *parent) :
 	connect(m_play, SIGNAL(showPlayqueue()),
 	        this, SLOT(showPlayqueue()));
 
-	connect(m_loginPerson, SIGNAL(newPerson()),
-	        this, SLOT(handleNewPerson()));
-	connect(m_loginPerson, SIGNAL(back()),
+	connect(m_personalize, SIGNAL(back()),
 	        this, SLOT(showMenu()));
-
-	connect(m_personalize, SIGNAL(showLoginPerson()),
-	        this, SLOT(handleLoginPerson()));
 
 	connect(m_playqueue, SIGNAL(back()),
 	        this, SLOT(showPlay()));
@@ -106,14 +97,8 @@ void Player::showPlay()
 
 void Player::handlePersonalize()
 {
-	m_personalize->clear();
 	m_view->setCurrentWidget(m_personalize);
-}
-
-void Player::handleLoginPerson()
-{
-	m_loginPerson->clear();
-	m_view->setCurrentWidget(m_loginPerson);
+	m_personalize->show();
 }
 
 void Player::showMenu()

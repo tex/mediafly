@@ -31,6 +31,7 @@
 #include "ConsumerBinary.h"
 #include "SetMFUserAsDefaultData.h"
 #include "GetBoundMFUsersData.h"
+#include "GetUserAssociationCodeData.h"
 #include "BindMFUserData.h"
 #include "CheckResponseOk.h"
 #include <QObject>
@@ -192,7 +193,7 @@ public:
 	 * </response>
 	 */
 	QDomDocument Authentication_GetTokenInfo (const mf::SessionInfo& session);
-
+#endif
 	/**
 	 * This method returns a unique, user-friendly code that the user can enter into
 	 * the Mediafly system to associate this device or application with his Mediafly
@@ -204,8 +205,8 @@ public:
 	 *   <code value="CODE" />
 	 * </response>
 	 */
-	QDomDocument Authentication_GetUserAssociationCode (const mf::SessionInfo& session);
-#endif
+	void Authentication_GetUserAssociationCode (mf::auth::GetUserAssociationCodeData* data);
+
 	/**
 	 * This method returns a list of account names bound to the calling device.
 	 * Response:
