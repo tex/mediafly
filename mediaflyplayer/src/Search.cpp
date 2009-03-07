@@ -12,6 +12,7 @@ mf::Search::Search(QWidget *parent) :
 void mf::Search::show()
 {
 	m_lineEdit->clear();
+	m_lineEdit->setFocus();
 }
 
 void mf::Search::handleOkButtonClicked()

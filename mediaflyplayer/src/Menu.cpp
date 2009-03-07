@@ -192,14 +192,17 @@ void mf::Menu::renderEpisodeMenu(const QModelIndex& index)
 	m_header->setText(tr("Media Episodes"));
 	m_icon->setVisible(false);
 
-	m_episodeModel.cancel();
-	m_episodeModel.clear();
+	if (index.isValid())
+	{
+		m_episodeModel.cancel();
+		m_episodeModel.clear();
 
-	QString slug = index.data(mf::ChannelModel::slugRole).toString();
-	QString name = index.data(mf::ChannelModel::nameRole).toString();
+		QString slug = index.data(mf::ChannelModel::slugRole).toString();
+		QString name = index.data(mf::ChannelModel::nameRole).toString();
 
-	m_channelSlug = slug;
-	m_episodeModel.refresh(mf::EpisodeQuery(slug, 0, itemsReadAtOnce));
+		m_channelSlug = slug;
+		m_episodeModel.refresh(mf::EpisodeQuery(slug, 0, itemsReadAtOnce));
+	}
 
 	m_listView->setModel(&m_episodeModel);
 	m_listView->setItemDelegate(m_itemDelegateEpisode);
@@ -363,7 +366,14 @@ void mf::Menu::handleLeftKey()
 		m_state = MainMenu;
 		break;
 	case EpisodeMenu:
-		m_state = ChannelMenu;
+		if (m_episodeModel.isSearch())
+		{
+			m_episodeModel.cancel();
+			m_episodeModel.clear();
+			emit showSearch();
+			return;
+		} else
+			m_state = ChannelMenu;
 		break;
 	default:
 		return;
@@ -377,7 +387,7 @@ void mf::Menu::uploadNextPartOfMenu()
 
 	switch (m_state) {
 	case EpisodeMenu:
-		m_episodeModel.refresh(mf::EpisodeQuery(m_channelSlug, m_episodeModel.rowCount(), itemsReadAtOnce));
+		m_episodeModel.refresh();
 		return;
 	default:
 		return;
@@ -389,4 +399,18 @@ void mf::Menu::showChannelMenu()
 	m_state = ChannelMenu;
 	render(QModelIndex());
 }
+
+void mf::Menu::showEpisodeMenu(SearchQuery& query)
+{
+	m_episodeModel.refresh(query);
+	m_state = EpisodeMenu;
+	render(QModelIndex());
+}
+
+void mf::Menu::showMainMenu()
+{
+	m_state = MainMenu;
+	render(QModelIndex());
+}
+
 

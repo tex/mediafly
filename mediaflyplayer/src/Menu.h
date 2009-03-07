@@ -27,6 +27,7 @@
 #include "ChannelModel.h"
 #include "EpisodeModel.h"
 #include "EpisodeDelegate.h"
+#include "SearchQuery.h"
 #include "CheckResponseOk.h"
 #include "ui_MediaflyMenu.h"
 #include <QObject>
@@ -45,7 +46,7 @@ public:
 	     mf::EpisodeModel&      episodeModel,
 	     QWidget               *parent = 0); 
 
-	void showChannelsMenu();
+	void showEpisodeMenu(SearchQuery& query);
 
 signals:
 	void showSearch();
@@ -56,6 +57,7 @@ signals:
 
 public slots:
 	void showChannelMenu();
+	void showMainMenu();
 
 private:
 	enum State

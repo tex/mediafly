@@ -76,7 +76,7 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(showPlay()));
 
 	connect(m_search, SIGNAL(back()),
-	        this, SLOT(showMenu()));
+	        this, SLOT(showMainMenu()));
 	connect(m_search, SIGNAL(search(QString)),
 	        this, SLOT(handleSearchTerm(QString)));
 }
@@ -120,10 +120,19 @@ void Player::handleSearchTerm(QString term)
 {
 	qDebug() << __PRETTY_FUNCTION__ << term;
 	m_view->setCurrentWidget(m_menu);
+
+	SearchQuery query(term);
+	m_menu->showEpisodeMenu(query);
 }
 
 void Player::showMenu()
 {
+	m_view->setCurrentWidget(m_menu);
+}
+
+void Player::showMainMenu()
+{
+	m_menu->showMainMenu();
 	m_view->setCurrentWidget(m_menu);
 }
 

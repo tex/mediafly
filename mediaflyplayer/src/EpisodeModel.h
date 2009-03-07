@@ -27,6 +27,8 @@
 #include "EpisodeEntry.h"
 #include "EpisodeQuery.h"
 #include "ConsumerBinary.h"
+#include "SearchQueryData.h"
+#include "SearchQuery.h"
 #include <QAbstractListModel>
 #include <QMap>
 #include <QString>
@@ -55,53 +57,50 @@ public:
 		channelRole,
 	};
 
-	EpisodeModel(QObject *parent = 0); 
+	EpisodeModel(QObject *parent = 0);
 	EpisodeModel(const EpisodeModel &obj);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
 
+	static bool advanceToNextEpisode(QModelIndex& index);
+	static bool advanceToPreviousEpisode(QModelIndex& index);
+
 	void clear();
 
 	void refresh(const mf::EpisodeQuery& query);
+	void refresh(const mf::SearchQuery& query);
 	void refresh();
 	void refreshFull();
 	void cancel();
 
 	int totalRowCount() const;
 
-	static bool advanceToNextEpisode(QModelIndex& index)
-	{
-		if (index.row() + 15 > index.model()->rowCount())
-			dynamic_cast<EpisodeModel *>(
-				const_cast<QAbstractItemModel *>(index.model())
-			)->refresh();
-		if (index.row() + 1 < index.model()->rowCount()) {
-			index = index.model()->index(index.row() + 1, 0);
-			return true;
-		}
-		return false;
-	}
-
-	static bool advanceToPreviousEpisode(QModelIndex& index)
-	{
-		if (index.row() > 0) {
-			index = index.model()->index(index.row() - 1, 0);
-			return true;
-		}
-		return false;
-	}
+	bool isSearch() const { return m_state == SearchData; }
 
 signals:
 	void refreshed();
 
 private:
 	Mediafly                       *m_mediafly;
-	mf::EpisodeModelData            m_modelData;
 	mf::ConsumerBinary              m_binaryData;
 	QMap<int, mf::EpisodeEntry>     m_data;
 	bool                            m_refreshFinished;
-	mf::EpisodeQuery                m_query;
+
+	EpisodeModelData m_episodeModelData;
+	SearchQueryData  m_seachQueryData;
+	
+	enum State
+	{
+		EpisodeData,
+		SearchData,
+	}
+	m_state;
+
+	EpisodeQuery m_episodeQuery;
+	SearchQuery  m_searchQuery;
+
+	void setState(enum State state);
 
 private slots:
 	void handleEntryRead(const mf::EpisodeEntry& entry);

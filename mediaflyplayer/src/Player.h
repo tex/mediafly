@@ -65,6 +65,7 @@ private slots:
 	void handlePersonalize();
 	void handleNewPerson();
 	void showMenu();
+	void showMainMenu();
 	void showChannelsMenu();
 	void showPlayqueue();
 	void showPlay();

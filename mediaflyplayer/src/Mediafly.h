@@ -33,6 +33,7 @@
 #include "GetBoundMFUsersData.h"
 #include "GetUserAssociationCodeData.h"
 #include "SearchQueryData.h"
+#include "SearchQuery.h"
 #include "BindMFUserData.h"
 #include "CheckResponseOk.h"
 #include <QObject>
@@ -572,7 +573,7 @@ public:
 	 * increases the time it takes to calculate the search results and is therefore
 	 * discouraged.
 	 */
-	void Search_Query (mf::SearchQueryData *searchData, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts);
+	void Search_Query (mf::SearchQueryData *searchData, const mf::SearchQuery &query);
 
 #if 0
 	/**

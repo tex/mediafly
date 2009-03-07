@@ -29,13 +29,10 @@ using namespace mf;
 EpisodeModel::EpisodeModel(QObject *parent) :
 	QAbstractListModel(parent)
 {
+	setState(EpisodeData);
+
 	m_mediafly = Mediafly::getMediafly();
 	m_refreshFinished = true;
-
-	connect(&m_modelData, SIGNAL(entryRead(const mf::EpisodeEntry&)),
-	        this, SLOT(handleEntryRead(const mf::EpisodeEntry&)));
-	connect(&m_modelData, SIGNAL(entryReadFinished()),
-	        this, SLOT(handleEntryReadFinished()));
 
 	connect(&m_binaryData, SIGNAL(binaryRead(const QString&, const QByteArray&)),
 	        this, SLOT(handleBinaryRead(const QString&, const QByteArray&)));
@@ -45,6 +42,7 @@ EpisodeModel::EpisodeModel(const EpisodeModel& obj) :
 	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
 {
 	m_mediafly = Mediafly::getMediafly();
+	m_state = obj.m_state;
 	m_data = obj.m_data;
 	m_refreshFinished = obj.m_refreshFinished;
 }
@@ -52,35 +50,115 @@ EpisodeModel::EpisodeModel(const EpisodeModel& obj) :
 void EpisodeModel::clear()
 {
 	m_data.clear();
-	m_modelData.clear();
+
+	switch (m_state) {
+	case EpisodeData:
+		m_episodeModelData.clear();
+		break;
+	case SearchData:
+		m_seachQueryData.clear();
+		break;
+	default:
+		Q_ASSERT(false);
+	}
+
 	m_refreshFinished = true;
+}
+
+void EpisodeModel::setState(enum State state)
+{
+	if (m_state == state)
+		return;
+
+	m_state = state;
+
+	switch (m_state) {
+	case EpisodeData:
+		disconnect(&m_seachQueryData, 0, this, 0);
+
+		connect(&m_episodeModelData, SIGNAL(entryRead(const mf::EpisodeEntry&)),
+		        this, SLOT(handleEntryRead(const mf::EpisodeEntry&)));
+		connect(&m_episodeModelData, SIGNAL(entryReadFinished()),
+		        this, SLOT(handleEntryReadFinished()));
+		break;
+	case SearchData:
+		disconnect(&m_episodeModelData, 0, this, 0);
+
+		connect(&m_seachQueryData, SIGNAL(entryRead(const mf::EpisodeEntry&)),
+		        this, SLOT(handleEntryRead(const mf::EpisodeEntry&)));
+		connect(&m_seachQueryData, SIGNAL(entryReadFinished()),
+		        this, SLOT(handleEntryReadFinished()));
+		break;
+	default:
+		Q_ASSERT(false);
+	}
+	clear();
 }
 
 void EpisodeModel::refresh(const mf::EpisodeQuery& query)
 {
+	setState(EpisodeData);
+
 	if (!m_refreshFinished)
 		return;
 	m_refreshFinished = false;
 
-	if ((m_data.size() < m_modelData.totalEpisodes()) ||	// Not all episodes loaded yet.
-	    (m_modelData.totalEpisodes() == -1))		// Unknown number of episodes.
+	if ((m_data.size() < m_episodeModelData.totalEpisodes()) ||	// Not all episodes loaded yet.
+	    (m_episodeModelData.totalEpisodes() == -1))		// Unknown number of episodes.
 	{
-		m_mediafly->Playlists_GetPlaylistForChannel(&m_modelData, query);
-		m_query = query;
+		m_mediafly->Playlists_GetPlaylistForChannel(&m_episodeModelData, query);
+		m_episodeQuery = query;
+	}
+}
+
+void EpisodeModel::refresh(const mf::SearchQuery& query)
+{
+	setState(SearchData);
+
+	if (!m_refreshFinished)
+		return;
+	m_refreshFinished = false;
+
+	if ((m_data.size() < m_seachQueryData.totalEpisodes()) ||	// Not all episodes loaded yet.
+	    (m_seachQueryData.totalEpisodes() == -1))			// Unknown number of episodes.
+	{
+		m_mediafly->Search_Query(&m_seachQueryData, query);
+		m_searchQuery = query;
 	}
 }
 
 void EpisodeModel::refresh()
 {
-	mf::EpisodeQuery query(m_query.channelSlug(), m_query.offset() + m_query.limit(), m_query.limit(), m_query.mediaType());
-	refresh(query);
+	switch (m_state) {
+	case EpisodeData:
+		m_episodeQuery.advanceOffset();
+		refresh(m_episodeQuery);
+		break;
+	case SearchData:
+		m_searchQuery.advanceOffset();
+		refresh(m_searchQuery);
+		break;
+	default:
+		Q_ASSERT(false);
+	}
 }
 
 void EpisodeModel::refreshFull()
 {
 	clear();
-	mf::EpisodeQuery query(m_query.channelSlug(), 0, m_query.offset() + m_query.limit(), m_query.mediaType());
-	refresh(query);
+
+	switch (m_state) {
+	case EpisodeData:
+		m_episodeQuery.clearOffset();
+		refresh(m_episodeQuery);
+		break;
+	case SearchData:
+		m_searchQuery.clearOffset();
+		refresh(m_searchQuery);
+		break;
+	default:
+		Q_ASSERT(false);
+	}
 }
 
 void EpisodeModel::cancel()
@@ -154,6 +232,38 @@ QVariant EpisodeModel::data(const QModelIndex &index, int role) const
 
 int EpisodeModel::totalRowCount() const
 {
-	return m_modelData.totalEpisodes();
+	switch (m_state) {
+	case EpisodeData:
+		return m_episodeModelData.totalEpisodes();
+	case SearchData:
+		return m_seachQueryData.totalEpisodes();
+	default:
+		Q_ASSERT(false);
+	}
+	// We newer reach this code. Just make compiler happy.
+	// 
+	return -1;
+}
+
+bool EpisodeModel::advanceToNextEpisode(QModelIndex& index)
+{
+	if (index.row() + 15 > index.model()->rowCount())
+		dynamic_cast<EpisodeModel *>(
+			const_cast<QAbstractItemModel *>(index.model())
+		)->refresh();
+	if (index.row() + 1 < index.model()->rowCount()) {
+		index = index.model()->index(index.row() + 1, 0);
+		return true;
+	}
+	return false;
+}
+
+bool EpisodeModel::advanceToPreviousEpisode(QModelIndex& index)
+{
+	if (index.row() > 0) {
+		index = index.model()->index(index.row() - 1, 0);
+		return true;
+	}
+	return false;
 }
 

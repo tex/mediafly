@@ -20,46 +20,57 @@
  *
  ****************************************************************************/
 
-#ifndef mfEpisodeQuery_H
-#define mfEpisodeQuery_H
+#ifndef mfSearchQuery_H
+#define mfSearchQuery_H
 
 #include <QString>
 
 namespace mf {
 
-class EpisodeQuery
+class SearchQuery
 {
 public:
-	EpisodeQuery() { }
+	SearchQuery() { }
 
-	EpisodeQuery(QString channelSlug, int offset, int limit, QString mediaType = "audio,video") :
-		m_channelSlug(channelSlug),
+	SearchQuery(QString term, QString searchType = "episode", QString explicitFilter = "notexplicit", QString mediaType = "audio,video", int offset = 0, int limit = 10, bool includeCounts = true) :
+		m_term(term),
+		m_searchType(searchType),
+		m_explicitFilter(explicitFilter),
+		m_mediaType(mediaType),
 		m_offset(offset),
 		m_limit(limit),
-		m_mediaType(mediaType)
+		m_includeCounts(includeCounts)
 	{ }
 
-	EpisodeQuery(const EpisodeQuery& obj) :
-		m_channelSlug(obj.m_channelSlug),
+	SearchQuery(const SearchQuery& obj) :
+		m_term(obj.m_term),
+		m_searchType(obj.m_searchType),
+		m_explicitFilter(obj.m_explicitFilter),
+		m_mediaType(obj.m_mediaType),
 		m_offset(obj.m_offset),
 		m_limit(obj.m_limit),
-		m_mediaType(obj.m_mediaType)
+		m_includeCounts(obj.m_includeCounts)
 	{ }
 
 	void clearOffset() { m_offset = 0; }
 	void advanceOffset() { m_offset += m_limit; }
 
-	const QString& channelSlug() const { return m_channelSlug; }
+	QString term() const { return m_term; }
+	QString searchType() const { return m_searchType; }
+	QString explicitFilter() const { return m_explicitFilter; }
+	QString mediaType() const { return m_mediaType; }
 	int offset() const { return m_offset; }
 	int limit() const { return m_limit; }
-	const QString& mediaType() const { return m_mediaType; }
+	bool includeCounts() const { return m_includeCounts; }
 
-	void setChannelSlug(QString channelSlug) { m_channelSlug = channelSlug; }
 private:
-	QString m_channelSlug;
+	QString m_term;
+	QString m_searchType;
+	QString m_explicitFilter;
+	QString m_mediaType;
 	int     m_offset;
 	int     m_limit;
-	QString m_mediaType;
+	bool    m_includeCounts;
 };
 
 }

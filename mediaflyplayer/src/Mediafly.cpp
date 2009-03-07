@@ -87,6 +87,8 @@ bool Mediafly::checkResponse(QDomDocument& doc, QString& data, QString& errorMsg
 
 void Mediafly::handleRequestFinished(int id, bool error)
 {
+	qDebug() << __PRETTY_FUNCTION__ << id << error << m_http.errorString();
+
 	if (m_connection.contains(id))
 	{
 		RequestInfo requestInfo = m_connection.value(id);
@@ -890,16 +892,16 @@ void Mediafly::Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, Q
  * increases the time it takes to calculate the search results and is therefore
  * discouraged.
  */
-void Mediafly::Search_Query (mf::SearchQueryData* searchData, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts)
+void Mediafly::Search_Query (mf::SearchQueryData* searchData, const mf::SearchQuery& query)
 {
 	QMap<QString, QString> map;
-	map["term"] = term;
-	map["searchType"] = "episode"; // searchType; // search only episodes until I figure out what's shows...
-	map["explicitFilter"] = explicitFilter;
-	map["mediaType"] = mediaType;
-	map["offset"] = QString::number(offset);
-	map["limit"] = QString::number(limit);
-	map["includeCounts"] = includeCounts ? "yes" : "no";
+	map["term"] = query.term();
+	map["searchType"] = query.searchType();
+	map["explicitFilter"] = query.explicitFilter();
+	map["mediaType"] = query.mediaType();
+	map["offset"] = QString::number(query.offset());
+	map["limit"] = QString::number(query.limit());
+	map["includeCounts"] = query.includeCounts() ? "yes" : "no";
 	Query(searchData, "Search.Query", map, m_sessionInfo);
 }
 
