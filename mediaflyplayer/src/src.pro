@@ -107,6 +107,10 @@ FORMS += ../forms/MediaflyPersonalizeSimple.ui
 HEADERS += GetUserAssociationCodeData.h
 SOURCES += GetUserAssociationCodeData.cpp
 
+FORMS += ../forms/MediaflySearch.ui
+HEADERS += Search.h
+SOURCES += Search.cpp
+
 HEADERS += PersonalizeSimple.h
 SOURCES += PersonalizeSimple.cpp
 

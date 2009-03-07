@@ -845,7 +845,6 @@ void Mediafly::Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, Q
 	Query(data, "Experience.PostExperienceForEpisode", map, m_sessionInfo);
 }
 
-#if 0
 /**
  * This method returns a list of shows and/or episodes based on the specified
  * search term.  Please note: shows include additional attributes in the result set
@@ -891,21 +890,20 @@ void Mediafly::Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, Q
  * increases the time it takes to calculate the search results and is therefore
  * discouraged.
  */
-QDomDocument Mediafly::Search_Query (const Mediafly::SessionInfo& session, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts ) {
+void Mediafly::Search_Query (mf::SearchQueryData* searchData, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts)
+{
 	QMap<QString, QString> map;
 	map["term"] = term;
-	map["searchType"] = searchType;
+	map["searchType"] = "episode"; // searchType; // search only episodes until I figure out what's shows...
 	map["explicitFilter"] = explicitFilter;
 	map["mediaType"] = mediaType;
 	map["offset"] = QString::number(offset);
 	map["limit"] = QString::number(limit);
 	map["includeCounts"] = includeCounts ? "yes" : "no";
-	QDomDocument doc = Query("Search.Query", map, session);
-	checkResponse(doc);
-	return doc;
+	Query(searchData, "Search.Query", map, m_sessionInfo);
 }
 
-
+#if 0
 /**
  * This method subscribes a user to the specified show or episode.  This method
  * only works if the device is associated with a Mediafly user account.

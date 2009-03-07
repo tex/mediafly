@@ -20,29 +20,29 @@
  *
  ****************************************************************************/
 
-#include "EpisodeModelData.h"
-#include <QDebug>
+#ifndef mfSearch_H
+#define mfSearch_H
 
-void mf::EpisodeModelData::read(const QDomDocument& doc)
+#include "ui_MediaflySearch.h"
+
+namespace mf {
+
+class Search : public QWidget, protected Ui::MediaflySearch
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	Q_OBJECT
+public:
+	Search(QWidget *parent = 0);
+	void show();
 
-	QDomNode playlist = doc.firstChildElement("response").firstChildElement(m_container);
+signals:
+	void back();
+	void search(QString term);
 
-	m_totalEpisodes = playlist.toElement().attribute("totalEpisodes").toInt();
+private slots:
+	void handleOkButtonClicked();
+};
 
-	QDomNode it = playlist.firstChild();
-	while (!it.isNull()) {
-		QDomElement el = it.toElement();
-		if (!el.isNull()) {
-			mf::EpisodeEntry entry(el.attribute("title"), el.attribute("slug"), el.attribute("description"),
-			                       el.attribute("format"), el.attribute("url"), el.attribute("urlOriginal"),
-			                       el.attribute("published"), el.attribute("showSlug"), el.attribute("showTitle"),
-			                       el.attribute("imageUrl"), el.attribute("channel"));
-			emit entryRead(entry);
-		}
-		it = it.nextSibling();
-	}
-	emit entryReadFinished();
 }
+
+#endif
 

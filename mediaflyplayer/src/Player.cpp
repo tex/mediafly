@@ -33,6 +33,7 @@ Player::Player(QWidget *parent) :
 	m_play = new mf::Play(this);
 	m_personalize = new mf::PersonalizeSimple(this);
 	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
+	m_search = new mf::Search(this);
 
 	m_view = new QStackedWidget(this);
 	m_layout = new QVBoxLayout(this);
@@ -42,6 +43,7 @@ Player::Player(QWidget *parent) :
 	m_view->addWidget(m_play);
 	m_view->addWidget(m_personalize);
 	m_view->addWidget(m_playqueue);
+	m_view->addWidget(m_search);
 
 	m_layout->addWidget(m_view);
 	setLayout(m_layout);
@@ -52,6 +54,8 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(handlePlayMenu(const QModelIndex&)));
 	connect(m_menu, SIGNAL(showPersonalize()),
 	        this, SLOT(handlePersonalize()));
+	connect(m_menu, SIGNAL(showSearch()),
+	        this, SLOT(handleSearch()));
 
 	connect(m_episodeDetails, SIGNAL(showPlayMenu(const QModelIndex&)),
 	        this, SLOT(handlePlayMenu(const QModelIndex&)));
@@ -70,6 +74,11 @@ Player::Player(QWidget *parent) :
 
 	connect(m_playqueue, SIGNAL(back()),
 	        this, SLOT(showPlay()));
+
+	connect(m_search, SIGNAL(back()),
+	        this, SLOT(showMenu()));
+	connect(m_search, SIGNAL(search(QString)),
+	        this, SLOT(handleSearchTerm(QString)));
 }
 
 void Player::handleNewPerson()
@@ -99,6 +108,18 @@ void Player::handlePersonalize()
 {
 	m_view->setCurrentWidget(m_personalize);
 	m_personalize->show();
+}
+
+void Player::handleSearch()
+{
+	m_view->setCurrentWidget(m_search);
+	m_search->show();
+}
+
+void Player::handleSearchTerm(QString term)
+{
+	qDebug() << __PRETTY_FUNCTION__ << term;
+	m_view->setCurrentWidget(m_menu);
 }
 
 void Player::showMenu()

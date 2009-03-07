@@ -32,6 +32,7 @@
 #include "SetMFUserAsDefaultData.h"
 #include "GetBoundMFUsersData.h"
 #include "GetUserAssociationCodeData.h"
+#include "SearchQueryData.h"
 #include "BindMFUserData.h"
 #include "CheckResponseOk.h"
 #include <QObject>
@@ -526,7 +527,6 @@ public:
 	 */
 	void Experience_PostExperienceForEpisode (mf::CheckResponseOk *data, QString episodeSlug, int position, int episodeLength);
 
-#if 0
 	/**
 	 * This method returns a list of shows and/or episodes based on the specified
 	 * search term.  Please note: shows include additional attributes in the result set
@@ -572,9 +572,9 @@ public:
 	 * increases the time it takes to calculate the search results and is therefore
 	 * discouraged.
 	 */
-	QDomDocument Search_Query (const mf::SessionInfo& session, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts = false );
+	void Search_Query (mf::SearchQueryData *searchData, QString term, QString searchType, QString explicitFilter, QString mediaType, int offset, int limit, bool includeCounts);
 
-
+#if 0
 	/**
 	 * This method subscribes a user to the specified show or episode.  This method
 	 * only works if the device is associated with a Mediafly user account.

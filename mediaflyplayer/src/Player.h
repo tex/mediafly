@@ -28,6 +28,7 @@
 #include "Menu.h"
 #include "PersonalizeSimple.h"
 #include "Playqueue.h"
+#include "Search.h"
 #include <QWidget>
 #include <QObject>
 #include <QStackedWidget>
@@ -54,8 +55,11 @@ private:
 	Play                   *m_play;
 	PersonalizeSimple      *m_personalize;
 	Playqueue              *m_playqueue;
+	Search                 *m_search;
 
 private slots:
+	void handleSearchTerm(QString term);
+	void handleSearch();
 	void handlePlayMenu(const QModelIndex& index);
 	void handleShowMenu(const QModelIndex& index);
 	void handlePersonalize();

@@ -20,29 +20,25 @@
  *
  ****************************************************************************/
 
+#ifndef mfSearchQueryData_H
+#define mfSearchQueryData_H
+
 #include "EpisodeModelData.h"
-#include <QDebug>
 
-void mf::EpisodeModelData::read(const QDomDocument& doc)
+namespace mf {
+
+class SearchQueryData : public EpisodeModelData
 {
-	qDebug() << __PRETTY_FUNCTION__;
-
-	QDomNode playlist = doc.firstChildElement("response").firstChildElement(m_container);
-
-	m_totalEpisodes = playlist.toElement().attribute("totalEpisodes").toInt();
-
-	QDomNode it = playlist.firstChild();
-	while (!it.isNull()) {
-		QDomElement el = it.toElement();
-		if (!el.isNull()) {
-			mf::EpisodeEntry entry(el.attribute("title"), el.attribute("slug"), el.attribute("description"),
-			                       el.attribute("format"), el.attribute("url"), el.attribute("urlOriginal"),
-			                       el.attribute("published"), el.attribute("showSlug"), el.attribute("showTitle"),
-			                       el.attribute("imageUrl"), el.attribute("channel"));
-			emit entryRead(entry);
-		}
-		it = it.nextSibling();
+	Q_OBJECT
+public:
+	SearchQueryData()
+	{
+		m_totalEpisodes = -1;
+		m_container = "searchResults";
 	}
-	emit entryReadFinished();
+};
+
 }
+
+#endif
 

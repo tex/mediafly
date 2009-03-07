@@ -240,6 +240,8 @@ void mf::Menu::selectMenu(QModelIndex& index)
 {
 	switch (index.data(mf::MenuModel::slugRole).toInt()) {
 	case mf::MenuModel::MENU_SEARCH:
+		emit showSearch();
+		break;
 	case mf::MenuModel::MENU_POPULAR_CHANNELS:
 	default:
 		QMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));

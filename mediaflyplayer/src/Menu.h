@@ -48,6 +48,7 @@ public:
 	void showChannelsMenu();
 
 signals:
+	void showSearch();
 	void showPlayMenu(const QModelIndex& index);
 	void showShowMenu(const QModelIndex& index);
 	void showPersonalize();

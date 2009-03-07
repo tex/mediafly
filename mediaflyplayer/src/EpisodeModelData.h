@@ -33,7 +33,11 @@ class EpisodeModelData : public Consumer
 {
 	Q_OBJECT
 public:
-	EpisodeModelData() : m_totalEpisodes(-1) { }
+	EpisodeModelData()
+	{
+		m_totalEpisodes = -1;
+		m_container = "playlist";
+	}
 
 	void read(const QDomDocument& doc);
 
@@ -50,8 +54,9 @@ signals:
 	void entryRead(const mf::EpisodeEntry& entry);
 	void entryReadFinished();
 
-private:
-	int m_totalEpisodes;
+protected:
+	int     m_totalEpisodes;
+	QString m_container;
 };
 
 }
