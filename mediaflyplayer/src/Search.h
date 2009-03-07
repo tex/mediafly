@@ -38,8 +38,8 @@ signals:
 	void back();
 	void search(QString term);
 
-private slots:
-	void handleOkButtonClicked();
+private:
+	void keyPressEvent(QKeyEvent *event);
 };
 
 }

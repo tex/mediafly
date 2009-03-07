@@ -21,14 +21,12 @@
  ****************************************************************************/
 
 #include "Search.h"
+#include "nhelpbox.h"
 
 mf::Search::Search(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
-
-	connect(m_cancelButton, SIGNAL(clicked(bool)), this, SIGNAL(back()));
-	connect(m_okButton, SIGNAL(clicked(bool)), this, SLOT(handleOkButtonClicked()));
 }
 
 void mf::Search::show()
@@ -37,10 +35,21 @@ void mf::Search::show()
 	m_lineEdit->setFocus();
 }
 
-void mf::Search::handleOkButtonClicked()
+void mf::Search::keyPressEvent(QKeyEvent *event)
 {
-	// assemble search query
-	//
-	emit search(m_lineEdit->text());
+	switch (event->key()) {
+	case Qt::Key_Right:
+		emit search(m_lineEdit->text());
+		break;
+	case Qt::Key_Left:
+	case Qt::Key_Escape:
+		emit back();
+		break;
+	case Qt::Key_Help:
+		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Left - Back to main menu\n") +
+		                      tr("Right - Search a term\n"));
+		break;
+	}
 }
 
