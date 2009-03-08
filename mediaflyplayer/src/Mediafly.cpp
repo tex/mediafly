@@ -216,6 +216,7 @@ QString Mediafly::makePath(QString& method, QStringList& parameters)
 		if (i + 1 != parameters.size())
 			path += "&";
 	}
+	qDebug() << path;
 	return path;
 }
 
@@ -279,9 +280,15 @@ void Mediafly::Query (mf::Consumer *consumer, QString method, QMap<QString, QStr
 	requestInfo.m_map = map;
 	requestInfo.m_useHttps = useHttps;
 
-	if (m_connection.size() == 0) {
+	if (m_connection.size() == 0)
+	{
 		Query(requestInfo);
-	} else {
+	}
+	else if (requestInfo.m_method != "Experience.PostExperienceForEpisode")
+	{
+		// Don't cache post experience calls (they may flood connection
+		// and it's not problem if some gets lost)...
+
 		m_request << requestInfo;
 	}
 }
