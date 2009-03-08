@@ -51,7 +51,8 @@ void mf::Search::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Right:
-		emit search(m_lineEdit->text());
+		if (!m_lineEdit->text().isEmpty())
+			emit search(m_lineEdit->text());
 		break;
 	case Qt::Key_Left:
 	case Qt::Key_Escape:
