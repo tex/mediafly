@@ -62,6 +62,7 @@ private:
 	mf::CheckResponseOk     m_checkResponseOk;
 	NMediaKeyClient         m_mediakeyChannel;
 	PlayAVInterface        *m_output;
+	bool                    m_ready;
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();

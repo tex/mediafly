@@ -30,7 +30,8 @@ using namespace mf;
 Play::Play(QWidget *parent) :
 	NBackgroundManagedWidget(parent),
 	m_state(MP_PAUSE),
-	m_output(m_audio)
+	m_output(m_audio),
+	m_ready(false)
 {
 	setupUi(this);
 
@@ -89,7 +90,7 @@ void Play::handleStateChange()
 	m_progressBar->setValue(position);
 	m_progressBar->update();
 
-	if (isFinished)
+	if (isFinished && m_ready)
 	{
 		// When one episode finishes advance to
 		// next one.
@@ -154,7 +155,7 @@ void Play::updateStateIndicator(enum State state)
 void Play::show(const QModelIndex& index)
 {
 	m_index = index;
-
+	m_ready = true;
 	update();
 }
 
@@ -212,11 +213,13 @@ void Play::keyPressEvent(QKeyEvent *event)
 			m_audio->keyPressEvent(event);
 		break;
 	case Qt::Key_Left:
+		m_ready = false;
 		m_video->hide();
 		m_audio->hide();
 		emit back();
 		break;
 	case Qt::Key_Escape:
+		m_ready = false;
 		m_video->hide();
 		m_audio->hide();
 		emit backToChannelMenu();
