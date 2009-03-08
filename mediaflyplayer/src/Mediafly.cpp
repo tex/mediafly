@@ -89,37 +89,39 @@ void Mediafly::handleRequestFinished(int id, bool error)
 {
 	qDebug() << __PRETTY_FUNCTION__ << id << error << m_http.errorString();
 
+	if (error)
+	{
+		if (m_http.error() != QHttp::Aborted)
+			emit readError(m_http.errorString());
+		return;
+	}
+
 	if (m_connection.contains(id))
 	{
 		RequestInfo requestInfo = m_connection.value(id);
 
-		if (error) {
-			emit readError(m_http.errorString());
-		}
-		else {
-			QString data = QString::fromUtf8(m_http.readAll());
-			QString errorMsg;
-			QDomDocument doc;
+		QString data = QString::fromUtf8(m_http.readAll());
+		QString errorMsg;
+		QDomDocument doc;
 
-			qDebug() << data;
+		qDebug() << data;
 
-			bool expiredToken;
-			if (!checkResponse(doc, data, errorMsg, expiredToken))
+		bool expiredToken;
+		if (!checkResponse(doc, data, errorMsg, expiredToken))
+		{
+			if (expiredToken)
 			{
-				if (expiredToken)
-				{
-					// Acquire new session info and restart
-					// the operation.
+				// Acquire new session info and restart
+				// the operation.
 
-					Authentication_GetToken();
-					m_request << requestInfo;
-				}
-				else
-					emit readError(errorMsg);
+				Authentication_GetToken();
+				m_request << requestInfo;
 			}
 			else
-				requestInfo.m_consumer->read(doc);
+				emit readError(errorMsg);
 		}
+		else
+			requestInfo.m_consumer->read(doc);
 
 		m_connection.remove(id);
 
@@ -165,9 +167,9 @@ Mediafly::Mediafly()
 
 void Mediafly::abort()
 {
+	m_http.clearPendingRequests();
 	m_connection.clear();
 	m_connectionBinary.clear();
-	m_http.abort();
 }
 
 QStringList Mediafly::makeParams(QMap<QString, QString>& map)

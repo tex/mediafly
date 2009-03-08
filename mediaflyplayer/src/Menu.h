@@ -98,6 +98,7 @@ private slots:
 	void handleRightKey();
 	void handleLeftKey();
 	void uploadNextPartOfMenu();
+	void handleSetUserAsDefaultReady();
 
 private slots:
 	void updateMenuModel();

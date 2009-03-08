@@ -69,10 +69,10 @@ void ChannelModel::handleEntryRead(const mf::ChannelEntry& entry)
 
 void ChannelModel::handleEntryFinished()
 {
-	qDebug() << __PRETTY_FUNCTION__;
+	int size = m_data.size();
 
-	for (int i = m_id; i < m_data.size(); ++i) {
-		m_data.removeAt(i);
+	for (int i = m_id; i < size; ++i) {
+		m_data.removeLast();
 	}
 
 	emit refreshed();

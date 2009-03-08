@@ -61,7 +61,7 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 	        this, SLOT(errorHandler(const QString&)));
 
 	connect(&m_setUserAsDefaultData, SIGNAL(ready()),
-	        this, SLOT(showChannelMenu()));
+	        this, SLOT(handleSetUserAsDefaultReady()));
 
 	connect(&m_checkResponseOk, SIGNAL(done()),
 	        &m_menuModel, SLOT(refresh()));
@@ -77,6 +77,12 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 	m_menuModel.refresh();
 
 	render(QModelIndex());
+}
+
+void mf::Menu::handleSetUserAsDefaultReady()
+{
+	m_menuModel.refresh();
+	showChannelMenu();
 }
 
 void mf::Menu::updateMenuModel()
