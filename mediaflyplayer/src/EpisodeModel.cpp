@@ -129,6 +129,9 @@ void EpisodeModel::refresh(const mf::SearchQuery& query)
 
 void EpisodeModel::refresh()
 {
+	if (!m_refreshFinished)
+		return;
+
 	switch (m_state) {
 	case EpisodeData:
 		m_episodeQuery.advanceOffset();
