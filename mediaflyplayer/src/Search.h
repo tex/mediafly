@@ -23,16 +23,17 @@
 #ifndef mfSearch_H
 #define mfSearch_H
 
+#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflySearch.h"
 
 namespace mf {
 
-class Search : public QWidget, protected Ui::MediaflySearch
+class Search : public NBackgroundManagedWidget, protected Ui::MediaflySearch
 {
 	Q_OBJECT
 public:
 	Search(QWidget *parent = 0);
-	void show();
+	void clear();
 
 signals:
 	void back();
@@ -40,6 +41,9 @@ signals:
 
 private:
 	void keyPressEvent(QKeyEvent *event);
+
+private slots:
+	void handleReturnOnLineEdit();
 };
 
 }

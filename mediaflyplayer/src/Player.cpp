@@ -129,8 +129,8 @@ void Player::handlePersonalize()
 
 void Player::handleSearch()
 {
+	m_search->clear();
 	m_view->setCurrentWidget(m_search);
-	m_search->show();
 }
 
 void Player::handleSearchTerm(QString term)

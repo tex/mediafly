@@ -24,15 +24,27 @@
 #include "nhelpbox.h"
 
 mf::Search::Search(QWidget *parent) :
-	QWidget(parent)
+	NBackgroundManagedWidget(parent)
 {
 	setupUi(this);
+	m_lineEdit->setToolTip(tr("Enter term"));
+
+	setPreferredBackground(BackgroundVideoOnly);
+
+	connect(m_lineEdit, SIGNAL(returnPressed()),
+	        this, SLOT(handleReturnOnLineEdit()));
 }
 
-void mf::Search::show()
+void mf::Search::clear()
 {
 	m_lineEdit->clear();
-	m_lineEdit->setFocus();
+	m_lineEdit->clearFocus();
+}
+
+void mf::Search::handleReturnOnLineEdit()
+{
+	m_lineEdit->clearFocus();
+	this->setFocus();
 }
 
 void mf::Search::keyPressEvent(QKeyEvent *event)
@@ -45,10 +57,14 @@ void mf::Search::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Escape:
 		emit back();
 		break;
+	case Qt::Key_Up:
+		m_lineEdit->setFocus();
+		break;
 	case Qt::Key_Help:
 		NHelpBox::NHelpBoxNew(tr("Possible keys"),
+		                      tr("Up - Enter term\n") +
 		                      tr("Left - Back to main menu\n") +
-		                      tr("Right - Search a term\n"));
+		                      tr("Right - Search term\n"));
 		break;
 	}
 }
