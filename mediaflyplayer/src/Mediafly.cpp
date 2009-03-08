@@ -945,7 +945,11 @@ void Mediafly::Search_Query (mf::SearchQueryData* searchData, const mf::SearchQu
 	map["term"] = query.term();
 	map["searchType"] = query.searchType();
 	map["explicitFilter"] = query.explicitFilter();
+#if (ONLY_AUDIO | NO_FUSE)
+	map["mediaType"] = "audio";
+#else
 	map["mediaType"] = query.mediaType();
+#endif
 	map["offset"] = QString::number(query.offset());
 	map["limit"] = QString::number(query.limit());
 	map["includeCounts"] = query.includeCounts() ? "yes" : "no";
