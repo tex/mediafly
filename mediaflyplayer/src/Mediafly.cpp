@@ -116,7 +116,7 @@ void Mediafly::handleRequestFinished(int id, bool error)
 
 				m_request.prepend(requestInfo);
 			}
-			else if (m_http().error() != QHttp::Aborted)
+			else if (m_http.error() != QHttp::Aborted)
 			{
 				emit readError(m_http.errorString());
 			}
