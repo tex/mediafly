@@ -168,7 +168,6 @@ void Play::update()
 	m_statusLabel->setText(tr("Loading..."));
 
 	QString err;
-	bool ret;
 
 	if (isVideo)
 	{
@@ -177,7 +176,6 @@ void Play::update()
 		m_output = m_video;
 
 		m_stackedWidget->setCurrentWidget(m_video);
-		ret = m_video->show(m_index, err);
 	}
 	else
 	{
@@ -186,9 +184,9 @@ void Play::update()
 		m_output = m_audio;
 
 		m_stackedWidget->setCurrentWidget(m_audio);
-		ret = m_audio->show(m_index, err);
 	}
 
+	bool ret = m_output->show(m_index, err);
 	if (ret == true)
 	{
 		m_statusLabel->clear();
