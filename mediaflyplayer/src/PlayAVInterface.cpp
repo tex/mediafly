@@ -96,6 +96,8 @@ mf::PlayAVInterface::~PlayAVInterface()
 
 bool mf::PlayAVInterface::mount(QString& cmd, QString& err)
 {
+	qDebug() << __PRETTY_FUNCTION__ << cmd;
+
 	int r = system(cmd.toAscii());
 	if (r == -1)
 	{
@@ -169,7 +171,6 @@ bool mf::PlayAVInterface::mountUrl(QString& url, QString& err, int cacheSize)
 		err += QObject::tr("Program error!") + " [4]";
 		return false;
 	}
-
 	qDebug() << __PRETTY_FUNCTION__ << url;
 
 	return true;

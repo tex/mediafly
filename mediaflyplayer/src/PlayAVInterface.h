@@ -65,8 +65,10 @@ public:
 
 	/** Get state of the stream.
 	 *
+	 * Output:
 	 *  int songPosition
 	 *  int songLength
+	 *  bool isFinished
 	 */
 	virtual void getState(int& songPosition, int& songLength, bool& isFinished) = 0;
 
