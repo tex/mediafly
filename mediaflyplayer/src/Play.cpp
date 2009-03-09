@@ -126,15 +126,16 @@ void Play::handlePlayStateButtonClicked()
 	case MP_PLAY:
 		m_state = MP_PAUSE;
 		break;
-	default:
-		Q_ASSERT(false);
+	case MP_ERROR:
+		update();
+		break;
 	}
-	updateStateIndicator(m_state);
+	updateState();
 }
 
-void Play::updateStateIndicator(enum State state)
+void Play::updateState()
 {
-	switch (state) {
+	switch (m_state) {
 	case MP_PAUSE:
 		m_playStateLabel->setText(">");
 		m_output->pause();
@@ -143,8 +144,9 @@ void Play::updateStateIndicator(enum State state)
 		m_playStateLabel->setText("||");
 		m_output->play();
 		break;
-	default:
-		Q_ASSERT(false);
+	case MP_ERROR:
+		m_playStateLabel->setText("X");
+		break;
 	}
 }
 
@@ -186,16 +188,15 @@ void Play::update()
 	if (ret == true)
 	{
 		m_statusLabel->clear();
-
 		m_state = MP_PLAY;
-		updateStateIndicator(m_state);
-
 		emit stateChange();
 	}
 	else
-		// Failed to play episode. Let user know about problem...
-		//
+	{
 		m_statusLabel->setText(err);
+		m_state = MP_ERROR;
+	}
+	updateState();
 }
 
 void Play::keyPressEvent(QKeyEvent *event)

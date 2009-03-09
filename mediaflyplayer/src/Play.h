@@ -55,6 +55,7 @@ private:
 	{
 		MP_PAUSE,
 		MP_PLAY,
+		MP_ERROR,
 	}
 	m_state;
 
@@ -66,7 +67,7 @@ private:
 
 	void keyPressEvent(QKeyEvent *event);
 	void update();
-	void updateStateIndicator(enum State state);
+	void updateState();
 	QString toTime(unsigned int msec) const;
 
 private slots:
