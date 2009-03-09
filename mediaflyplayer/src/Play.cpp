@@ -136,17 +136,13 @@ void Play::updateStateIndicator(enum State state)
 {
 	switch (state) {
 	case MP_PAUSE:
-	{
 		m_playStateLabel->setText(">");
 		m_output->pause();
 		break;
-	}
 	case MP_PLAY:
-	{
 		m_playStateLabel->setText("||");
 		m_output->play();
 		break;
-	}
 	default:
 		Q_ASSERT(false);
 	}
