@@ -148,9 +148,8 @@ bool PlayAudio::show(const QModelIndex& index, QString& err)
 		//
 		// Use normal way,let xmms2 to manage it completly ->
 		// no seek available...
-#endif
+
 		url = m_index.data(mf::EpisodeModel::urlRole).toString();
-#ifndef NO_FUSE
 	}
 	else
 		url = "file://" + url;
