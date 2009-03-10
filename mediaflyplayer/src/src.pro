@@ -17,7 +17,7 @@ include (../config.pri)
 rootfs.files = ../build/*
 INSTALLS += rootfs
 
-LIBS += -lneux -lncooler-core -lxmmsclient++ -lboost_signals
+LIBS += -lneux -lncooler-core
 
 RESOURCES += ../resources/mediafly.qrc
 
@@ -80,12 +80,23 @@ HEADERS += PlayAVInterface.h
 SOURCES += PlayAVInterface.cpp
 
 FORMS += ../forms/MediaflyPlayVideo.ui
-HEADERS += PlayVideo.h
-SOURCES += PlayVideo.cpp
-
 FORMS += ../forms/MediaflyPlayAudio.ui
-HEADERS += PlayAudio.h
-SOURCES += PlayAudio.cpp
+
+phonon {
+  HEADERS += PlayAudioPhonon.h
+  SOURCES += PlayAudioPhonon.cpp
+  HEADERS += PlayVideoPhonon.h
+  SOURCES += PlayVideoPhonon.cpp
+  LIBS += -lphonon
+} else {
+  HEADERS += PlayAudio.h
+  SOURCES += PlayAudio.cpp
+  HEADERS += PlayVideo.h
+  SOURCES += PlayVideo.cpp
+  HEADERS += nxmmsmainloop.h
+  SOURCES += nxmmsmainloop.cpp
+  LIBS += -lxmmsclient++ -lboost_signals
+}
 
 HEADERS += SetMFUserAsDefaultData.h
 
@@ -132,6 +143,4 @@ SOURCES += Playqueue.cpp
 
 QMAKE_CLEAN += ../../build/* ./build/* ./qrc_*.cpp ./Makefile
 
-HEADERS += nxmmsmainloop.h
-SOURCES += nxmmsmainloop.cpp
 
