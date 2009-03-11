@@ -14,13 +14,13 @@ QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wall
 QT -= sql svg
 QT += xml network
 
-# Enable to compile with only audio support.
-#
-# QMAKE_CXXFLAGS += -DONLY_AUDIO
+noFuse {
+  # Compile without fuse support.
+  # That implies audio only support using xmms2's streaming capatibilities.
+  QMAKE_CXXFLAGS += -DNO_FUSE
+}
 
-# Enable to compile without fuse support.
-# That practicaly means only audio and audio
-# uses only xmms2's streaming capatibilities.
-#
-# QMAKE_CXXFLAGS += -DNO_FUSE
+onlyAudio {
+  QMAKE_CXXFLAGS += -DONLY_AUDIO
+}
 

@@ -1,0 +1,10 @@
+Compile time options:
+
+ Usage:
+  qmake "CONFIG+=options"
+
+ Available options:
+  noFuse - build version not using fuse filesystems (httpfs, preloadfs)
+  onlyAudio - build with audio only support
+  phonon - use Phonon subsystem to audio/video playback
+
