@@ -43,7 +43,7 @@ private:
 	void keyPressEvent(QKeyEvent *event);
 
 private slots:
-	void handleReturnOnLineEdit();
+	void handleEditingFinished();
 };
 
 }

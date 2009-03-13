@@ -31,41 +31,30 @@ mf::Search::Search(QWidget *parent) :
 
 	setPreferredBackground(BackgroundVideoOnly);
 
-	connect(m_lineEdit, SIGNAL(returnPressed()),
-	        this, SLOT(handleReturnOnLineEdit()));
+	connect(m_lineEdit, SIGNAL(editingFinished()),
+	        this, SLOT(handleEditingFinished()));
 }
 
 void mf::Search::clear()
 {
 	m_lineEdit->clear();
-	m_lineEdit->clearFocus();
+	m_lineEdit->setFocus();
 }
 
-void mf::Search::handleReturnOnLineEdit()
+void mf::Search::handleEditingFinished()
 {
-	m_lineEdit->clearFocus();
-	this->setFocus();
+	if (m_lineEdit->text().isEmpty())
+	{
+		emit back();
+	} else
+		emit search(m_lineEdit->text());
 }
 
 void mf::Search::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
-	case Qt::Key_Right:
-		if (!m_lineEdit->text().isEmpty())
-			emit search(m_lineEdit->text());
-		break;
-	case Qt::Key_Left:
 	case Qt::Key_Escape:
 		emit back();
-		break;
-	case Qt::Key_Up:
-		m_lineEdit->setFocus();
-		break;
-	case Qt::Key_Help:
-		NHelpBox::NHelpBoxNew(tr("Possible keys"),
-		                      tr("Up - Enter term\n") +
-		                      tr("Left - Back to main menu\n") +
-		                      tr("Right - Search term\n"));
 		break;
 	}
 }
