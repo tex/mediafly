@@ -137,10 +137,6 @@ SOURCES += MenuDelegate.cpp
 HEADERS += CheckResponseOk.h
 SOURCES += CheckResponseOk.cpp
 
-FORMS += ../forms/MediaflyPlayqueue.ui
-HEADERS += Playqueue.h
-SOURCES += Playqueue.cpp
-
 QMAKE_CLEAN += ../../build/* ./build/* ./qrc_*.cpp ./Makefile
 
 

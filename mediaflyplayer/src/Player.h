@@ -27,7 +27,6 @@
 #include "EpisodeDetails.h"
 #include "Menu.h"
 #include "PersonalizeSimple.h"
-#include "Playqueue.h"
 #include "Search.h"
 #include "nbackgroundmanagedwidget.h"
 #include "nstdinappmanager.h"
@@ -56,7 +55,6 @@ private:
 	Menu                   *m_menu;
 	Play                   *m_play;
 	PersonalizeSimple      *m_personalize;
-	Playqueue              *m_playqueue;
 	Search                 *m_search;
 
 	NStdinAppManager stdinman;
@@ -71,7 +69,6 @@ private slots:
 	void showMenu();
 	void showMainMenu();
 	void showChannelMenu();
-	void showPlayqueue();
 	void showPlay();
 	void onQuit();
 };

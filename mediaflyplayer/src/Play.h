@@ -47,8 +47,6 @@ public:
 signals:
 	void back();
 	void backToChannelMenu();
-	void showPlayqueue();
-	void stateChange();
 
 private:
 	enum State

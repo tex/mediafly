@@ -97,8 +97,6 @@ void Play::handleStateChange()
 
 		handleNextEpisodeButtonClicked();
 	}
-
-	emit stateChange();
 }
 
 void Play::handleNextEpisodeButtonClicked()
@@ -189,7 +187,6 @@ void Play::update()
 	{
 		m_statusLabel->clear();
 		m_state = MP_PLAY;
-		emit stateChange();
 	}
 	else
 	{
@@ -218,9 +215,6 @@ void Play::keyPressEvent(QKeyEvent *event)
 		m_video->hide();
 		m_audio->hide();
 		emit backToChannelMenu();
-		break;
-	case Qt::Key_Up:
-		emit showPlayqueue();
 		break;
 	case Qt::Key_MediaPlay:
 		handlePlayStateButtonClicked();

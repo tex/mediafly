@@ -39,7 +39,6 @@ Player::Player(QWidget *parent) :
 	m_menu = new mf::Menu(m_menuModel, m_channelModel, m_episodeModel, this);
 	m_play = new mf::Play(this);
 	m_personalize = new mf::PersonalizeSimple(this);
-	m_playqueue = new mf::Playqueue(m_episodeModel, m_play, this);
 	m_search = new mf::Search(this);
 
 	m_view = new QStackedWidget(this);
@@ -49,7 +48,6 @@ Player::Player(QWidget *parent) :
 	m_view->addWidget(m_episodeDetails);
 	m_view->addWidget(m_play);
 	m_view->addWidget(m_personalize);
-	m_view->addWidget(m_playqueue);
 	m_view->addWidget(m_search);
 
 	m_layout->addWidget(m_view);
@@ -73,14 +71,9 @@ Player::Player(QWidget *parent) :
 	        this, SLOT(showMenu()));
 	connect(m_play, SIGNAL(backToChannelMenu()),
 	        this, SLOT(showChannelMenu()));
-	connect(m_play, SIGNAL(showPlayqueue()),
-	        this, SLOT(showPlayqueue()));
 
 	connect(m_personalize, SIGNAL(back()),
 	        this, SLOT(showMenu()));
-
-	connect(m_playqueue, SIGNAL(back()),
-	        this, SLOT(showPlay()));
 
 	connect(m_search, SIGNAL(back()),
 	        this, SLOT(showMainMenu()));
@@ -157,10 +150,5 @@ void Player::showChannelMenu()
 {
 	m_menu->showChannelMenu();
 	m_view->setCurrentWidget(m_menu);
-}
-
-void Player::showPlayqueue()
-{
-	m_view->setCurrentWidget(m_playqueue);
 }
 
