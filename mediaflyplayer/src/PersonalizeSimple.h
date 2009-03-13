@@ -26,7 +26,7 @@
 #include "ui_MediaflyPersonalizeSimple.h"
 #include "GetUserAssociationCodeData.h"
 
-#include <QString>
+class QKeyEvent;
 
 namespace mf {
 
@@ -41,6 +41,8 @@ signals:
 	void back();
 
 private:
+	void keyPressEvent(QKeyEvent *event);
+
 	mf::auth::GetUserAssociationCodeData m_data;
 };
 

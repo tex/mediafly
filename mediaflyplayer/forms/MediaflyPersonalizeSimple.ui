@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>337</height>
+    <width>522</width>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -37,7 +37,7 @@
         </font>
        </property>
        <property name="text" >
-        <string>User assosiation code:</string>
+        <string>User association code:</string>
        </property>
       </widget>
      </item>
@@ -76,7 +76,7 @@
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Visit &lt;span style=" font-weight:600;">www.mediafly.com/PersonalizeDevice&lt;/span>, login into your account or create a new one and enter this code to assosiate the account with this device. The code is valid for next 48 hours.&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Visit &lt;span style=" font-weight:600;">www.mediafly.com/PersonalizeDevice&lt;/span>, login into your account or create a new one and enter this code to associate the account with this device. The code is valid for next 48 hours.&lt;/p>&lt;/body>&lt;/html></string>
      </property>
      <property name="textFormat" >
       <enum>Qt::RichText</enum>
@@ -102,7 +102,7 @@ p, li { white-space: pre-wrap; }
    <item>
     <widget class="QLabel" name="label_3" >
      <property name="text" >
-      <string>Mediafy application retrieves associated accounts during start.</string>
+      <string>Mediafly application retrieves associated accounts during start.</string>
      </property>
      <property name="wordWrap" >
       <bool>true</bool>
@@ -123,11 +123,38 @@ p, li { white-space: pre-wrap; }
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="m_buttonOk" >
-     <property name="text" >
-      <string>OK</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridLayout_2" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="label_4" >
+       <property name="font" >
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+       <property name="text" >
+        <string>&lt;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="QLabel" name="label_5" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font" >
+        <font>
+         <pointsize>22</pointsize>
+        </font>
+       </property>
+       <property name="text" >
+        <string>Back</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

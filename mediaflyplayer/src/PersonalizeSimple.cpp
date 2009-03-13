@@ -1,15 +1,11 @@
 #include "PersonalizeSimple.h"
 #include "Mediafly.h"
+#include <QKeyEvent>
 
 mf::PersonalizeSimple::PersonalizeSimple(QWidget *parent) :
 	QWidget(parent)
 {
 	setupUi(this);
-
-	// OK button emits back() signal to hide the widget...
-	//
-	connect(m_buttonOk, SIGNAL(clicked()),
-	        this, SIGNAL(back()));
 
 	// When we receive a code show it on the screen...
 	//
@@ -24,5 +20,15 @@ void mf::PersonalizeSimple::show()
 	// Ask for a code...
 	//
 	Mediafly::getMediafly()->Authentication_GetUserAssociationCode(&m_data);
+}
+
+void mf::PersonalizeSimple::keyPressEvent(QKeyEvent *event)
+{
+	switch (event->key()) {
+	case Qt::Key_Escape:
+	case Qt::Key_Left:
+		emit back();
+		break;
+	}
 }
 
