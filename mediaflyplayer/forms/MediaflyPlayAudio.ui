@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>404</width>
-    <height>346</height>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -17,6 +17,12 @@
     <layout class="QVBoxLayout" name="verticalLayout" >
      <item>
       <widget class="NScrollLabel" name="m_showTitleLabel" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font" >
         <font>
          <pointsize>20</pointsize>
@@ -34,18 +40,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout" >
        <item>
         <widget class="QLabel" name="m_iconLabel" >
-         <property name="minimumSize" >
-          <size>
-           <width>80</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="maximumSize" >
-          <size>
-           <width>80</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text" >
           <string/>
          </property>
@@ -76,6 +70,12 @@
      </item>
      <item>
       <widget class="NScrollLabel" name="m_episodeNameLabel" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font" >
         <font>
          <pointsize>20</pointsize>
@@ -88,6 +88,12 @@
      </item>
      <item>
       <widget class="NScrollLabel" name="m_numberOfEpisodesLabel" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="font" >
         <font>
          <pointsize>18</pointsize>

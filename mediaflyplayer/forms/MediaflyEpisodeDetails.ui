@@ -18,6 +18,12 @@
   <layout class="QGridLayout" >
    <item row="0" column="0" colspan="3" >
     <widget class="QLabel" name="m_header" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font" >
       <font>
        <pointsize>24</pointsize>
@@ -35,6 +41,12 @@
    </item>
    <item row="1" column="0" colspan="3" >
     <widget class="NScrollLabel" name="m_label" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font" >
       <font>
        <pointsize>20</pointsize>
@@ -114,6 +126,12 @@
    </item>
    <item row="4" column="0" colspan="3" >
     <widget class="QLabel" name="label" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font" >
       <font>
        <pointsize>20</pointsize>
