@@ -23,12 +23,11 @@
 #ifndef mfSearch_H
 #define mfSearch_H
 
-#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflySearch.h"
 
 namespace mf {
 
-class Search : public NBackgroundManagedWidget, protected Ui::MediaflySearch
+class Search : public QWidget, protected Ui::MediaflySearch
 {
 	Q_OBJECT
 public:

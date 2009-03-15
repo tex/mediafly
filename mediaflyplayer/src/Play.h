@@ -28,13 +28,12 @@
 #include "ui_MediaflyPlay.h"
 #include "CheckResponseOk.h"
 #include "nmediakeychannel.h"
-#include "nbackgroundmanagedwidget.h"
 #include <QModelIndex>
 #include <QKeyEvent>
 
 namespace mf {
 
-class Play : public NBackgroundManagedWidget, protected Ui::MediaflyPlay
+class Play : public QWidget, protected Ui::MediaflyPlay
 {
 	Q_OBJECT
 public:

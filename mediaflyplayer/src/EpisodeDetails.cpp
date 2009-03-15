@@ -28,11 +28,9 @@
 using namespace mf;
 
 EpisodeDetails::EpisodeDetails(QWidget *parent) :
-	NBackgroundManagedWidget(parent)
+	QWidget(parent)
 {
 	setupUi(this);
-
-	setPreferredBackground(BackgroundVideoOnly);
 }
 
 void EpisodeDetails::show(const QModelIndex& index)

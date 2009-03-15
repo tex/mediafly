@@ -23,7 +23,6 @@
 #ifndef mfEpisodeDetails_H
 #define mfEpisodeDetails_H
 
-#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyEpisodeDetails.h"
 #include <QWidget>
 #include <QModelIndex>
@@ -31,7 +30,7 @@
 
 namespace mf {
 
-class EpisodeDetails : public NBackgroundManagedWidget, private Ui::MediaflyEpisodeDetails
+class EpisodeDetails : public QWidget, private Ui::MediaflyEpisodeDetails
 {
 	Q_OBJECT
 public:

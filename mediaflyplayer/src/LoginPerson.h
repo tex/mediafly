@@ -24,12 +24,11 @@
 #define mfLoginPerson_H
 
 #include "BindMFUserData.h"
-#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyLoginPerson.h"
 
 namespace mf {
 
-class LoginPerson : public NBackgroundManagedWidget, private Ui::MediaflyLoginPerson
+class LoginPerson : public QWidget, private Ui::MediaflyLoginPerson
 {
 	Q_OBJECT
 public:

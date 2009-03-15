@@ -28,14 +28,12 @@
 using namespace mf;
 
 Play::Play(QWidget *parent) :
-	NBackgroundManagedWidget(parent),
+	QWidget(parent),
 	m_state(MP_PAUSE),
 	m_output(m_audio),
 	m_ready(false)
 {
 	setupUi(this);
-
-	setPreferredBackground(BackgroundVideoOnly);
 
 	connect(m_audio, SIGNAL(stateChange()),
 	        this, SLOT(handleStateChange()));

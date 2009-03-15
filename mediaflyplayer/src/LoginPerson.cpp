@@ -28,13 +28,11 @@
 using namespace mf;
 
 LoginPerson::LoginPerson(QWidget* parent) :
-	NBackgroundManagedWidget(parent)
+	QWidget(parent)
 {
 	setupUi(this);
 	m_password->setToolTip(tr("Enter password"));
 	m_username->setToolTip(tr("Enter username"));
-
-	setPreferredBackground(BackgroundVideoOnly);
 
 	connect(&m_data, SIGNAL(done()),
 	        this, SLOT(handleBindMFUserDone()));

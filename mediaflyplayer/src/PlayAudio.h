@@ -31,8 +31,6 @@
 
 #include "PlayAVInterface.h"
 
-#include "nbackgroundmanagedwidget.h"
-
 #include "ui_MediaflyPlayAudio.h"
 
 #include <QModelIndex>
@@ -41,7 +39,7 @@
 
 namespace mf {
 
-class PlayAudio : public NBackgroundManagedWidget, public PlayAVInterface, private Ui::MediaflyPlayAudio
+class PlayAudio : public QWidget, public PlayAVInterface, private Ui::MediaflyPlayAudio
 {
 	Q_OBJECT	
 public:

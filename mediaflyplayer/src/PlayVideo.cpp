@@ -29,11 +29,9 @@
 using namespace mf;
 
 PlayVideo::PlayVideo(QWidget *parent) :
-	NBackgroundManagedWidget(parent)
+	QWidget(parent)
 {
 	setupUi(this);
-
-	setPreferredBackground(BackgroundVideoOnly);
 
 	m_nmsControl = new NmsControl();
 	if (!m_nmsControl || !m_nmsControl->Connect())

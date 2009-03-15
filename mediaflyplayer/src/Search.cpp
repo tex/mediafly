@@ -24,12 +24,10 @@
 #include "nhelpbox.h"
 
 mf::Search::Search(QWidget *parent) :
-	NBackgroundManagedWidget(parent)
+	QWidget(parent)
 {
 	setupUi(this);
 	m_lineEdit->setToolTip(tr("Enter term"));
-
-	setPreferredBackground(BackgroundVideoOnly);
 
 	connect(m_lineEdit, SIGNAL(editingFinished()),
 	        this, SLOT(handleEditingFinished()));

@@ -23,14 +23,13 @@
 #ifndef mfPersonalize_H
 #define mfPersonalize_H
 
-#include "nbackgroundmanagedwidget.h"
 #include "ui_MediaflyPersonalize.h"
 
 class QKeyEvent;
 
 namespace mf {
 
-class Personalize : public NBackgroundManagedWidget, private Ui::MediaflyPersonalize
+class Personalize : public QWidget, private Ui::MediaflyPersonalize
 {
 	Q_OBJECT
 public:

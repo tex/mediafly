@@ -27,11 +27,9 @@
 using namespace mf;
 
 Personalize::Personalize(QWidget *parent) :
-	NBackgroundManagedWidget(parent)
+	QWidget(parent)
 {
 	setupUi(this);
-
-	setPreferredBackground(BackgroundVideoOnly);
 }
 
 void Personalize::clear()
