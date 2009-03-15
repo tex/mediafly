@@ -16,7 +16,7 @@
    <item>
     <layout class="QVBoxLayout" name="m_verticalLayout" >
      <item>
-      <widget class="QLabel" name="m_episodeNameLabel" >
+      <widget class="NScrollLabel" name="m_episodeNameLabel" >
        <property name="enabled" >
         <bool>false</bool>
        </property>
@@ -31,13 +31,10 @@
        <property name="alignment" >
         <set>Qt::AlignCenter</set>
        </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
-       </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="m_showTitleLabel" >
+      <widget class="NScrollLabel" name="m_showTitleLabel" >
        <property name="font" >
         <font>
          <pointsize>20</pointsize>
@@ -48,9 +45,6 @@
        </property>
        <property name="alignment" >
         <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -71,6 +65,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NScrollLabel</class>
+   <extends>QLabel</extends>
+   <header>nscrolllabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

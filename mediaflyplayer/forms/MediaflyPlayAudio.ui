@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>348</height>
+    <width>404</width>
+    <height>346</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -16,7 +16,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout" >
      <item>
-      <widget class="QLabel" name="m_showTitleLabel" >
+      <widget class="NScrollLabel" name="m_showTitleLabel" >
        <property name="font" >
         <font>
          <pointsize>20</pointsize>
@@ -27,9 +27,6 @@
        </property>
        <property name="alignment" >
         <set>Qt::AlignCenter</set>
-       </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -78,7 +75,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="m_episodeNameLabel" >
+      <widget class="NScrollLabel" name="m_episodeNameLabel" >
        <property name="font" >
         <font>
          <pointsize>20</pointsize>
@@ -87,13 +84,10 @@
        <property name="text" >
         <string/>
        </property>
-       <property name="wordWrap" >
-        <bool>true</bool>
-       </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="m_numberOfEpisodesLabel" >
+      <widget class="NScrollLabel" name="m_numberOfEpisodesLabel" >
        <property name="font" >
         <font>
          <pointsize>18</pointsize>
@@ -108,6 +102,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NScrollLabel</class>
+   <extends>QLabel</extends>
+   <header>nscrolllabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
