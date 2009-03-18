@@ -48,8 +48,10 @@ ChannelModel::ChannelModel(const ChannelModel &obj) :
 
 void ChannelModel::cancel()
 {
-	// TODO
+	// It's not really neccessary to cancel the loading of
+	// channel list.
 }
+
 void ChannelModel::refresh()
 {
 	m_id = 0;
