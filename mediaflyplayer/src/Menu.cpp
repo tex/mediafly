@@ -256,10 +256,6 @@ void mf::Menu::selectMenu(QModelIndex& index)
 	case mf::MenuModel::MENU_SEARCH:
 		emit showSearch();
 		break;
-	case mf::MenuModel::MENU_POPULAR_CHANNELS:
-	default:
-		NMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
-		break;
 	case mf::MenuModel::MENU_MEDIA_CHANNELS:
 		m_state = ChannelMenu;
 		break;
@@ -296,9 +292,6 @@ void mf::Menu::selectMenu(QModelIndex& index)
 	case mf::MenuModel::MENU_PERSONALIZE:
 		emit showPersonalize();
 		break;
-	case mf::MenuModel::MENU_ADD_PERSON:
-		emit showLoginPerson();
-		break;
 	case mf::MenuModel::MENU_REMOVE_PERSON:
 	{
 		Mediafly::getMediafly()->Authentication_UnbindMFUser(&m_checkResponseOk, m_menuModel.getDefaultAccountName());
@@ -309,6 +302,9 @@ void mf::Menu::selectMenu(QModelIndex& index)
 		m_listView->setModel(NULL);
 		break;
 	}
+	default:
+		NMessageBox::information(this, tr("Missing feature"), tr("Not yet implemented"));
+		break;
 	}
 }
 
