@@ -40,10 +40,13 @@ public:
 	{ }
 
 	EpisodeQuery(const EpisodeQuery& obj) :
-		Query(obj.m_offset, obj.m_limit),
-		m_channelSlug(obj.m_channelSlug),
-		m_mediaType(obj.m_mediaType)
-	{ }
+		Query(obj.m_offset, obj.m_limit)
+	{
+		if (this == &obj)
+			return;
+		m_channelSlug = obj.m_channelSlug;
+		m_mediaType = obj.m_mediaType;
+	}
 
 	const QString& channelSlug() const { return m_channelSlug; }
 	const QString& mediaType() const { return m_mediaType; }

@@ -43,13 +43,16 @@ public:
 	{ }
 
 	SearchQuery(const SearchQuery& obj) :
-		Query(obj.m_offset, obj.m_limit),
-		m_term(obj.m_term),
-		m_searchType(obj.m_searchType),
-		m_explicitFilter(obj.m_explicitFilter),
-		m_mediaType(obj.m_mediaType),
-		m_includeCounts(obj.m_includeCounts)
-	{ }
+		Query(obj.m_offset, obj.m_limit)
+	{
+		if (this == &obj)
+			return;
+		m_term = obj.m_term;
+		m_searchType = obj.m_searchType;
+		m_explicitFilter = obj.m_explicitFilter;
+		m_mediaType = obj.m_mediaType;
+		m_includeCounts = obj.m_includeCounts;
+	}
 
 	QString term() const { return m_term; }
 	QString searchType() const { return m_searchType; }

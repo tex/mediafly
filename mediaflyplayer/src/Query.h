@@ -33,10 +33,13 @@ public:
 		m_limit(limit)
 	{ }
 
-	Query(const Query& obj) :
-		m_offset(obj.m_offset),
-		m_limit(obj.m_limit)
-	{ }
+	Query(const Query& obj)
+	{
+		if (this == &obj)
+			return;
+		m_offset = obj.m_offset;
+		m_limit = obj.m_limit;
+	}
 
 	void advanceOffset() { m_offset += m_limit; }
 
