@@ -23,44 +23,38 @@
 #ifndef mfSearchQuery_H
 #define mfSearchQuery_H
 
+#include "Query.h"
 #include <QString>
 
 namespace mf {
 
-class SearchQuery
+class SearchQuery : public Query
 {
 public:
 	SearchQuery() { }
 
 	SearchQuery(QString term, QString searchType = "episode", QString explicitFilter = "notexplicit", QString mediaType = "audio,video", int offset = 0, int limit = 10, bool includeCounts = true) :
+		Query(offset, limit),
 		m_term(term),
 		m_searchType(searchType),
 		m_explicitFilter(explicitFilter),
 		m_mediaType(mediaType),
-		m_offset(offset),
-		m_limit(limit),
 		m_includeCounts(includeCounts)
 	{ }
 
 	SearchQuery(const SearchQuery& obj) :
+		Query(obj.m_offset, obj.m_limit),
 		m_term(obj.m_term),
 		m_searchType(obj.m_searchType),
 		m_explicitFilter(obj.m_explicitFilter),
 		m_mediaType(obj.m_mediaType),
-		m_offset(obj.m_offset),
-		m_limit(obj.m_limit),
 		m_includeCounts(obj.m_includeCounts)
 	{ }
-
-	void clearOffset() { m_offset = 0; }
-	void advanceOffset() { m_offset += m_limit; }
 
 	QString term() const { return m_term; }
 	QString searchType() const { return m_searchType; }
 	QString explicitFilter() const { return m_explicitFilter; }
 	QString mediaType() const { return m_mediaType; }
-	int offset() const { return m_offset; }
-	int limit() const { return m_limit; }
 	bool includeCounts() const { return m_includeCounts; }
 
 private:
@@ -68,8 +62,6 @@ private:
 	QString m_searchType;
 	QString m_explicitFilter;
 	QString m_mediaType;
-	int     m_offset;
-	int     m_limit;
 	bool    m_includeCounts;
 };
 

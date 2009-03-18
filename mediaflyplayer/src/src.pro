@@ -75,6 +75,8 @@ SOURCES += Play.cpp
 
 HEADERS += SearchQueryData.h
 
+HEADERS += Query.h
+
 HEADERS += PlayAVInterface.h
 SOURCES += PlayAVInterface.cpp
 

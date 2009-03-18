@@ -20,38 +20,33 @@
  *
  ****************************************************************************/
 
-#ifndef mfEpisodeQuery_H
-#define mfEpisodeQuery_H
-
-#include "Query.h"
-#include <QString>
+#ifndef mfQuery_H
+#define mfQuery_H
 
 namespace mf {
 
-class EpisodeQuery : public Query
+class Query
 {
 public:
-	EpisodeQuery() { }
-
-	EpisodeQuery(QString channelSlug, int offset, int limit, QString mediaType = "audio,video") :
-		Query(offset, limit),
-		m_channelSlug(channelSlug),
-		m_mediaType(mediaType)
+	Query(int offset = 0, int limit = 0) :
+		m_offset(offset),
+		m_limit(limit)
 	{ }
 
-	EpisodeQuery(const EpisodeQuery& obj) :
-		Query(obj.m_offset, obj.m_limit),
-		m_channelSlug(obj.m_channelSlug),
-		m_mediaType(obj.m_mediaType)
+	Query(const Query& obj) :
+		m_offset(obj.m_offset),
+		m_limit(obj.m_limit)
 	{ }
 
-	const QString& channelSlug() const { return m_channelSlug; }
-	const QString& mediaType() const { return m_mediaType; }
+	void clearOffset() { m_offset = 0; }
+	void advanceOffset() { m_offset += m_limit; }
 
-	void setChannelSlug(QString channelSlug) { m_channelSlug = channelSlug; }
-private:
-	QString m_channelSlug;
-	QString m_mediaType;
+	int offset() const { return m_offset; }
+	int limit() const { return m_limit; }
+
+protected:
+	int     m_offset;
+	int     m_limit;
 };
 
 }
