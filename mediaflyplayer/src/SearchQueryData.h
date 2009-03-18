@@ -31,7 +31,11 @@ class SearchQueryData : public EpisodeModelData
 {
 	Q_OBJECT
 public:
-	SearchQueryData();
+	SearchQueryData()
+	{
+		m_totalEpisodes = -1;
+		m_container = "searchResults";
+	}
 };
 
 }
