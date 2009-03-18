@@ -38,15 +38,6 @@ EpisodeModel::EpisodeModel(QObject *parent) :
 	        this, SLOT(handleBinaryRead(const QString&, const QByteArray&)));
 }
 
-EpisodeModel::EpisodeModel(const EpisodeModel& obj) :
-	QAbstractListModel(dynamic_cast<const QObject&>(obj).parent())
-{
-	m_mediafly = Mediafly::getMediafly();
-	m_state = obj.m_state;
-	m_data = obj.m_data;
-	m_refreshFinished = obj.m_refreshFinished;
-}
-
 void EpisodeModel::clear()
 {
 	m_data.clear();
@@ -92,6 +83,7 @@ void EpisodeModel::setState(enum State state)
 	default:
 		Q_ASSERT(false);
 	}
+
 	clear();
 }
 

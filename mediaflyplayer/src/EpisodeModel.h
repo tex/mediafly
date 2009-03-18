@@ -59,7 +59,6 @@ public:
 	};
 
 	EpisodeModel(QObject *parent = 0);
-	EpisodeModel(const EpisodeModel &obj);
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const;
 	QVariant data(const QModelIndex &parent, int role) const;
