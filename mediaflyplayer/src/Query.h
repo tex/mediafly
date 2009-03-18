@@ -38,7 +38,6 @@ public:
 		m_limit(obj.m_limit)
 	{ }
 
-	void clearOffset() { m_offset = 0; }
 	void advanceOffset() { m_offset += m_limit; }
 
 	int offset() const { return m_offset; }

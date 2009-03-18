@@ -146,24 +146,6 @@ void EpisodeModel::refresh()
 	}
 }
 
-void EpisodeModel::refreshFull()
-{
-	clear();
-
-	switch (m_state) {
-	case EpisodeData:
-		m_episodeQuery.clearOffset();
-		refresh(m_episodeQuery);
-		break;
-	case SearchData:
-		m_searchQuery.clearOffset();
-		refresh(m_searchQuery);
-		break;
-	default:
-		Q_ASSERT(false);
-	}
-}
-
 void EpisodeModel::cancel()
 {
 	m_mediafly->abort();

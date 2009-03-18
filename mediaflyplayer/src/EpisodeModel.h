@@ -72,7 +72,6 @@ public:
 	void refresh(const mf::EpisodeQuery& query);
 	void refresh(const mf::SearchQuery& query);
 	void refresh();
-	void refreshFull();
 	void cancel();
 
 	int totalRowCount() const;
