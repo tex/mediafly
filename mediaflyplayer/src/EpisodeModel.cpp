@@ -155,7 +155,7 @@ void EpisodeModel::handleEntryRead(const mf::EpisodeEntry& entry)
 {
 	qDebug() << __PRETTY_FUNCTION__ << entry.title();
 
-	m_data[m_data.size()] = entry;
+	m_data.append(entry);
 	emit refreshed();
 }
 

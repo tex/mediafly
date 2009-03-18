@@ -31,7 +31,7 @@
 #include "SearchQuery.h"
 #include "nlistview.h"
 #include <QAbstractListModel>
-#include <QMap>
+#include <QVector>
 #include <QString>
 #include <QByteArray>
 #include <QPixmap>
@@ -84,7 +84,7 @@ signals:
 private:
 	Mediafly                       *m_mediafly;
 	mf::ConsumerBinary              m_binaryData;
-	QMap<int, mf::EpisodeEntry>     m_data;
+	QVector<mf::EpisodeEntry>       m_data;
 	bool                            m_refreshFinished;
 
 	EpisodeModelData m_episodeModelData;
