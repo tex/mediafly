@@ -39,8 +39,6 @@ mf::Menu::Menu(mf::MenuModel&        menuModel,
 {
 	setupUi(this);
 
-	connect(m_listView, SIGNAL(almostAtEndOfList()),
-	        this, SLOT(uploadNextPartOfMenu()));
 	connect(m_listView, SIGNAL(enterPressed()),
 	        this, SLOT(handleEnterKey()));
 	connect(m_listView, SIGNAL(rightPressed()),
@@ -352,10 +350,8 @@ void mf::Menu::handleRightKey()
 		m_state = EpisodeMenu;
 		break;
 	case EpisodeMenu:
-	{
 		emit showShowMenu(index);
 		return;
-	}
 	default:
 		return;
 	}
@@ -399,19 +395,6 @@ void mf::Menu::handleExitKey()
 	default:
 		handleLeftKey();
 		break;
-	}
-}
-
-void mf::Menu::uploadNextPartOfMenu()
-{
-	qDebug() << __PRETTY_FUNCTION__;
-
-	switch (m_state) {
-	case EpisodeMenu:
-		m_episodeModel.refresh();
-		return;
-	default:
-		return;
 	}
 }
 

@@ -64,11 +64,13 @@ void List::keyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down:
 	case Qt::Key_PageDown:
 	case Qt::Key_End:
-		if (!model())
-			break;
-		if (currentIndex().row() + 15 > model()->rowCount())
-			emit almostAtEndOfList();
+	{
+		// Fetch more items of the model before user gets to the end of the list in the view.
+		//
+		if (model() && (currentIndex().row() + 15 > model()->rowCount()) && (model()->canFetchMore(currentIndex())))
+			model()->fetchMore(currentIndex());
 		break;
+	}
 	case Qt::Key_Return:
 	case Qt::Key_Enter:
 		emit enterPressed();

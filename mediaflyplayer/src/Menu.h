@@ -95,7 +95,6 @@ private slots:
 	void handleRightKey();
 	void handleLeftKey();
 	void handleExitKey();
-	void uploadNextPartOfMenu();
 	void handleSetUserAsDefaultReady();
 
 private slots:

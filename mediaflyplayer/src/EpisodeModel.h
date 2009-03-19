@@ -68,9 +68,11 @@ public:
 
 	void clear();
 
+	bool canFetchMore(const QModelIndex &parent) const;
+	void fetchMore(const QModelIndex &parent);
+
 	void refresh(const mf::EpisodeQuery& query);
 	void refresh(const mf::SearchQuery& query);
-	void refresh();
 	void cancel();
 
 	int totalRowCount() const;

@@ -119,7 +119,12 @@ void EpisodeModel::refresh(const mf::SearchQuery& query)
 	}
 }
 
-void EpisodeModel::refresh()
+bool EpisodeModel::canFetchMore(const QModelIndex &/*parent*/) const
+{
+	return totalRowCount() > rowCount();
+}
+
+void EpisodeModel::fetchMore(const QModelIndex &/*parent*/)
 {
 	if (!m_refreshFinished)
 		return;
@@ -224,10 +229,10 @@ int EpisodeModel::totalRowCount() const
 
 bool EpisodeModel::advanceToNextEpisode(QModelIndex& index)
 {
-	if (index.row() + 15 > index.model()->rowCount())
+	if (index.model() && (index.row() + 15 > index.model()->rowCount()) && (index.model()->canFetchMore(index)))
 		dynamic_cast<EpisodeModel *>(
 			const_cast<QAbstractItemModel *>(index.model())
-		)->refresh();
+		)->fetchMore(index);
 	if (index.row() + 1 < index.model()->rowCount()) {
 		index = index.model()->index(index.row() + 1, 0);
 		return true;

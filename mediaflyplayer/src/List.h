@@ -45,7 +45,6 @@ public:
 	void keyPressEvent(QKeyEvent *event);
 
 signals:
-	void almostAtEndOfList();
 	void enterPressed();
 	void leftPressed();
 	void rightPressed();
